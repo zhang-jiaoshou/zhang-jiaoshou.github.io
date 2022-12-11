@@ -1,0 +1,3988 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>第二阶段总结</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+ html{
+    padding: 0 100px;
+}
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%E7%AC%AC%E4%B8%80%E5%A4%A9">第一天</h1>
+<h2 id="1-%E4%B8%BB%E8%A6%81%E5%86%85%E5%AE%B9">1 主要内容</h2>
+<ol>
+<li>JavaScript初识</li>
+<li>Js的基础操作</li>
+</ol>
+<h2 id="2-js%E5%88%9D%E8%AF%86">2 Js初识</h2>
+<h3 id="21-js%E7%9A%84%E5%8E%86%E5%8F%B2">2.1 Js的历史</h3>
+<pre class="hljs"><code><div>    netscape（网景）公司 推出来全球第一款浏览器 navigator  为了留住用户 需要让浏览器网页 能和用户进行交互(主要针对表单提交)
+
+    js 借鉴了C语言的函数、Java的管理机制
+
+    js 最开始命名为 mocha 后因java 的大火 为了蹭热度 改名为JavaScript 但和Java没有关系
+
+    js 诞生于网景公司 由布兰登·艾奇编写 主要为了解决和用户交互的问题(针对表单提交) 借鉴了Java C语言，本名mocha-&gt;liveScript-&gt;JavaScript
+</div></code></pre>
+<h3 id="22-js%E7%9A%84%E7%89%B9%E7%82%B9">2.2 Js的特点</h3>
+<pre class="hljs"><code><div>    js 是一门基于对象的，由事件驱动的，解释性脚本语言
+
+    基于对象的：在js中有很多工具 这些工具可以给我们提供解决基础问题**的方法我们称这些工具为对象我们说js是基于对象的。
+
+    由事件驱动的： 在js中 通过事件来实现用户和页面的交互功能， 因此我们说js由事件驱动的
+
+    由于Js是用来编写浏览器的代码的语言，就需要更适合浏览器页面。浏览器页面的优点是代码少 用户体验高 
+
+</div></code></pre>
+<h4 id="221-%E7%BC%96%E8%AF%91%E6%80%A7">2.2.1 编译性</h4>
+<pre class="hljs"><code><div>    在代码执行之前 先将整段代码进行翻译。全部翻译完之后，将翻译好的机器语言写入一个可执行文件中
+
+    优点：一次编译，到处使用
+    缺点：编译的时间较长
+</div></code></pre>
+<h4 id="222-%E8%A7%A3%E9%87%8A%E6%80%A7">2.2.2 解释性</h4>
+<pre class="hljs"><code><div>    在代码执行之前 先对代码进行解释，逐行解释，逐行执行
+
+    优点：执行代码等待时间较短
+    缺点：每次执行都需要重新编译
+</div></code></pre>
+<h3 id="23-js%E7%9A%84%E7%BB%84%E6%88%90%E6%88%90%E5%88%86">2.3 Js的组成成分</h3>
+<h4 id="231-ecmascript">2.3.1 ECMAScript</h4>
+<blockquote>
+<p>欧洲计算机制造商协会(European Computer Manufacturers Association)制定了Js语法标准</p>
+</blockquote>
+<ul>
+<li>Js的基础语法</li>
+</ul>
+<h4 id="232-dom">2.3.2 DOM</h4>
+<blockquote>
+<p>Document object mode 文档对象模型</p>
+</blockquote>
+<ul>
+<li>帮助用户操作文档(html文档) 其实是操作html中的方法库</li>
+</ul>
+<h4 id="231-bom">2.3.1 BOM</h4>
+<blockquote>
+<p>Browser object mode 浏览器对象模型</p>
+</blockquote>
+<ul>
+<li>主要用于帮助用户操作浏览器</li>
+</ul>
+<h3 id="24-js%E7%9A%84%E5%BC%95%E5%85%A5%E6%96%B9%E5%BC%8F">2.4 Js的引入方式</h3>
+<h4 id="241-%E8%A1%8C%E5%86%85%E5%BC%95%E5%85%A5">2.4.1 行内引入</h4>
+<blockquote>
+<p>在标签中写入Js代码</p>
+</blockquote>
+<ul>
+<li>不建议使用 不利于结构和逻辑的分离</li>
+<li>注意：当我们编写行内js的时候，很容易出现引号的嵌套问题</li>
+</ul>
+<pre class="hljs"><code><div>     &lt;div onclick=&quot;alert('点击事件')&quot;&gt;&lt;/div&gt;
+</div></code></pre>
+<h4 id="242-%E5%86%85%E9%83%A8%E5%BC%95%E5%85%A5">2.4.2 内部引入</h4>
+<blockquote>
+<p>在html文档中 写入script标签 并在script标签中引入Js代码</p>
+</blockquote>
+<ul>
+<li>script标签 可以写在html文档中的任意位置，建议下载 body标签末尾 或者 head标签的末尾</li>
+<li>可以写任意多个</li>
+</ul>
+<pre class="hljs"><code><div>    &lt;script&gt;
+        alert('内部引入');
+    &lt;/script&gt;
+</div></code></pre>
+<h4 id="243-%E5%A4%96%E9%83%A8%E5%BC%95%E5%85%A5">2.4.3 外部引入</h4>
+<blockquote>
+<p>在HTML文档总 写入 script 标签 并设置标签的src属性 值设置为外部路径</p>
+</blockquote>
+<ul>
+<li>用于外部引入的 script标签中 不能写任何代码 写了，也不会有任何效果</li>
+<li>如果一定需要写入 内部  必须新写入一个script标签写入</li>
+</ul>
+<pre class="hljs"><code><div>    &lt;script src=&quot;./js/public.js&quot;&gt;&lt;/script&gt;
+</div></code></pre>
+<h4 id="244-js%E7%9A%84%E6%B3%A8%E9%87%8A">2.4.4 Js的注释</h4>
+<blockquote>
+<p>单行文本注释</p>
+</blockquote>
+<ul>
+<li>// 注释的文本内容</li>
+</ul>
+<blockquote>
+<p>多行文本注释</p>
+</blockquote>
+<ul>
+<li>/* 注释的文本内容 换行依然可以实现注释 */</li>
+</ul>
+<h4 id="245-%E5%85%A5%E5%8F%A3%E5%87%BD%E6%95%B0%E7%86%9F%E7%BB%83%E6%8E%8C%E6%8F%A1">2.4.5 入口函数(熟练掌握)</h4>
+<ul>
+<li>写在window.onload函数中的js代码会在页面结构样式 外部资源加载完成之后执行</li>
+</ul>
+<pre class="hljs"><code><div>    &lt;script&gt;
+        window.onload=function(){
+            ...
+        }
+    &lt;/script&gt;
+
+</div></code></pre>
+<h2 id="3-js%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C">3 Js的一些基础操作</h2>
+<h3 id="31-js%E7%9A%84%E5%8F%98%E9%87%8F">3.1 Js的变量</h3>
+<blockquote>
+<p>变量 值可以变化的量，变量实际上是数据的容器</p>
+</blockquote>
+<h4 id="311-%E5%9C%A8js%E4%B8%AD-%E5%8F%98%E9%87%8F%E7%9A%84%E5%86%99%E6%B3%95">3.1.1  在Js中 变量的写法</h4>
+<pre class="hljs"><code><div>    // 1 创建空容器 var 声明变量关键字
+    var 变量名 ;
+
+    // 2 变量的赋值 向容器中添加内容
+    变量名 = 数据;
+
+    // 简写
+    var 变量名 = 数据;
+    
+    // 连续声明
+    var a,b,c,d;
+
+    // 连等
+    var a=b=c=d;
+</div></code></pre>
+<h4 id="312-%E5%8F%98%E9%87%8F%E5%91%BD%E5%90%8D">3.1.2 变量命名</h4>
+<blockquote>
+<p>命名规则</p>
+</blockquote>
+<ol>
+<li>变量命名不可以用数字开头</li>
+<li>变量命名不能包含除 $ 和 _ 意外的任何特殊字符</li>
+<li>变量名 不能使用 关键字 和 保留字</li>
+</ol>
+<blockquote>
+<p>命名规范</p>
+</blockquote>
+<ol>
+<li>变量命名尽量使用驼峰命名法</li>
+<li>尽量不要使用中文</li>
+<li>尽量命名时具备语义化</li>
+</ol>
+<h3 id="32-js%E4%B8%AD%E7%9A%84%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6">3.2 Js中的鼠标事件</h3>
+<pre class="hljs"><code><div>    点击事件 onclick
+    双击事件 ondblclick
+    按下事件 onmousedown
+    抬起事件 onmouseup
+    移入事件 onmouseover    onmouseenter
+    移出事件 onmouseout     onmouseleave
+    右击事件 oncontextmenu
+    移动事件 mousemove
+    
+    mouseover 经过自身和子盒子都会触发
+    
+    mouseenter 只经过自身触发 搭配鼠标离开时间 mouseleave
+
+</div></code></pre>
+<h3 id="33-js%E4%B8%AD%E6%93%8D%E4%BD%9C%E5%85%83%E7%B4%A0%E7%9A%84%E6%96%B9%E6%B3%95">3.3 Js中操作元素的方法</h3>
+<h4 id="331-innertext">3.3.1 innerText</h4>
+<blockquote>
+<p>用来获取 普通双标签 的 文本内容</p>
+</blockquote>
+<ul>
+<li>innerText 只能操作纯文本内容</li>
+</ul>
+<pre class="hljs"><code><div>    获取内容 : 
+        元素.innerText;
+
+    设置内容 :
+        元素.innerText = '文本内容';
+
+</div></code></pre>
+<h4 id="332-innerhtml">3.3.2 innerHTML</h4>
+<blockquote>
+<p>用来操作 普通双标签 的 html内容</p>
+</blockquote>
+<ul>
+<li>innerHTML 可以操作标签</li>
+</ul>
+<pre class="hljs"><code><div>    获取内容 :  
+        元素.innerHTML;
+
+    设置内容 :
+        元素.innerHTML = '内容';
+
+</div></code></pre>
+<h4 id="333-value">3.3.3 value</h4>
+<blockquote>
+<p>还用来操作表单元素的内容</p>
+</blockquote>
+<pre class="hljs"><code><div>    获取内容 :
+        元素.value;
+
+    设置内容 :
+        元素.value = '内容';
+
+</div></code></pre>
+<h4 id="334-%E6%93%8D%E4%BD%9C%E5%85%83%E7%B4%A0%E5%B1%9E%E6%80%A7">3.3.4 操作元素属性</h4>
+<ul>
+<li>获取src属性值的时候不能正常使用 得到的是绝对路径</li>
+<li>操作类名的时候不能正常使用 如果想操作类名 要写 元素.className</li>
+<li>不能操作元素非子代属性和自定义属性</li>
+</ul>
+<pre class="hljs"><code><div>    获取元素属性值 :
+        元素.属性名;
+
+    设置元素属性值 :
+        元素.属性名 = '属性值';
+
+</div></code></pre>
+<h4 id="335-%E6%93%8D%E4%BD%9C%E5%85%83%E7%B4%A0%E6%A0%B7%E5%BC%8F">3.3.5 操作元素样式</h4>
+<ul>
+<li>设置和获取的样式是行内样式</li>
+<li>操作元素的样式的时候 有些比较特殊，需要用驼峰命名法</li>
+</ul>
+<pre class="hljs"><code><div>   
+    获取元素样式 : 
+            元素.style.样式属性名;
+
+    设置元素样式 : 
+            元素.style.样式属性名 = 属性值;
+
+    cssText :
+    用法 : 元素.style.cssText = '元素的样式';
+    注意 : 设置cssText相当于重新设置元素的行内样式，原本的样式会被覆盖
+    一般用这个方法清空不需要的行内样式
+
+    // 清空行内样式
+    box.style.cssText = '';
+
+</div></code></pre>
+<h1 id="%E7%AC%AC%E4%BA%8C%E5%A4%A9">第二天</h1>
+<h2 id="1-%E4%B8%BB%E8%A6%81%E5%86%85%E5%AE%B9">1 主要内容</h2>
+<ol>
+<li>Js的数据类型</li>
+<li>数据类新的转换</li>
+<li>Js的运算符</li>
+</ol>
+<h2 id="2-js%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">2 Js的数据类型</h2>
+<blockquote>
+<p>获取数据类型的方法 typeof</p>
+</blockquote>
+<ul>
+<li>typeof 要查看类型的数据</li>
+</ul>
+<h3 id="21-%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">2.1 简单数据类型</h3>
+<h4 id="211-number-%E6%95%B0%E5%AD%97">2.1.1 number 数字</h4>
+<ol>
+<li>
+<p>整形 数学中的整数</p>
+</li>
+<li>
+<p>浮点型 数学中的小数</p>
+</li>
+</ol>
+<ul>
+<li>尽量不要使用浮点型数据进行运算</li>
+</ul>
+<ol start="3">
+<li>NaN 在算错的情况下得到</li>
+</ol>
+<ul>
+<li>NaN 和任何数字都不相等</li>
+<li>NaN 和任何数字进行运算 结果都是NaN</li>
+</ul>
+<ol start="4">
+<li>数字的进制</li>
+</ol>
+<blockquote>
+<p>八进制数字 : 0数字</p>
+</blockquote>
+<ul>
+<li>数字中不能出现比8大的数，如果出现了就按照十进制数字理解。</li>
+</ul>
+<blockquote>
+<p>十六进制数字 : 0x数字</p>
+</blockquote>
+<ul>
+<li>十六进制中用 a~f 表示 10~15</li>
+</ul>
+<ol start="5">
+<li>特殊值 无穷大 Infinity</li>
+</ol>
+<ul>
+<li>任何数除以0 都是Infinity</li>
+</ul>
+<h4 id="212-string-%E5%AD%97%E7%AC%A6%E4%B8%B2">2.1.2 string 字符串</h4>
+<blockquote>
+<p>引号(单双引号都可以)中包裹任意内容都是字符串</p>
+</blockquote>
+<ul>
+<li>字符串中每个字符都有一个编号，这个标号从0开始，按照字符排序依次递增，我们称之为字符的下标(索引)</li>
+<li>根据下标，我们可以得到对应的字符---- str[下标] (在 IE8- 不支持)</li>
+<li>通用方法为： str.charAt(下标)</li>
+<li>字符串的length属性 表示字符串中包含字符的个数</li>
+</ul>
+<h4 id="213-boolean-%E5%B8%83%E5%B0%94">2.1.3 boolean 布尔</h4>
+<blockquote>
+<p>true 真</p>
+</blockquote>
+<blockquote>
+<p>false 假</p>
+</blockquote>
+<h4 id="214-undefined-%E6%9C%AA%E5%AE%9A%E4%B9%89">2.1.4 undefined 未定义</h4>
+<blockquote>
+<p>未定义 变量声明但是未赋值 undefined</p>
+</blockquote>
+<h4 id="215-null-%E5%80%BC%E4%B8%BA%E7%A9%BA">2.1.5 null 值为空</h4>
+<blockquote>
+<p>值为空 只有一个值 null</p>
+</blockquote>
+<ul>
+<li>赋值了，只是赋的值为空</li>
+</ul>
+<h3 id="22-%E5%A4%8D%E6%9D%82%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">2.2 复杂数据类型</h3>
+<h4 id="221-array-%E6%95%B0%E7%BB%84">2.2.1 array 数组</h4>
+<blockquote>
+<p>是一个用来存储数据的容器 [数据1,数据2,数据3,数据4,...]</p>
+</blockquote>
+<ul>
+<li>数组中可以存储任意的数据类型 任意多个</li>
+<li>数组中存储的数据 我们称之为数组项</li>
+<li>每个数组项都有一个编号 编号从 0 开始 按照数组项的排序依次递增。我们称编号为下标(索引号)</li>
+<li>每个数组都有一个属性 length 数组的长度，表示当前数组中 数组项的个数。</li>
+<li>length : 数组的长度</li>
+<li>获取数组中的数组项 : arr[下标]</li>
+</ul>
+<h4 id="222-object-%E5%AF%B9%E8%B1%A1">2.2.2 object 对象</h4>
+<blockquote>
+<p>是一个用来存储数据的容器 {属性名 : 属性值,属性名 : 属性值,...}</p>
+</blockquote>
+<ul>
+<li>对象使用 属性 的方式存储数据</li>
+<li>对象中可以写任意多个属性，属性值可以使任意类型的数据</li>
+<li>属性名不能重复 如果重复   后面的属性覆盖前面的</li>
+</ul>
+<pre class="hljs"><code><div>    获取对象属性值： obj.属性名
+    设置对象属性值： obj.属性名 = 属性值;
+    给对象添加属性： obj.新属性名. = 值;
+
+
+    在Js中数组和对象的数据类型都是object
+    我们可以用instanceof来区分
+
+    数组数据 instanceof Array 值为true
+    对象数据 instanceof Object 值为false
+
+</div></code></pre>
+<h4 id="223-function-%E5%87%BD%E6%95%B0">2.2.3 function 函数</h4>
+<blockquote>
+<p>用来存储代码的容器  function 函数名(){ 代码 }</p>
+</blockquote>
+<ul>
+<li>在Js中函数经常 被类比为工具 因为函数如果不调用，是不会自动执行的</li>
+<li>函数调用： 函数名();</li>
+</ul>
+<h3 id="23-%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%A4%8D%E6%9D%82%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%9C%AC%E8%B4%A8%E5%8C%BA%E5%88%AB">2.3 简单数据类型和复杂数据类型的本质区别</h3>
+<p>为了能让堆区的数据便于查找 人们给计算机设置了机制----每当数据存入堆区中，就立即生成一个当前数据的地址(指针)，将这个地址(字符串)存在栈区，以后想要访问堆区数据的时候，就先从栈区得到地址，之后查找到堆区数据。</p>
+<blockquote>
+<p>栈区</p>
+</blockquote>
+<ul>
+<li>JS的 简单数据类型 放在栈区</li>
+</ul>
+<pre class="hljs"><code><div>    优点： 获取数据时候很方便
+    缺点：容量比较小，不能存放数据量庞大的数据
+</div></code></pre>
+<blockquote>
+<p>堆区</p>
+</blockquote>
+<ul>
+<li>JS的 复杂数据类型 放在栈区</li>
+</ul>
+<pre class="hljs"><code><div>    优点：容量大，可以存放数据量庞大的数据
+    缺点：存在堆区的数据不易查找
+
+</div></code></pre>
+<h2 id="3-js%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">3 Js的数据类型转换</h2>
+<h3 id="31-%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%95%B0%E5%AD%97">3.1 其他类型转数字</h3>
+<ol>
+<li>Number 可以将任何数据类型 转换为 数字类型</li>
+</ol>
+<ul>
+<li>Number(要转换的数据) ---&gt; 数字类型</li>
+</ul>
+<ol start="2">
+<li>parseInt 将其他类型数据转换成整型数据</li>
+</ol>
+<ul>
+<li>parseInt(要转换的数据)----&gt; 整型数据</li>
+<li>parseInt转换数据类型时，会先从数据开头进行转换，一直到彻底转换完，或遇到不能转换的内容时，就结束转换</li>
+</ul>
+<ol start="3">
+<li>parseFloat 将其他类型数据转换成浮点型数据</li>
+</ol>
+<ul>
+<li>parseFloat(要转换的数据)----&gt; 浮点型数据</li>
+<li>parseInt转换数据类型时，会先从数据开头进行转换，一直到彻底转换完，或遇到不能转换的内容时，就结束转换</li>
+</ul>
+<ol start="4">
+<li>isNaN 判断传入的数据转换为数字之后 是不是NaN</li>
+</ol>
+<ul>
+<li>isNaN('字符串') // 是数字 ：false 不是数字：true</li>
+</ul>
+<h3 id="32-%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2">3.2 其他类型转字符串</h3>
+<ol>
+<li>String 可以将任何数据类型 转换为 字符串</li>
+</ol>
+<ul>
+<li>String(要转换的数据) ---&gt; 字符串类型</li>
+<li>任意类型的数据都可以使用这个方法转换为字符串</li>
+</ul>
+<ol start="2">
+<li>toString 可以将数字转化成指定进制的数字字符串</li>
+</ol>
+<ul>
+<li>不能转换 undefined 和 null</li>
+</ul>
+<pre class="hljs"><code><div>    //toString转换进制
+    var num = 10;
+    console.log(num.toString(2));//1010
+    console.log(num.toString(8));//12
+</div></code></pre>
+<h3 id="33-%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%E8%BD%AC%E5%B8%83%E5%B0%94">3.3 其他类型转布尔</h3>
+<ol>
+<li>Boolean(要转换的数据) ---&gt; 布尔类型</li>
+</ol>
+<ul>
+<li>转换成bool类型  '' 0 NaN null undefined 结果为false 其余为true</li>
+</ul>
+<h3 id="34-%E9%9A%90%E5%BC%8F%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">3.4 隐式类型转换</h3>
+<ol>
+<li>+可以进隐式转换</li>
+</ol>
+<ul>
+<li>直接将操作数转换为数字之后运算</li>
+<li>如果有字符串，会将操作数直接准换成字符串进行拼接</li>
+<li>任何数据+''; 表示将该数据隐式转换为字符串</li>
+</ul>
+<ol start="2">
+<li>
+<ul>
+<li>
+<ul>
+<li>/ %</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>进行上述运算的时候 会将所有的操作数直接转换成数字，进行数学运算</li>
+</ul>
+<ol start="3">
+<li>
+<p>任何数据 -0 *1 /1 表示将该数据，隐式转换为数字类型</p>
+</li>
+<li>
+<p>!数据 任何数据进行取反的时候都会转换为布尔值并取反</p>
+</li>
+<li>
+<p>!!数据  表示将该数据转换成布尔值</p>
+</li>
+</ol>
+<h2 id="4-js%E7%9A%84%E8%BF%90%E7%AE%97%E7%AC%A6">4 Js的运算符</h2>
+<h3 id="41-%E7%AE%97%E6%95%B0%E8%BF%90%E7%AE%97%E7%AC%A6">4.1 算数运算符</h3>
+<h4 id="411">4.1.1 + - * / %</h4>
+<h4 id="412-%E8%87%AA%E5%8A%A0---%E8%87%AA%E5%87%8F">4.1.2 ++(自加) --(自减)</h4>
+<ol>
+<li>++ 表示在原数字基础上加一</li>
+<li>-- 表示在原数字基础上减一</li>
+<li>如果++/--  写在 数字的前面  表示先自加/自减  后打印（参加运算）  如果++/--写在数字的后面   表示  先打印（参加运算）  后自加/自减</li>
+</ol>
+<h3 id="42-%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6">4.2 赋值运算符</h3>
+<h4 id="421">4.2.1 =</h4>
+<h4 id="422">4.2.2 +=</h4>
+<blockquote>
+<p>a+=10 &lt;-----&gt; a=a+10</p>
+</blockquote>
+<h4 id="423">4.2.3 -=</h4>
+<blockquote>
+<p>a-=10 &lt;-----&gt; a=a-10</p>
+</blockquote>
+<h4 id="424">4.2.4 *=</h4>
+<blockquote>
+<p>a*=10 &lt;-----&gt; a=a*10</p>
+</blockquote>
+<h4 id="425">4.2.5 /=</h4>
+<blockquote>
+<p>a/=10 &lt;-----&gt; a=a/10</p>
+</blockquote>
+<h3 id="43-%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6">4.3 比较运算符</h3>
+<h4 id="431">4.3.1 &gt; &lt; &gt;= &lt;=</h4>
+<blockquote>
+<p>在Js中和数学中的比较运算符完全一样，比较成功为 true ；比较失败为false</p>
+</blockquote>
+<h4 id="422-%E7%9B%B8%E7%AD%89%E4%B8%8D%E7%9B%B8%E7%AD%89-%E5%85%A8%E7%AD%89%E4%B8%8D%E5%85%A8%E7%AD%89">4.2.2 ==(相等)/!=(不相等) ===(全等)/!==(不全等)</h4>
+<ol>
+<li>==(相等) !=(不相等)</li>
+</ol>
+<ul>
+<li>只判断操作数的值是否相等，不判断数据类型是否相同</li>
+<li>== 的比较原理：会把等号两边的操作数 转换为相同的类型之后 直接比较值</li>
+<li>!= 比较两个操作数是否不相等 如果不等为 true 相等为false</li>
+</ul>
+<ol start="2">
+<li>===(全等)/!==(不全等)</li>
+</ol>
+<ul>
+<li>即比较值，也比较类型 都相同，值为true  有一个不相等值为false</li>
+<li>!== 在逻辑上 和===正好相反</li>
+</ul>
+<h3 id="44-%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6">4.4 逻辑运算符</h3>
+<h4 id="441-%E4%B8%8E%E8%BF%90%E7%AE%97">4.4.1 与运算</h4>
+<blockquote>
+<p>操作数1 &amp;&amp; 操作数2</p>
+</blockquote>
+<ul>
+<li>如果两个操作数同时为true 值为true 有一个值为false值就是false</li>
+<li>全真为真，有假为假</li>
+</ul>
+<h4 id="442-%E6%88%96%E8%BF%90%E7%AE%97">4.4.2 或运算</h4>
+<blockquote>
+<p>操作数1 || 操作数2</p>
+</blockquote>
+<ul>
+<li>如果两个操作数有一个是true 值就是true，如果两个都是false值为false</li>
+<li>有真为真，全假才假</li>
+</ul>
+<h4 id="443-%E9%9D%9E%E8%BF%90%E7%AE%97">4.4.3 非运算</h4>
+<blockquote>
+<p>!操作数</p>
+</blockquote>
+<ul>
+<li>取反 true变false false变true</li>
+</ul>
+<h3 id="45-%E4%B8%89%E5%85%83%E8%BF%90%E7%AE%97%E7%AC%A6">4.5 三元运算符</h3>
+<blockquote>
+<p>判断条件 ? 条件成立执行语句 : 条件不成立执行语句;</p>
+</blockquote>
+<ul>
+<li>如果条件成立 执行 : 前的代码</li>
+<li>如果条件不成立 执行 : 后的代码</li>
+</ul>
+<h1 id="%E7%AC%AC%E4%B8%89%E5%A4%A9">第三天</h1>
+<h2 id="1-js%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5">1 JS流程控制语句</h2>
+<h3 id="11-%E9%A1%BA%E5%BA%8F%E7%BB%93%E6%9E%84%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5">1.1 顺序结构流程控制语句</h3>
+<blockquote>
+<p>Js代码按照从上到下的顺序进行执行</p>
+</blockquote>
+<h3 id="12-%E9%80%89%E6%8B%A9%E7%BB%93%E6%9E%84%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5">1.2 选择结构流程控制语句</h3>
+<h4 id="121-if-else">1.2.1 if-else</h4>
+<ol>
+<li>if 语句</li>
+</ol>
+<ul>
+<li>if(判断条件){ 条件成立执行的代码 }</li>
+</ul>
+<ol start="2">
+<li>if-else 语句</li>
+</ol>
+<ul>
+<li>if(判断条件){ 条件成立执行的代码 }else{ 条件不成立执行的代码 }</li>
+</ul>
+<ol start="3">
+<li>if-else 分支语句</li>
+</ol>
+<pre class="hljs"><code><div>    if(判断条件1){
+        条件1成立执行的代码
+    }else if(判断条件2){
+        条件2成立执行的代码
+    }
+    .... 
+    else if(判断条件n){
+        条件n成立执行的代码 
+    }
+    else{
+        所有条件都不成立 执行的代码
+    }
+
+</div></code></pre>
+<h4 id="122-switch">1.2.2 switch</h4>
+<pre class="hljs"><code><div>    switch	的语法结构
+    switch(匹配常量){
+    case 匹配项1:	匹配成功执行的代码;break;
+    case 匹配项2:	匹配成功执行的代码;break;
+    case 匹配项3:	匹配成功执行的代码;break;
+    case 匹配项4:	匹配成功执行的代码;break;
+    ...
+    default: 前面所有的都匹配失败率	执行的语句
+    }
+
+    匹配常量：普通的数据
+
+​	switch会拿着匹配常量	和	每一个 匹配项	逐一进行比对	如果匹配常量 === 某一匹配项	就会执行后面的代码	之后执行break语句（作用是打断后续switch代码的执行）	如果所有匹配项都匹配失败，就执行default后面的代码
+</div></code></pre>
+<h3 id="13-%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5">1.3 循环结构流程控制语句</h3>
+<h4 id="131-for%E5%BE%AA%E7%8E%AF">1.3.1 for循环</h4>
+<ol>
+<li>for</li>
+</ol>
+<pre class="hljs"><code><div>for(初始化循环变量;设置循环条件;更新循环变量){
+    每次循环执行的代码(循环体代码)
+    }
+
+    //当满足循环条件的时候  就可以继续循环   不满足条件 就立即结束循环
+    //for循环的执行过程
+    //1.初始化循环变量    var i = 0 1 2 3.... 9 10
+    //2. 判断循环条件     i &lt; 10; 
+    //3.如果循环条件成立  就立即执行循环体代码  如果不成立  就立即结束循环
+    //4.更新循环变量   i++
+    //5.回到第二步 继续执行
+
+</div></code></pre>
+<ol start="2">
+<li>for-in 循环</li>
+</ol>
+<pre class="hljs"><code><div>    for(var 属性名变量 in ){
+    每次循环执行的代码(循环体代码)
+    }
+
+    for-in  循环是专门用来循环对象的
+</div></code></pre>
+<h4 id="132-while%E5%BE%AA%E7%8E%AF">1.3.2 while循环</h4>
+<ol>
+<li>while</li>
+</ol>
+<ul>
+<li>如果条件不成立就不执行while</li>
+</ul>
+<pre class="hljs"><code><div>    var i = 0;
+    while(i&lt;10){
+        循环体代码
+        i++;
+    }
+
+</div></code></pre>
+<ol start="2">
+<li>do-while</li>
+</ol>
+<ul>
+<li>如果条件不成立，也可以执行一次循环体</li>
+</ul>
+<pre class="hljs"><code><div>   var i = 0;
+   do{
+        循环体代码
+        i++;
+    } while(i&lt;10);
+
+</div></code></pre>
+<h3 id="14-%E5%85%B6%E4%BB%96%E7%BB%93%E6%9E%84%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5">1.4 其他结构流程控制语句</h3>
+<ol>
+<li>
+<p>break 打断语句的执行</p>
+</li>
+<li>
+<p>continue 跳过本次循环 继续下一次循环</p>
+</li>
+</ol>
+<h3 id="15-%E8%8E%B7%E5%8F%96%E9%A1%B5%E9%9D%A2%E5%85%83%E7%B4%A0">1.5 获取页面元素</h3>
+<h4 id="151%E8%8E%B7%E5%8F%96%E9%A1%B5%E9%9D%A2%E5%85%83%E7%B4%A0%E7%9A%84%E5%85%B6%E4%BB%96%E6%96%B9%E6%B3%95">1.5.1.获取页面元素的其他方法</h4>
+<pre class="hljs"><code><div>​	 document.getElementById('id');	通过id获取元素
+
+    getElementsByTagName('标签名')；通过标签名获取元素
+
+​	 这种方法获取到的结果 不是元素	而是	html元素集合（伪数组）
+
+    如果想获取集合中的元素	写作：元素集合[指定的下标]	=== 对应下标的元素
+
+
+    getElementByClassName('类名')	通过类名获取元素 获取到的也是元素集合具体用法同上
+</div></code></pre>
+<h4 id="152%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0%E6%96%B9%E6%B3%95%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB">1.5.2.获取元素方法之间的区别</h4>
+<ol>
+<li>ById</li>
+</ol>
+<ul>
+<li>获取到的是一个元素</li>
+<li>只能使用document作为范围</li>
+</ul>
+<ol start="2">
+<li>ByTagName、ByClassName</li>
+</ol>
+<ul>
+<li>获取到的是元素的集合</li>
+<li>可以使用父元素集合</li>
+</ul>
+<h1 id="%E7%AC%AC%E4%BA%94%E5%A4%A9">第五天</h1>
+<h2 id="%E4%BD%9C%E7%94%A8%E4%BA%8E%E4%B8%8E%E8%A7%A3%E6%9E%90%E5%92%8C%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC">作用于与解析和函数返回值</h2>
+<h2 id="1-%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0">1 函数的参数</h2>
+<h3 id="11-arguments">1.1 arguments</h3>
+<ul>
+<li>arguments是一个伪数组 包含了所有的实参</li>
+<li>arguments一般用在 参数个数不确定的情况</li>
+</ul>
+<h3 id="12-arguments%E5%92%8C%E5%BD%A2%E5%8F%82%E7%9A%84%E5%85%B3%E7%B3%BB">1.2 arguments和形参的关系</h3>
+<blockquote>
+<p>当arguments发生改变的时候，形参值也对应发生改变</p>
+</blockquote>
+<blockquote>
+<p>当形参值改变的时候,arguments对应值发生改变</p>
+</blockquote>
+<h3 id="13-%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E7%9A%84%E7%89%B9%E6%AE%8A%E6%83%85%E5%86%B5">1.3 函数参数的特殊情况</h3>
+<ol>
+<li>形参个数多于实参</li>
+</ol>
+<ul>
+<li>多出来的形参 由于接不到实参，值为 undefined</li>
+</ul>
+<ol start="2">
+<li>实参个数多于形参</li>
+</ol>
+<ul>
+<li>按顺序给形参赋值，多出来的实参舍弃</li>
+</ul>
+<h2 id="2-js%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F">2 Js的作用域</h2>
+<h3 id="21-%E5%9F%9F--%E7%A9%BA%E9%97%B4-%E8%8C%83%E5%9B%B4">2.1 域 : 空间 范围</h3>
+<ul>
+<li>变量和函数 起作用 起效果的空间</li>
+</ul>
+<blockquote>
+<p>作用域在 ES5中分两类</p>
+</blockquote>
+<ol>
+<li>全局作用域</li>
+</ol>
+<ul>
+<li>script标签里，函数的外面</li>
+</ul>
+<ol start="2">
+<li>局部作用域</li>
+</ol>
+<ul>
+<li>函数大括号中包裹的代码空间</li>
+</ul>
+<h3 id="22-%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%87%BD%E6%95%B0-%E5%92%8C-%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E5%87%BD%E6%95%B0">2.2 全局变量(函数) 和 局部变量(函数)</h3>
+<h4 id="221-%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%87%BD%E6%95%B0">2.2.1 全局变量(函数)</h4>
+<ul>
+<li>
+<p>声明在全局作用域中的变量(函数)</p>
+</li>
+<li>
+<p>在整个js代码中任何位置都可以操作全局变量</p>
+</li>
+<li>
+<p>不声明 直接使用的变量 也是全局变量</p>
+</li>
+</ul>
+<h4 id="222-%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E5%87%BD%E6%95%B0">2.2.2 局部变量(函数)</h4>
+<ul>
+<li>声明在局部作用域中的变量(函数)</li>
+<li>只能在当前函数作用域中访问</li>
+</ul>
+<h4 id="223-%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE">2.2.3 作用域链</h4>
+<pre class="hljs"><code><div>    当我们要使用一个变量的时候，会先在当前作用域查找，如果有直接使用，如果没有，就向上一级作用域查找，如果有就使用 ，如果还没有，就继续向上一级作用域查找，  一直查找到全局作用域  如果有就使用，如果还没有，就报错
+
+</div></code></pre>
+<h2 id="3-js%E7%9A%84%E9%A2%84%E8%A7%A3%E6%9E%90">3 Js的预解析</h2>
+<ul>
+<li>在Js代码执行之前，浏览器会先进行一个操作---预解析(调整代码顺序)</li>
+</ul>
+<pre class="hljs"><code><div>    预解析操作：
+    1. 在整个Js代码中 查找var function
+    2. 做完之后 将所有查找到的 变量声明 和 函数声明 都提升到当前作用域的最前面 (提升声明  不提升赋值)
+    3. 预解析执行完成以后 Js代码才会从上到下执行
+
+</div></code></pre>
+<ol>
+<li>关键字声明 如果使用关键字声明 整个函数连同函数体都会提升</li>
+</ol>
+<pre class="hljs"><code><div>    console.log(a);
+	console.log(d);
+	var a = 3;
+	//表达式声明
+	// var d = function a() {
+	// 	alert('1');
+	// };
+
+	//关键字声明   如果使用关键字声明， 整个函数连同函数体都会被提升
+	function d (){
+		alert(&quot;1&quot;);
+	}
+	console.log(a);
+	console.log(d);
+	a();
+	/*
+	var a ;
+	var d ;
+	console.log(a);//undefined
+	console.log(d);//undefined
+	a = 3;
+	//表达式声明  只要是赋值  都不提升
+	d = function a(){
+		alert('1');
+	};
+	console.log(a);//3
+	console.log(d);//函数
+	a();// 报错
+	 */
+
+	 //变量声明提升   赋值绝不会提升
+	 //赋值的数据  不会改变前面变量的值
+	 //函数表达式声明  只提升变量声明， 后面赋值的函数不会提升
+	 //函数关键字声明  会把整个函数全部提升到作用域顶端
+</div></code></pre>
+<ul>
+<li>在ES5中预解析的时候 如果出现函数和变量同名 时候不管先后顺序  函数覆盖变量</li>
+</ul>
+<ol>
+<li>在任何一个作用域中 代码开始执行之前 都要进行预解析</li>
+</ol>
+<pre class="hljs"><code><div>		function fn(a){
+            console.log(a);//undefined
+            var a=3;
+            console.log(a);//3
+        }
+        fn();
+</div></code></pre>
+<ol start="2">
+<li>函数中 实参给形参赋值 是在预解析执行完之后，js代码执行之前</li>
+</ol>
+<pre class="hljs"><code><div>		function fn(a){
+            console.log(a);//2
+            var a=3;
+            console.log(a);//3
+        }
+        fn(2);
+</div></code></pre>
+<h2 id="4-%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC">4 函数的返回值</h2>
+<ul>
+<li>
+<p>函数执行完以后，一定有返回值，</p>
+</li>
+<li>
+<p>函数通过 return 关键字返回函数内部的值</p>
+</li>
+<li>
+<p>如果没有指定返回值，函数默认返回值为 undefined</p>
+</li>
+</ul>
+<h3 id="41-%E8%8E%B7%E5%8F%96%E8%BF%94%E5%9B%9E%E5%80%BC">4.1 获取返回值</h3>
+<ul>
+<li>
+<p>数调用表达式的值  就是  函数的返回值</p>
+</li>
+<li>
+<p>返回值可以将函数中  想让外界作用域访问到的数据  暴露出来</p>
+</li>
+<li>
+<p>一个函数只能有一个返回值</p>
+</li>
+</ul>
+<p>-return关键字的特殊作用：函数会在遇到return关键字的时候 停止执行   return后面的代码 将不会执行</p>
+<ul>
+<li>js中函数的返回值  可以是  任意类型的数据。</li>
+</ul>
+<h2 id="5-%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0%E9%9D%9E%E8%A1%8C%E5%86%85%E6%A0%B7%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95">5 获取元素非行内样式的方法</h2>
+<h3 id="51-%E6%A0%87%E5%87%86%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD">5.1 标准浏览器中</h3>
+<blockquote>
+<p>getComputedStyle 获取计算过的样式</p>
+</blockquote>
+<ul>
+<li>getComputedStyle(要获取样式的元素).要获取样式的属性名</li>
+</ul>
+<blockquote>
+<p>在IE浏览器中 currentStyle 获取当前样式</p>
+</blockquote>
+<ul>
+<li>指定元素.currentStyle(样式属性名)</li>
+</ul>
+<h1 id="%E7%AC%AC%E5%85%AD%E5%A4%A9">第六天</h1>
+<h2 id="1-%E5%AE%9A%E6%97%B6%E5%99%A8">1 定时器</h2>
+<ul>
+<li>JavaScript提供了一些原生方法来实现延时去执行某一段代码的功能---定时器</li>
+</ul>
+<h3 id="11-%E5%BB%B6%E8%BF%9F%E5%AE%9A%E6%97%B6%E5%99%A8-settimeout">1.1  延迟定时器 setTimeout</h3>
+<ul>
+<li>延迟指定的时间之后，执行的代码</li>
+<li>延迟时间以毫秒(ms)为单位，1s=1000ms</li>
+<li>定时器函数的返回值 被我们称为定时器ID</li>
+</ul>
+<pre class="hljs"><code><div>    var TimeoutID = setTimeout(function(){
+        要延迟执行的代码
+    },延迟时间)
+
+</div></code></pre>
+<h3 id="12-%E9%97%B4%E6%AD%87%E5%AE%9A%E6%97%B6%E5%99%A8-setinterval">1.2  间歇定时器 setInterval</h3>
+<ul>
+<li>每个指定的时间间隔 执行一次函数中的代码</li>
+<li>间歇时间以毫秒(ms)为单位，1s=1000ms</li>
+<li>定时器函数的返回值 被我们称为定时器ID</li>
+</ul>
+<pre class="hljs"><code><div>    var IntervalID = setInterval(function(){
+        要间歇执行的代码
+    },间歇时间)
+
+</div></code></pre>
+<h3 id="13-%E6%B8%85%E9%99%A4%E5%AE%9A%E6%97%B6%E5%99%A8">1.3 清除定时器</h3>
+<ul>
+<li>清除延迟定时器 clearTimeout</li>
+</ul>
+<pre class="hljs"><code><div>    clearTimeout(要清除定时器的ID);
+</div></code></pre>
+<ul>
+<li>清除间歇定时器 clearInterval</li>
+</ul>
+<pre class="hljs"><code><div>    clearInterval(要清除定时器的ID);
+</div></code></pre>
+<h2 id="2-js%E5%8A%A8%E7%94%BB">2 js动画</h2>
+<ol>
+<li>
+<p>使用定位给元素设置位置</p>
+</li>
+<li>
+<p>从起点到终点 需要 一步一步的走(定位)过去</p>
+</li>
+<li>
+<p>到终点停止</p>
+</li>
+</ol>
+<h2 id="3-math-%E5%AF%B9%E8%B1%A1">3 Math 对象</h2>
+<ul>
+<li>Math 对象是用来解决 数字相关问题的</li>
+</ul>
+<blockquote>
+<p>随机数：Math.random();</p>
+</blockquote>
+<ul>
+<li>0~1 可以取到0不能取到1</li>
+</ul>
+<pre class="hljs"><code><div>    计算区间随机数
+    function getRandom(min,max){
+        return Math.floor(Math.random()*(max-min+1))+min;
+    }
+    console.log('随机数：'+getRandom(1,10));
+</div></code></pre>
+<pre class="hljs"><code><div>    最大值：
+    Math.max(数字1,数字2,数字3,数字4,数字5....);
+    最小值：
+    Math.min(数字1,数字2,数字3,数字4,数字5....);
+    
+    向上取整：
+    Math.ceil(数字);
+    向下取整：
+    Mach.floor(数字);
+
+    乘方(几次方)
+    Mach.pow(x,y); 计算x的y次方
+
+    开方：
+    Math.sqrt(数字); 计算开平方
+
+    四舍五入：
+    Math.round(数字) 饥渴读取到四舍五入结果
+    只能四舍五入小数，只要不够0.5 全部舍弃
+
+    //PI
+    圆周率：3.1415926...
+
+</div></code></pre>
+<h1 id="%E7%AC%AC%E4%B8%83%E5%A4%A9">第七天</h1>
+<h2 id="1-%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1">1 时间对象</h2>
+<h3 id="11-%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA">1.1 时间对象的创建</h3>
+<pre class="hljs"><code><div>    new Date()
+</div></code></pre>
+<h3 id="12-%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%93%8D%E4%BD%9C">1.2 时间对象的操作</h3>
+<pre class="hljs"><code><div>    get/setFullYear
+    时间对象.getFullYear(); 获取整年
+    时间对象.setFullYear(); 设置时间对象的年份
+
+    get/setMonth()
+    时间对象.getMonth()	获取月份
+    时间对象.setMonth()	设置月份
+    注意：在js中月份的操作 是按照0-11 进行计数的
+
+    get/setDate
+    时间对象.getDate()	获取日期
+    时间对象.setDate()	设置日期
+
+    getDay
+    时间对象.getDay()	获取周几
+    周日值为0	从周一到周六为0--6
+
+    getHours/setHours
+    时间对象.getHours()	获取小时
+    时间对象.setHours()	设置小时
+
+    getMinutes/setMinutes
+    时间对象.getMinutes()	获取分钟数
+    时间对象.setMinutes(分钟)	设置分钟
+
+    getSeconds/setSeconds
+    时间对象.getSeconds()	获取秒数
+    时间对象.setSeconds(秒)	设置秒
+
+    getTime
+    时间对象.getTime()	获取时间戳		
+    得到的是一个数字到 1970年1月1日00：00：00 的时间差，单位为ms
+    setTime
+    时间对象.setTime(时间戳)	根据时间戳来设置时间
+
+</div></code></pre>
+<h3 id="13-%E5%88%9B%E5%BB%BA%E4%BB%BB%E6%84%8F%E6%97%B6%E9%97%B4%E7%9A%84%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1">1.3 创建任意时间的时间对象</h3>
+<ul>
+<li>
+<p>第一种方法：new Date(年，月，日，时，分，秒) 月份是0-11</p>
+</li>
+<li>
+<p>第二种方法：new Date（“年，月， 日 时：分：秒”）月份是1-12</p>
+</li>
+<li>
+<p>第三种方法：new Date('wed Dec 12 2018 00 : 00 : 00');不推荐使用</p>
+</li>
+</ul>
+<h3 id="14-%E5%8E%9F%E7%94%9F%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%96%B9%E6%B3%95">1.4 原生时间对象的格式化方法</h3>
+<pre class="hljs"><code><div>    时间对象.toDateString()	    获取时间对象日期部分
+    时间对象.toTimeString()     获取时间对象时间部分
+    时间对象.toString()     获取时间对象所有部分
+    时间对象.toLocalDateString()   获取时间对象本地日期部分
+    时间对象.toLocalTimeString()    获取时间对象本地时间部分
+    时间对象.toLocalString()    获取时间对象本地所有部分
+</div></code></pre>
+<h3 id="15-momentjs">1.5 moment.js</h3>
+<p>1.原生的时间对象	在相关操作方面  很不方便  由此产生了很多 关羽时间的插件 moment.js是其中比较优秀的插件</p>
+<pre class="hljs"><code><div>    http://momentjs.cn/	moment.js的官网地址
+    使用
+    使用moment.js创建时间对象		（解析）
+    moment()	获取当前时间的	moment对象
+
+    使用moment.js进行时间对象的格式化	（显示）
+    moment().format()	将moment时间对象 按照默认规则 格式化
+    moment().format(string)	将moment对象  按照指定的规则 格式化  规则由字符串来控制
+    moment.valueOf()	得到的是时间戳
+    moment.toDate()	得到的是原生时间对象
+
+    使用moment.js获取时间对象中的 指定部分时间	（取值/赋值）
+    moment.year/month/date()	获取年份/月份/日期
+    moment.year/month/date(number)	设置年份/月份/日期
+    注意：月份获取和设置都是0-11
+
+    moment().week() 获取或设置年份的星期。
+    moment().dayOfYear()	//获取当前日期是一年中的第几天
+
+    使用moment.js查询时间对象	（查询）
+    moment().isBefore(日期)	当前时间对象 是否在指定日期之前
+    moment().isAfter(日期)	当前时间对象 是否在指定日期之后
+    moment().isBetween(日期1,日期2)	当前时间对象 是否在指定日期之间
+    moment().isSame(日期)	当前时间对象 是否和指定日期相同
+
+    moment().isLeapYear() 	判断当前日期的年份是否是闰年
+    moment().format('X')
+</div></code></pre>
+<h2 id="2-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1">2 字符串对象</h2>
+<h3 id="21-%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F">2.1 创建方式</h3>
+<ul>
+<li>Js中没一个数据 都具有对象的身份</li>
+</ul>
+<pre class="hljs"><code><div>    var str = '字符串';
+    var str1 = String(&quot;少年安得长少年，沧海尚变为桑田&quot;);//构造函数声明
+    var str = new String('字符串');
+</div></code></pre>
+<h3 id="22-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95">2.2 字符串对象的方法</h3>
+<pre class="hljs"><code><div>    字符串.length   字符串的长度
+    字符串.charAt(指定下标)	获取字符串中指定下标的字符
+    
+    indexOf
+    用法1：字符串.indexOf('字符')	获取指定字符 在字符串中第一次出现的下标 如果没有出现过 获取到 -1
+    用法2：字符串.indexOf('字符',起始下标) 从起始下标开始在字符串中查找，到字符串末尾 ，如果有获取第一次出现的下标 如果没有 获取到-1
+
+    lastIndexOf
+    这种方法 和 indexOf的用法一样 唯一的区别是从后往前找
+
+    substring	
+    用法：字符串.substring(起始下标，结束下标)
+    作用：截取字符串	从起始下标开始截取 到结束下标结束
+    注意：可以取到起始下标	取不到结束下标
+    slice
+    用法：字符串.slice(起始下标，结束下标)
+    作用：截取字符串	从起始下标开始截取 到结束下标结束
+    注意：可以取到起始下标	取不到结束下标
+
+    slice 和 substring的区别
+    1.如果 起始下标 和结束下标 传入的顺序颠倒了
+    substring会自动将顺序调整好
+    slice 不会调整顺序	因此 截取出现问题
+    2.如果传参的时候 传入负数
+    substring 会将传入的负数参数转化为 零
+    slice会先给负数参数+字符串.length	用加完值大于零 用加完的值 替换原参数  如果加完之后 值仍小于 零 就直接将该参数归零 slice更适合高端玩家
+
+    截取整个字符串的用法
+    字符串.substring/slice(0)
+    表示0 为起始下标 不传结束下标 表示从0开始一直截取完整个字符串
+
+    字母转换大小写
+    str.toLowerCase(); 大写转换为小写
+    str=str.toUpperCase(); 小写转换为大写
+
+    字符串的切割方法 split
+    str.split('切割标识'); 从开始，每次遇到切割符就切一刀，返回值为切割后的数组。
+    str.split('切割标识',n); n为数字，如果长度小于切割后数组的实际长度，多出的舍弃，如果长度大于切割后数组的长度，则按照实际长度。
+
+    字符串的替换 replace
+    str.replace('旧字符片段','新字符片段'); 新字符片段代替旧字符片段
+
+    去除字符串两端空格的方法  trim
+    用法：字符串.trim()
+    作用：去除字符串两端的空格
+    &quot;     abc     &quot;
+    这个方法一般用在  注册页面  
+
+
+</div></code></pre>
+<h1 id="%E7%AC%AC%E5%85%AB%E5%A4%A9">第八天</h1>
+<h2 id="1-%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1">1 数组对象</h2>
+<h3 id="11-%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA">1.1 数组对象的创建</h3>
+<pre class="hljs"><code><div>    // 字面量创建 
+    var arr[1,2,3,4];
+    // 构造函数创建
+    var arr = Array(1,2,3,4);
+    // new方式创建
+    var arr = new Array(1,2,3,4);
+
+    // 创建一个长度为4的空数组
+    // 每一项是一个 empty ，empty只占位，没数据 
+    var arr = new Array(4);
+
+</div></code></pre>
+<h3 id="12-%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95">1.2 数组对象的方法</h3>
+<ul>
+<li>数组本身的数据类型就是object 也就是说，数组本身就具备对象的身份，因此也就有很多方法 来解决数组相关问题</li>
+</ul>
+<h4 id="121-%E6%B7%BB%E5%8A%A0%E6%95%B0%E7%BB%84%E9%A1%B9%E5%92%8C-%E5%88%A0%E9%99%A4%E6%95%B0%E7%BB%84%E9%A1%B9%E7%9A%84%E6%96%B9%E6%B3%95">1.2.1 添加数组项和 删除数组项的方法</h4>
+<ul>
+<li>这四种方法 只能操作固定位置的数组项</li>
+</ul>
+<pre class="hljs"><code><div>    // push 在数组的末尾，添加元素 返回值为数组的长度
+    数组对象.push(数据1,数据2,....);
+
+    // pop 删除数组的最后一项  返回值是被删除的数组项
+    数组对象.pop();
+
+
+    // unshift 在数组的开头，添加元素  返回值为数组的长度
+    数组对象.unshift(数据1,数据2,...)
+
+    // shift 删除数组的第0项   返回值是被删除的元素
+    数组对象.shift();
+
+</div></code></pre>
+<h4 id="122-%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E9%A1%B9%E7%9A%84%E6%96%B9%E6%B3%95">1.2.2 操作数据项的方法</h4>
+<pre class="hljs"><code><div>    // splice 
+    // 1 删除
+    // 从起始下标开始 删除指定位数的数组项 返回值为被删除的元素 组成的数组。
+    数组.splice(起始下标,删除位数);
+
+    // 2 替换
+    // 从起始下标开始，删除指定的数组项 使用后续传入的数据 填补空缺
+    // 后续传入的数据可以有任意多个
+    数组.splice(起始下标,删除位数,数据1,数据2,....)
+
+    // 3 插入
+    // 从起始下标开始，将数据插入到起始下标之前
+    数组.splice(起始下标,0,数据1,数据2,....)
+
+</div></code></pre>
+<h4 id="123-dateparse">1.2.3 Date.parse</h4>
+<ul>
+<li>将时间字符串转换为时间戳，进行排序</li>
+</ul>
+<pre class="hljs"><code><div>   Date.parse(时间字符串) ----&gt;   时间戳
+
+</div></code></pre>
+<h3 id="13-%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%AE%97%E6%B3%95">1.3 数组对象的算法</h3>
+<h4 id="131-%E6%95%B0%E7%BB%84%E7%9A%84%E5%8E%BB%E9%87%8D%E7%AE%97%E6%B3%95">1.3.1 数组的去重算法</h4>
+<ul>
+<li>删除重复的数组项</li>
+</ul>
+<pre class="hljs"><code><div>   var arr = [1,2,3,3,3,4,4,8,0,8,9];
+        for(var i=0;i&lt;arr.length;i++){
+            for(var j=i+1;j&lt;arr.length;j++){
+                if(arr[i]===arr[j]){
+                    arr.splice(j--,1);
+                }
+            }
+        }
+    console.log(arr);
+</div></code></pre>
+<h4 id="132-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F">1.3.2 选择排序</h4>
+<pre class="hljs"><code><div>        var arr = [1,3,2,5,8,4,7];
+        // 从小到大
+        //循环数组arr
+        for(var i = 0;i &lt; arr.length;i++){
+            //循环当前项后面的所有项
+            for(var j = i+1;j &lt; arr.length;j++){
+                //比较 后面有比当前项小的就交换
+                if(arr[i] &gt; arr[j]){
+                    var temp = arr[j];
+                    arr[j] = arr[i];
+                    arr[i] = temp;
+                }
+            }
+        }
+        console.log(arr);
+</div></code></pre>
+<h4 id="133-%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E6%B3%95">1.3.3 冒泡排序法</h4>
+<pre class="hljs"><code><div>    var arr = [1,3,2,4,0,5,9,7];
+    //循环arr数组得到每个数组项 外层控制交换的遍数
+    for(var i = 0;i &lt; arr.length-1;i++){
+        //内层控制交换多少次
+        for(var j = 0;j &lt; arr.length-1-i;j++){
+            if(arr[j] &gt; arr[j+1]){
+                var temp = arr[j+1];
+                arr[j+1] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+    console.log(arr);
+
+</div></code></pre>
+<h4 id="134-%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95">1.3.4 排序方法</h4>
+<pre class="hljs"><code><div>    // sort
+    // 数组.sort();
+    注意：按照数字对应的ASCII码值 进行排序
+
+    // 数组.sort(function(a,b){return a-b/b-a});
+    作用：升序或降序排列数组
+
+</div></code></pre>
+<h3 id="14-%E6%95%B0%E7%BB%84%E7%9A%84%E5%85%B6%E4%BB%96%E6%96%B9%E6%B3%95">1.4 数组的其他方法</h3>
+<h4 id="141-join-%E5%B0%86%E6%95%B0%E7%BB%84%E7%9A%84%E6%95%B0%E7%BB%84%E9%A1%B9%E6%8B%BC%E6%8E%A5%E6%88%90%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2">1.4.1 join 将数组的数组项拼接成一个字符串</h4>
+<blockquote>
+<p>数组.join()</p>
+</blockquote>
+<ul>
+<li>无参，拼接标识默认为逗号</li>
+<li>不会改变原数组,返回字符串</li>
+</ul>
+<h4 id="142-reverse">1.4.2 reverse</h4>
+<blockquote>
+<p>数组.reverse()</p>
+</blockquote>
+<ul>
+<li>数组翻转</li>
+</ul>
+<h4 id="143-indexof">1.4.3 indexof</h4>
+<blockquote>
+<p>数组.indexof(指定的数组项)</p>
+</blockquote>
+<ul>
+<li>可以获取到指定数据项，重复的数据，返回第一次出现的值，找不到返回-1</li>
+</ul>
+<h4 id="144-slice">1.4.4 slice</h4>
+<blockquote>
+<p>数组.slice(起始下标,结束下标)</p>
+</blockquote>
+<ul>
+<li>获取到起始下标到结束下标之间的所有数据项 拼接成一个新数组</li>
+<li>能取到开头 取不到结尾</li>
+</ul>
+<h4 id="145-concat">1.4.5 concat</h4>
+<blockquote>
+<p>数组1.concat(数组12，数组3，.....)</p>
+</blockquote>
+<ul>
+<li>将数组1 和后续传入的数组拼接在一起</li>
+</ul>
+<h4 id="145-%E6%95%B0%E7%BB%84%E7%9A%84%E8%BF%AD%E4%BB%A3%E6%96%B9%E6%B3%95">1.4.5 数组的迭代方法</h4>
+<ol>
+<li>every 遍历数组(不常用)</li>
+</ol>
+<ul>
+<li>自动循环数组，每循环一个数组项就执行一次判断条件</li>
+<li>数组项全部符合条件就返回 true</li>
+<li>只要有一项不符合就返回 false</li>
+</ul>
+<pre class="hljs"><code><div>    数组.every(function(item,index,array){
+        // item 数组中的数组项
+        // index 数组项的下标
+        // array 被循环的数组
+        return 条件判断;
+    });
+</div></code></pre>
+<ol start="2">
+<li>some 遍历数组(不常用)</li>
+</ol>
+<ul>
+<li>自动循环数组，每循环一个数组项 就执行一次判断条件</li>
+<li>数组项只要有一项符合就返回 true</li>
+<li>所有都不符合返回 false</li>
+</ul>
+<pre class="hljs"><code><div>    数组.some(function(item,index,array){
+        // item 数组中的数组项
+        // index 数组项的下标
+        // array 被循环的数组
+        return 条件判断;
+    });
+</div></code></pre>
+<ol start="3">
+<li>filter 过滤器</li>
+</ol>
+<ul>
+<li>自动循环每一个数组项，如果满足条件就把数组留下来，如果不满足就舍弃,返回值为满足条件的数据项数组</li>
+</ul>
+<pre class="hljs"><code><div>    数组.filter(function(item,index){
+
+        return 条件判断;
+    });
+
+</div></code></pre>
+<ol start="4">
+<li>map</li>
+</ol>
+<p>map</p>
+<ul>
+<li>自动循环每一个数组项 给每一个数组项都 *10 乘完之后将得到的结果作为数组项 拼成一个新数组，将新数组返回出来</li>
+</ul>
+<pre class="hljs"><code><div>    数组.map(function(item,idx){
+        return item*10;
+    });
+
+</div></code></pre>
+<ol start="5">
+<li>forEach</li>
+</ol>
+<ul>
+<li>单纯的循环数组</li>
+</ul>
+<pre class="hljs"><code><div>    数组.forEach(function(item,idx){
+    //直接写入对数组或数组项的操作 就可以直接对数组进行操作
+        console.log(item);
+        console.log(idx);
+    });
+</div></code></pre>
+<h4 id="146-%E4%B8%AD%E6%96%87%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95">1.4.6 中文排序方法</h4>
+<pre class="hljs"><code><div>    arr.sort(function(a,b){
+        // zh 可以不写，写了防错
+        return a.name.localeCompare(b.name,'zh');
+    })
+    console.log(arr);
+
+</div></code></pre>
+<h4 id="147-%E4%BA%8C%E5%8F%89%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F">1.4.7 二叉排序算法(快速排序)</h4>
+<ul>
+<li>用来接进行数组排序</li>
+</ul>
+<pre class="hljs"><code><div>    1. 获取中间项
+    2. 声明两个空数组 left right
+    3. 用中间项做基准 比中间项大的放进right中 比中间项晓得 放进left中
+    4. 将数组拼起来 left + 中间项 + right
+
+    function QuickSort(arr){
+        if(arr.length&lt;=1){
+            return arr;
+        }
+        var num=Math.floor(arr.length/2);
+        var numValue=arr.splice(num,1)[0];
+        var left=[];
+        var right=[];
+        for(var i=0;i&lt;arr.length;i++){
+            if(arr[i]&lt;numValue){
+                left.push(arr[i]);
+            }else{
+                right.push(arr[i]);
+            }
+        }
+        return QuickSort(left).concat(numValue,QuickSort(right));
+    } 
+    var arr=[4,5,2,7,8,4,6,2,1,9,0];
+    console.log(QuickSort(arr));
+</div></code></pre>
+<h1 id="%E7%AC%AC%E4%B9%9D%E5%A4%A9">第九天</h1>
+<h2 id="1-dom%E7%AE%80%E4%BB%8B">1 DOM简介</h2>
+<h3 id="11-dom-%E6%96%87%E6%A1%A3%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B">1.1 DOM 文档对象模型</h3>
+<ul>
+<li>
+<p>帮助我们操作html文档</p>
+</li>
+<li>
+<p>封装了许多函数，这些函数可以帮助我们操作html文档</p>
+</li>
+<li>
+<p>是针对 HTML 和 XML 的一个API,开发者可以通过DOM来操作HTML文档或者XML文档</p>
+</li>
+<li>
+<p>API Application Programming Interface 应用程序接口 接口就是方法函数</p>
+</li>
+<li>
+<p>XML 可拓展标记语言，但没有单标签，所有标签都需要用户自定义</p>
+</li>
+</ul>
+<h3 id="12-dom-%E6%93%8D%E4%BD%9Chtml">1.2 DOM 操作html</h3>
+<ul>
+<li>会将html的结构抽象化为 DOM树状结构，这个结构中存在很多节点</li>
+<li>DOM操作html其实是通过操作节点实现的</li>
+</ul>
+<h3 id="13-dom%E7%9A%84%E8%8A%82%E7%82%B9">1.3 DOM的节点</h3>
+<blockquote>
+<p>节点的分类</p>
+</blockquote>
+<ol>
+<li>标签节点：html中的标签被抽象化为 DOM中的标签节点</li>
+<li>属性节点：html中的属性</li>
+<li>注释节点：html中的注释</li>
+<li>文本节点：html中的文本</li>
+</ol>
+<blockquote>
+<p>获取子节点</p>
+</blockquote>
+<ul>
+<li>text 文本节点</li>
+<li>comment 注释节点</li>
+</ul>
+<pre class="hljs"><code><div>    // 获取子节点 childNodes 含(文本节点、注释节点)
+    父节点.childNodes();
+
+</div></code></pre>
+<blockquote>
+<p>节点的特性</p>
+</blockquote>
+<pre class="hljs"><code><div>    // 节点的类型 nodeType
+    节点.nodeType
+    标签节点 : 1
+    属性节点 : 2
+    文本节点 : 3
+    注释节点 : 4
+
+    // 节点的名称 nodeName
+    节点.nodeName
+    文本节点 : #text
+    注释节点 : #comment
+    标签节点 : 大写标签名
+
+    // 节点的值 nodeValue 主要针对于文本节点
+    // 可以修改 文本节点 注释节点 值
+    // 标签节点不可以使用 nodeValue的值
+    获取 : 节点.nodeValue
+    设置 : 节点.nodeValue = '节点内容值';
+
+</div></code></pre>
+<h2 id="2-%E8%8E%B7%E5%8F%96%E8%8A%82%E7%82%B9">2 获取节点</h2>
+<h3 id="21-%E8%8E%B7%E5%8F%96%E5%AD%90%E8%8A%82%E7%82%B9">2.1 获取子节点</h3>
+<h4 id="211-childnodes">2.1.1 childNodes</h4>
+<blockquote>
+<p>父元素.childNodes</p>
+</blockquote>
+<ul>
+<li>获取到父元素中所有 子节点 (含有文本节点，注释节点)</li>
+</ul>
+<h4 id="212-children">2.1.2 children</h4>
+<blockquote>
+<p>父元素.children</p>
+</blockquote>
+<ul>
+<li>获取到父元素中所有 子标签 节点</li>
+</ul>
+<h3 id="22-%E8%8E%B7%E5%8F%96%E7%88%B6%E8%8A%82%E7%82%B9">2.2 获取父节点</h3>
+<h4 id="221-parentnode">2.2.1 parentNode</h4>
+<blockquote>
+<p>子节点.parentNode</p>
+</blockquote>
+<ul>
+<li>获取子元素的直接父节点</li>
+</ul>
+<h4 id="222-offsetparent">2.2.2 offsetParent</h4>
+<blockquote>
+<p>子节点.offsetParent</p>
+</blockquote>
+<ul>
+<li>获取到 带定位的父节点</li>
+<li>如果直接父节点没有定位，就继续往上层查找，直到body</li>
+</ul>
+<h3 id="23-%E8%8E%B7%E5%8F%96%E5%85%84%E5%BC%9F%E8%8A%82%E7%82%B9">2.3 获取兄弟节点</h3>
+<h4 id="231-previoussibling">2.3.1 previousSibling</h4>
+<blockquote>
+<p>节点.previousSibling</p>
+</blockquote>
+<ul>
+<li>获取 上一个 兄弟节点</li>
+<li>在IE中表示获取上一个兄弟元素</li>
+</ul>
+<h4 id="232-nextsibling">2.3.2 nextSibling</h4>
+<blockquote>
+<p>节点.nextSibling</p>
+</blockquote>
+<ul>
+<li>获取 下一个 兄弟节点</li>
+<li>在IE中表示获取下一个兄弟元素</li>
+</ul>
+<h4 id="233-previouselementsibling-ie%E4%B8%8D%E5%85%BC%E5%AE%B9">2.3.3 previousElementSibling (IE不兼容)</h4>
+<blockquote>
+<p>节点.previousElementSibling</p>
+</blockquote>
+<ul>
+<li>获取 上一个 兄弟元素节点</li>
+</ul>
+<h4 id="234-nextelementsibling-ie%E4%B8%8D%E5%85%BC%E5%AE%B9">2.3.4 nextElementSibling (IE不兼容)</h4>
+<blockquote>
+<p>节点.nextElementSibling</p>
+</blockquote>
+<ul>
+<li>获取 下一个 兄弟元素节点</li>
+</ul>
+<h3 id="24-%E7%9F%AD%E8%B7%AF%E8%BF%90%E7%AE%97">2.4 短路运算</h3>
+<blockquote>
+<p>当逻辑运算的操作数 不是布尔值的时候，这种运算就是短路运算</p>
+</blockquote>
+<ul>
+<li>短路运算的结果是 算式中 起决定性作用的操作数的值</li>
+</ul>
+<pre class="hljs"><code><div>    1. 现将运算符两端的操作数转换为布尔值
+    2. 分析算式中那一个操作数 起到了决定性作用
+    3. 算式的值 就是 起决定性作用那个的操作数的值
+
+</div></code></pre>
+<h3 id="25-%E5%85%B6%E4%BB%96%E8%8A%82%E7%82%B9">2.5 其他节点</h3>
+<h4 id="251-firstchild">2.5.1 firstChild</h4>
+<blockquote>
+<p>节点.firstChild</p>
+</blockquote>
+<ul>
+<li>获取第一个节点</li>
+<li>在IE中表示 获取第一个元素节点</li>
+</ul>
+<h4 id="252-lastchild">2.5.2 lastChild</h4>
+<blockquote>
+<p>节点.lastChild</p>
+</blockquote>
+<ul>
+<li>获取最后一个节点</li>
+<li>在IE中表示 获取最后一个元素节点</li>
+</ul>
+<h4 id="253-firstelementchild-ie%E4%B8%8D%E5%85%BC%E5%AE%B9">2.5.3 firstElementChild (IE不兼容)</h4>
+<blockquote>
+<p>节点.firstElementChild</p>
+</blockquote>
+<ul>
+<li>获取 第一个元素节点</li>
+</ul>
+<h4 id="254-lastelementchild-ie%E4%B8%8D%E5%85%BC%E5%AE%B9">2.5.4 lastElementChild (IE不兼容)</h4>
+<blockquote>
+<p>节点.lastElementChild</p>
+</blockquote>
+<ul>
+<li>获取最后一个元素节点</li>
+</ul>
+<h2 id="3-%E6%93%8D%E4%BD%9C%E8%8A%82%E7%82%B9">3 操作节点</h2>
+<h3 id="31-%E6%B7%BB%E5%8A%A0%E8%8A%82%E7%82%B9">3.1 添加节点</h3>
+<h4 id="311-%E5%88%9B%E5%BB%BA%E8%8A%82%E7%82%B9">3.1.1 创建节点</h4>
+<ol>
+<li>元素节点</li>
+</ol>
+<blockquote>
+<p>createElement();</p>
+</blockquote>
+<ul>
+<li>document.createElement('标签名');</li>
+<li>创建指定标签名的 标签节点</li>
+</ul>
+<ol start="2">
+<li>文本节点   (没什么卵用)</li>
+</ol>
+<blockquote>
+<p>createTextNode();</p>
+</blockquote>
+<ul>
+<li>document.createTextNode('文本内容');</li>
+<li>创建指定标签名的 标签节点</li>
+</ul>
+<h4 id="312-%E6%B7%BB%E5%8A%A0%E8%8A%82%E7%82%B9">3.1.2 添加节点</h4>
+<ol>
+<li>追加节点</li>
+</ol>
+<blockquote>
+<p>appendChild();</p>
+</blockquote>
+<ul>
+<li>document.appendChild(要添加的子节点);</li>
+<li>将要添加的子节点 追加到 父元素的末尾</li>
+<li>如果追加的子节点 原本就存在于，就会产生物理位移，移动到父元素的后面。</li>
+</ul>
+<ol start="2">
+<li>插入节点</li>
+</ol>
+<blockquote>
+<p>insertBefore();</p>
+</blockquote>
+<ul>
+<li>document.insertBefore(新节点,旧节点);</li>
+<li>将要添加的子节点放到 旧节点的前面</li>
+<li>如果追加的节点 原本就存在，就位产生物理位移，移动到父元素的后面。</li>
+</ul>
+<h3 id="32-%E5%88%A0%E9%99%A4%E8%8A%82%E7%82%B9">3.2 删除节点</h3>
+<ol>
+<li>移除自身</li>
+</ol>
+<blockquote>
+<p>remove()</p>
+</blockquote>
+<ul>
+<li>节点.remover();</li>
+<li>移除自己</li>
+</ul>
+<ol start="2">
+<li>移除子节点</li>
+</ol>
+<blockquote>
+<p>removeChild()</p>
+</blockquote>
+<ul>
+<li>节点.removeChild(指定子节点)</li>
+<li>移除指定的子节点</li>
+</ul>
+<h3 id="33-%E4%BF%AE%E6%94%B9%E8%8A%82%E7%82%B9">3.3 修改节点</h3>
+<ol>
+<li>替换节点</li>
+</ol>
+<blockquote>
+<p>replaceChild()</p>
+</blockquote>
+<ul>
+<li>父元素.replaceChild(新子节点,旧子节点)</li>
+<li>使用新子节点 替换旧 子节点</li>
+</ul>
+<ol start="2">
+<li>克隆节点</li>
+</ol>
+<blockquote>
+<p>cloneNode()</p>
+</blockquote>
+<ul>
+<li>
+<p>节点.cloneNode()  浅拷贝</p>
+</li>
+<li>
+<p>直接克隆得到的是原标签 不包含内容</p>
+</li>
+<li>
+<p>节点.cloneNode(true) 深拷贝</p>
+</li>
+<li>
+<p>带上 true 就可以带内容克隆</p>
+</li>
+</ul>
+<h2 id="4-%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0%E7%9A%84%E6%96%B0%E6%96%B9%E6%B3%95">4 获取元素的新方法</h2>
+<h3 id="41-queryselector">4.1 querySelector</h3>
+<blockquote>
+<p>document.querySelector('选择器');</p>
+</blockquote>
+<ul>
+<li>如果满足条件的节点有多个 就选择第一个</li>
+</ul>
+<h3 id="42-queryselectorall">4.2 querySelectorAll</h3>
+<blockquote>
+<p>document.querySelectorAll('选择器');</p>
+</blockquote>
+<ul>
+<li>选中所有满足条件的元素，返回值为一个数组</li>
+</ul>
+<h2 id="5-dom-%E6%93%8D%E4%BD%9C%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7">5 DOM 操作节点属性</h2>
+<pre class="hljs"><code><div>    获取节点的属性： 元素.属性名
+    设置节点属性值： 元素.属性名 = 属性值
+
+    不能操作 元素的非自带属性 自定义属性。
+
+
+    // 可以操作非自带属性和自定义属性
+    // getAttribute  得到指定的属性值
+    元素节点.getAttribute('指定的属性名称')
+    
+    // setAttribute  设置属性值
+    元素节点.setAttribute('指定的属性名称','指定的属性值')
+
+    //removeAttribute
+    元素节点.removeAttribute('属性名');
+
+</div></code></pre>
+<h2 id="6-dom-%E6%93%8D%E4%BD%9C%E8%A1%A8%E6%A0%BC">6 DOM 操作表格</h2>
+<pre class="hljs"><code><div>    // 获取表头
+    表格元素.tHead
+    // 获取表格底部
+    表格元素.tFoot
+
+    // 获取表格主体
+    // tBodies 获取到的是一个数组包含表格中的所有表格主体
+    表格元素.tBodies[下标]     // 得到某一个
+
+    //  获取行
+    表格元素.rows      // 获取表格中所有行
+    表格元素.tBodies[n].rows    // 获取tbody的所有行
+
+    // 获取列
+    表格元素.rows[n].cells // 我们只能获取某一行中的所有列
+
+
+
+</div></code></pre>
+<h2 id="7-dom-%E6%93%8D%E4%BD%9C%E8%A1%A8%E5%8D%95">7 DOM 操作表单</h2>
+<h3 id="71-%E8%8E%B7%E5%8F%96%E8%A1%A8%E5%8D%95%E5%85%83%E7%B4%A0">7.1 获取表单元素</h3>
+<ul>
+<li>form.表单元素name名</li>
+</ul>
+<pre class="hljs"><code><div>    &lt;form&gt;
+        &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;内容&quot;&gt;
+    &lt;/form&gt;
+    &lt;script&gt;
+        var form = document.querySelector('form');
+        console.log(form.username.value);
+    &lt;/script&gt;
+    
+</div></code></pre>
+<h3 id="72-%E8%A1%A8%E5%8D%95%E5%85%83%E7%B4%A0%E7%9A%84%E4%BA%8B%E4%BB%B6">7.2 表单元素的事件</h3>
+<ol>
+<li>form 元素的专属事件</li>
+</ol>
+<pre class="hljs"><code><div>    onsubmit  提交事件
+    当表单提交的时候触发 return false 阻止表单提交
+    
+    onreset  重置事件
+    当表单重置的时候触发 
+
+</div></code></pre>
+<ol start="2">
+<li>input 元素的专属事件</li>
+</ol>
+<pre class="hljs"><code><div>    onfocus 获得焦点  
+
+    onblur  失去焦点  
+
+</div></code></pre>
+<h3 id="73-%E8%A1%A8%E5%8D%95%E5%85%83%E7%B4%A0%E7%9A%84%E6%96%B9%E6%B3%95">7.3 表单元素的方法</h3>
+<pre class="hljs"><code><div>    form元素的方法
+        submit
+        表单元素.submit()  提交表单
+
+        reset
+        表单元素.reset()  重置表单
+
+    input的方法
+        focus
+        input.focus()   让input获取焦点
+
+        blur
+        input.blur()    让input失去焦点
+
+        select
+        input.select()  将input中的内容选中
+
+</div></code></pre>
+<h1 id="%E7%AC%AC%E5%8D%81%E5%A4%A9">第十天</h1>
+<h2 id="1-bom-%E7%AE%80%E4%BB%8B">1 BOM 简介</h2>
+<ul>
+<li>BOM --&gt; Browser Object Model</li>
+<li>浏览器对象模型 提供了独立于内容的、可以与浏览器窗口进行互动的对象结构。</li>
+<li>浏览器对象模型 不依赖任何html内容 可以独立操作浏览器</li>
+</ul>
+<h3 id="11-window%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%B3%BB%E7%BB%9F%E5%AF%B9%E8%AF%9D%E6%A1%86">1.1 window对象的系统对话框</h3>
+<blockquote>
+<p>alert</p>
+</blockquote>
+<ul>
+<li>window.alert('提示信息');</li>
+<li>window 可以省略</li>
+</ul>
+<blockquote>
+<p>console.log</p>
+</blockquote>
+<ul>
+<li>window.log('打印信息');</li>
+<li>window 可以省略</li>
+</ul>
+<blockquote>
+<p>confirm</p>
+</blockquote>
+<ul>
+<li>window.confirm('询问信息');</li>
+<li>弹出询问窗口 确定返回值为true 取消返回值为false</li>
+</ul>
+<blockquote>
+<p>prompt</p>
+</blockquote>
+<ul>
+<li>window.prompt('询问信息');</li>
+<li>弹出一个带输入框的询问窗口 用户可以在输入框中输入内容 并选择确定或取消</li>
+<li>用户点击确定， 返回值为输入的内容 如果点取消返回值为null</li>
+</ul>
+<h3 id="12-window%E7%9A%84open%E5%92%8Cclose%E6%96%B9%E6%B3%95">1.2 window的open和close方法</h3>
+<blockquote>
+<p>open</p>
+</blockquote>
+<ul>
+<li>open(url,name,features,replace) 打开一个新的浏览器窗口</li>
+<li>url 要打开的页面地址</li>
+<li>features 设置新窗口大小</li>
+<li>replace 是否替换历史记录 true/false</li>
+<li>open('https://www.baidu.com','_blank','width=300px,height=300px',false)</li>
+<li>如果open写在行内，必须加window</li>
+</ul>
+<blockquote>
+<p>close</p>
+</blockquote>
+<ul>
+<li>close()</li>
+<li>关闭当前页面</li>
+</ul>
+<h2 id="2-bom-%E9%87%8D%E8%A6%81%E5%AF%B9%E8%B1%A1">2 BOM 重要对象</h2>
+<h3 id="21-location">2.1 location</h3>
+<pre class="hljs"><code><div>    location = url   跳转页面
+    location.reload(true)  无参 刷新页面 true强制刷新 跳过本地缓存从服务器获取
+    location.href        获取整个URL(常用)
+    location.search      返回参数(常用)
+
+    location.host        返回域名 wwww.xxxx.xx:xxxx
+    location.hostname    不带端口号的 www.xxxx.xx
+    location.port        返回端口号，如果没有返回空字符串
+    location.pathname    返回路径
+    location.hash        返回片段 #后的内容 常见于链接锚点
+    location.protocol    获取协议
+</div></code></pre>
+<h3 id="22-history">2.2 history</h3>
+<ul>
+<li>history对象 与浏览器历史交互，包含用户访问过的url</li>
+</ul>
+<pre class="hljs"><code><div>    history.back()       相当于点击后退功能
+    history.forward()    相当于点击前进功能
+    history.go(非零数字)     -1 后退一个页面，1 前进一个页面
+</div></code></pre>
+<h3 id="23-navigator">2.3 navigator</h3>
+<pre class="hljs"><code><div>    navigator.appCodeName     浏览器代号 所有浏览器代号 都是mozilla
+    navigator.appName         浏览器名称 标准浏览器都是 netscape IE8以下浏览器值为 microsoft Internet Explorer
+    navigator.appVersion   浏览器版本
+    navigator.platform     硬件平台
+    navigator.userAgent    用户代理
+    navigator.cookieEnabled     是否启用cookie  true启用 false禁用
+
+
+</div></code></pre>
+<h2 id="3-bom-%E6%93%8D%E4%BD%9C%E5%85%83%E7%B4%A0%E5%A4%A7%E5%B0%8F%E5%92%8C%E4%BD%8D%E7%BD%AE%E7%9A%84%E4%B8%89%E5%A4%A7%E7%B3%BB%E5%88%97%E5%B1%9E%E6%80%A7">3 BOM 操作元素大小和位置的三大系列属性</h2>
+<h3 id="31-client%E7%B3%BB%E5%88%97">3.1 client系列</h3>
+<pre class="hljs"><code><div>    // 获取元素大小
+    元素.clientWidth     获取元素的可视宽度  获取到的是数值
+    元素.clientHeight    获取元素的可视高度  获取到的是数值
+    可视宽高：   自身宽高+padding (不包含 border 和 margin )
+
+    // 获取边框
+    元素.clientLeft      获取上边框宽度
+    元素.clientTop       获取上边框高度
+</div></code></pre>
+<h3 id="32-offset%E7%B3%BB%E5%88%97">3.2 offset系列</h3>
+<pre class="hljs"><code><div>    // 获取元素大小
+    元素.offsetWidth    获取元素的占位宽    获取的是数值
+    元素.offsetHeight   获取元素的占位高    获取的是数值
+    占位宽高：  自身宽高+padding+border (不包含 margin)
+
+    // 获取元素位置   没有带定位的父元素 就以页面为基准
+    元素.offsetTop      当前元素距离 第一个带定位的父级顶部 的距离
+    元素.offsetLeft     当前元素距离 第一个带定位的父级左侧 的距离
+
+    // 获取带有定位的父亲
+    元素.offsetParent;   获取带有定位离自己最近的父元素
+
+
+    // 页面被卷去的头部和标签不同
+    window.pageYOffset
+</div></code></pre>
+<h3 id="33-scroll%E7%B3%BB%E5%88%97">3.3 scroll系列</h3>
+<pre class="hljs"><code><div>    // 如果内容超出，为真正内容大小
+    元素.scrollHeight   获取元素的实际内容宽度
+    元素.scrollWidth    获取元素的实际内容高度
+
+    // 被卷去的距离  可以设置也可获取
+    元素.scrollTop      被卷去的头部(上滑的距离)
+    元素.scrollLeft     被卷去的左边(左滑的距离)
+
+
+</div></code></pre>
+<h3 id="34-%E8%8E%B7%E5%8F%96%E5%B1%8F%E5%B9%95%E7%9A%84%E5%8F%AF%E8%A7%86%E5%AE%BD%E9%AB%98">3.4 获取屏幕的可视宽高</h3>
+<ul>
+<li>获取屏幕的可视宽高 其实就是获取 html标签的可视宽高</li>
+</ul>
+<pre class="hljs"><code><div>    // 获取html标签
+    document.documentElement
+    // html的可视区域 (支持 IE7 以上)
+    document.documentElement.clientWidth    
+
+    // 获取body标签
+    document.body
+    // html的可视区 ( IE7 以下)
+    document.body.clientWidth    
+ 
+    不兼容的原因是IE7 以下 document.documentElement 不能获取html标签
+
+</div></code></pre>
+<h2 id="4-bom-%E7%9B%B8%E5%85%B3%E4%BA%8B%E4%BB%B6">4 BOM 相关事件</h2>
+<pre class="hljs"><code><div>    滚动条滚动事件
+    onscroll    当滚动条发生滚动的时候 触发这个事件
+
+    可视窗口大小改变事件
+    
+    onresize    当可视窗口大小发生变化的时候 触发这个事件
+
+    响应式布局的底层原理就是resize事件
+</div></code></pre>
+<h1 id="%E7%AC%AC%E5%8D%81%E4%B8%80%E5%A4%A9">第十一天</h1>
+<h2 id="1-%E4%BA%8B%E4%BB%B6%E9%AB%98%E7%BA%A7">1 事件高级</h2>
+<h3 id="11-%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1">1.1 事件对象</h3>
+<ul>
+<li>在Js中每一个事件，都有一个时间对象 这个对象是用来记录当前时间的相关信息的</li>
+</ul>
+<h4 id="111-%E8%8E%B7%E5%8F%96%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E5%BC%8F">1.1.1  获取事件对象的方式</h4>
+<pre class="hljs"><code><div>
+    标准浏览器 : 在事件处理函数中使用 window.event 就可得到事件对象
+    谷歌和IE：直接使用 window.event 
+    火狐 : 元素.onclick = function(ev){ ev就会接收到事件对象 }
+    兼容处理:
+    元素.onclick = function(ev){
+        var event = window.event||ev; 
+    }
+</div></code></pre>
+<h4 id="112-%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%BD%BF%E7%94%A8">1.1.2  事件对象的使用</h4>
+<pre class="hljs"><code><div>
+    clientX/Y : 获取当前鼠标 相对于可视窗口的位置
+    pageX/Y : 获取当前鼠标 相对于页面顶部和左侧的距离
+
+    target/srcElement : 表示当前添加事件的元素 
+    // target 是标准浏览器使用
+    // srcElement 是IE10及以下使用
+
+    type : 事件类型(事件名)
+    altKey ctrlKey shiftKey : 三分属性的值都是布尔值，表示事件触发的时候 是否按住了alt ctrl shift键如果按住了，值为true
+
+</div></code></pre>
+<h3 id="12-%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A">1.2 事件绑定</h3>
+<ul>
+<li>on方式添加事件 不能给同一元素添加多个同类事件</li>
+<li>事件绑定可以绑定多个</li>
+</ul>
+<pre class="hljs"><code><div>    // 标准浏览器
+    元素.addEventListener('事件类型',function(){
+        // 事件处理函数
+    });
+
+    // IE8及以下浏览器
+    元素.attachEvent('on事件类型',function(){
+        // 事件处理函数
+    })
+</div></code></pre>
+<h3 id="13-dom%E4%BA%8B%E4%BB%B6%E6%B5%81">1.3 DOM事件流</h3>
+<ul>
+<li>DOM 事件流 就是Js中事件执行的一个流程，分为三个阶段</li>
+</ul>
+<h4 id="131-%E4%BA%8B%E4%BB%B6%E6%8D%95%E8%8E%B7">1.3.1 事件捕获</h4>
+<ul>
+<li>window --&gt; document --&gt; html --&gt; body --&gt; .... --&gt; 触发事件的元素</li>
+<li>事件捕获就是从最顶级的元素(window)开始，向实际触发事件的元素进行一层一层的捕获，这个过程中 事件会从上到下进行传递，事件在传递的过程中 <strong>如果某一元素也有同类事件就会一并触发</strong></li>
+</ul>
+<blockquote>
+<p>addEventListener('事件名',function(){},true)</p>
+</blockquote>
+<ul>
+<li>如果传入true 事件执行捕获阶段，传入false 执行冒泡阶段，默认false</li>
+</ul>
+<h4 id="132-%E7%A1%AE%E5%AE%9A%E7%9B%AE%E6%A0%87">1.3.2 确定目标</h4>
+<ul>
+<li>就是事件流中 找到了 实际触发事件的元素 将该   元素的事件触发</li>
+</ul>
+<h4 id="133-%E4%BA%8B%E4%BB%B6%E5%86%92%E6%B3%A1">1.3.3 事件冒泡</h4>
+<ul>
+<li>触发事件的元素--&gt;...--&gt; body --&gt; html --&gt; document --&gt; window</li>
+<li>事件冒泡就是从实际触发事件的元素开始 向实际触发的元素开始，向window 进行一层一层的事件传递，传递过程中 <strong>如果某一元素也有同类事件就会一并触发</strong></li>
+</ul>
+<pre class="hljs"><code><div>    标准浏览器：
+    事件对象.stopPropagation(); 
+    //停止传播 不能继续冒泡 有兼容性问题
+
+    IE浏览器：
+    // e.cancelBubble;  //低版本浏览器 不是方法 是属性
+    // e.cancelBubble = true; 阻止冒泡
+
+</div></code></pre>
+<h3 id="14-%E4%BA%8B%E4%BB%B6%E8%A7%A3%E7%BB%91%E5%8F%96%E6%B6%88">1.4 事件解绑(取消)</h3>
+<pre class="hljs"><code><div>    // 标准浏览器
+    元素.addEventListener('click',fn);
+    function fn(){事件处理函数}
+
+
+    // IE浏览器
+    元素.detachEvent('on事件类型',fn);
+    function fn(){事件处理函数}
+
+    // on方式添加的事件移除方式
+    元素.on事件类型=null;
+</div></code></pre>
+<h3 id="15-%E5%8F%96%E6%B6%88%E4%BA%8B%E4%BB%B6%E7%9A%84%E9%BB%98%E8%AE%A4%E8%A1%8C%E4%B8%BA">1.5 取消事件的默认行为</h3>
+<ul>
+<li>在js中 很多时间都有默认行为，例如点击事件，a标签默认为跳转</li>
+</ul>
+<blockquote>
+<p>取消默认行为的方法</p>
+</blockquote>
+<pre class="hljs"><code><div>    // 标准浏览器：
+    事件对象.preventDefault(); 方法
+
+    // 低版本浏览器 e.returnValue;   属性
+    // e.returnValue = false；
+
+    // on方式添加的时间：
+    return false;
+
+</div></code></pre>
+<h3 id="16-%E9%94%AE%E7%9B%98%E5%92%8C%E6%BB%9A%E8%BD%AE%E7%9B%B8%E5%85%B3%E4%BA%8B%E4%BB%B6">1.6 键盘和滚轮相关事件</h3>
+<h4 id="161-%E9%94%AE%E7%9B%98%E7%B1%BB%E4%BA%8B%E4%BB%B6">1.6.1 键盘类事件</h4>
+<pre class="hljs"><code><div>    // 键盘抬起事件
+    keyup   键盘抬起以后触发
+
+    // 键盘按下
+    keydown     键盘按下时候触发
+
+    // 键盘按下抬起后触发 不能识别功能键 ctrl shift 左右箭头
+    keypress
+
+</div></code></pre>
+<blockquote>
+<p>键盘类事件的事件对象</p>
+</blockquote>
+<pre class="hljs"><code><div>    key : 键盘值    用换下的键对应的值
+    keyCode : 键盘码   用户按下按键对应的键盘值 对应Unicode编码
+    // a-z 99-127
+
+</div></code></pre>
+<h4 id="162-%E6%BB%9A%E8%BD%AE%E4%BA%8B%E4%BB%B6">1.6.2 滚轮事件</h4>
+<pre class="hljs"><code><div>    mousewheel  只适用于谷歌
+
+    DOMMouseScroll 只适用于火狐浏览器 只能使用addEventListener绑定
+    // 在IE中不兼容(因为addEventListener在IE中不能使用)
+
+    // 兼容处理
+    function bindWheel(ele,fun){
+        ele.onmousewheel = fun;
+        if(ele.addEventListener!=UNDEFINED){
+            ele.addEventListener(DOMMouseScroll)
+        }
+    }
+
+    // 滚轮的滚动方向
+    mousewheel : 事件对象中的 wheelDelta 如果向下滚动 值为负值，如果向上滚动值为正数。
+
+    DOMMouseScroll : 事件对象中的 deltail 如果向下滚动 值为正值，如果向上滚动值为负数。
+
+</div></code></pre>
+<h3 id="17-%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98">1.7 事件委托</h3>
+<ul>
+<li>如果我们又很多 li 要求给所有的li提那家点击事件，如果直接使用for循环 会非常浪费性能。 页面上有追加后的li 也要求有事件响应。</li>
+</ul>
+<pre class="hljs"><code><div>    // 事件委托的思路
+    1.给子元素绑定的事件，绑定给共同的父元素。
+    2.事件处理函数中，判断当前实际触发事件的元素是否是子元素
+    3.如果是子元素 就执行形影的操作 如果不是 就不做任何操作
+    
+    // 事件委托的优势
+    1.可以在最大限度上 节省性能
+    2.可以使后续追加的元素 也具备事件效果
+    
+</div></code></pre>
+<h1 id="%E7%AC%AC%E5%8D%81%E4%BA%8C%E5%A4%A9">第十二天</h1>
+<h2 id="1-%E5%85%A8%E5%B1%80%E6%8D%95%E8%8E%B7">1 全局捕获</h2>
+<h3 id="11-%E6%8D%95%E8%8E%B7">1.1 捕获</h3>
+<ul>
+<li>ie低版本浏览器有效</li>
+</ul>
+<blockquote>
+<p>元素.setCapture();</p>
+</blockquote>
+<ul>
+<li>给某一元素设置全局捕获</li>
+<li>假设元素添加了点击事件，不论点击整个文档的任何位置 点击事件都会被捕获,到添加了全局捕获的元素身上 来触发</li>
+</ul>
+<h3 id="12-%E9%87%8A%E6%94%BE%E6%8D%95%E8%8E%B7">1.2 释放捕获</h3>
+<blockquote>
+<p>元素.releaseCapture();</p>
+</blockquote>
+<ul>
+<li>给某一元素释放全局捕获</li>
+<li>释放掉之前添加在元素身上的捕获</li>
+</ul>
+<h2 id="2-%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0">2 回调函数</h2>
+<ul>
+<li>当一个函数 作为实参 出入另一个函数时，我们就说这个函数时一个回调函数。</li>
+</ul>
+<h1 id="%E7%AC%AC%E5%8D%81%E4%B8%89%E5%A4%A9">第十三天</h1>
+<h2 id="1-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1">1 面向对象</h2>
+<ul>
+<li>使用对象时，只关注其提供的功能，不关注内部细节。</li>
+</ul>
+<h3 id="11-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1">1.1 面向对象</h3>
+<ol>
+<li>
+<p>封装 : 将解决问题的代码封装在对象中，从而实现功能代码的封装，放置功能代码和其他代码产生关联。 高内聚，低耦合。</p>
+</li>
+<li>
+<p>继承 : 父级对象的属性可以继承给子级对象。</p>
+</li>
+<li>
+<p>多态 : 同一功能在不同情况，会执行不同的操作。</p>
+</li>
+</ol>
+<h3 id="11-%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95">1.1 创建对象的方法</h3>
+<h4 id="111-%E5%AD%97%E9%9D%A2%E9%87%8F%E5%88%9B%E5%BB%BA">1.1.1 字面量创建</h4>
+<blockquote>
+<p>var obj={属性名 : 属性值,属性名 : 属性值,... }</p>
+</blockquote>
+<ul>
+<li>不利于批量创建对象</li>
+<li>变现只管，易于理解</li>
+</ul>
+<h4 id="112-%E5%AE%9E%E4%BE%8B%E5%8C%96%E5%88%9B%E5%BB%BA">1.1.2 实例化创建</h4>
+<blockquote>
+<p>var obj = nev Object()</p>
+</blockquote>
+<ul>
+<li>这是个空对象</li>
+<li>obj.属性名 = 属性值;</li>
+<li>不利于批量创建对象</li>
+</ul>
+<h4 id="113-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1">1.1.3 工厂模式创建对象</h4>
+<ul>
+<li>利于批量创建对象</li>
+<li>this --&gt; window 实际操作中，往往需要this指向实际创建出的对象。</li>
+</ul>
+<pre class="hljs"><code><div>        function fn(name,age,gender){
+            var obj = new Object();
+            obj.name=name;
+            obj.age=age;
+            obj.gender=gender;
+            return obj;
+        }
+       var zs= fn('name','age','gender');
+
+</div></code></pre>
+<h4 id="114-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1">1.1.4 构造函数创建对象</h4>
+<ul>
+<li>构造函数命名 首字母大写</li>
+<li>构造函数用 new 构造函数名(实参)</li>
+<li>构造函数中的 this 指向向创建出来的对象 <strong>(重要)</strong></li>
+<li>当多个对象出现属性值相同的属性时，会导致内存浪费</li>
+</ul>
+<pre class="hljs"><code><div>    function Fun(name,age,gender){
+        this.name=name;
+        this.age=age;
+        this.gender=gender;
+    }
+    var snakeWoman=new Fun('星巴克',18,'女');
+
+    **重要** 构造函数的执行过程(new关键字究竟执行了那些内容)
+    1. Js隐式创建一个空对象
+    2. Js将构造函数的this --&gt; 空对象
+    3. 执行构造函数中的代码
+    4. Js隐式将绑定好属性的空对象返回出来
+</div></code></pre>
+<h4 id="115-%E5%8E%9F%E5%9E%8B%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1">1.1.5 原型创建对象</h4>
+<ul>
+<li>原型：在Js中 每一个对象都有原型 原型就是对象的父级对象 缘溪行对象中的所有属性都会继承给子对象</li>
+<li>原型的继承：所有自独享都可以使用原型对象的属性 但是不能拥有</li>
+<li>可以在最大程度上节省内存</li>
+<li>所有子对象继承的属性都是完全一样的 不能随意改变。</li>
+</ul>
+<pre class="hljs"><code><div>    原型、对象和构造函数三者关系
+
+    子对象找原型:  子对象.__proto__ === 原型
+    原型找构造函数：原型.constructor === 构造函数
+    构造函数找原型：构造函数.prototype === 原型
+
+    function Star() {}
+    Star.prototype.uname = '刘德华';
+    var obj = new Star();
+
+</div></code></pre>
+<h4 id="116-%E6%B7%B7%E5%90%88%E5%BC%8F%E5%88%9B%E5%BB%BA">1.1.6 混合式创建</h4>
+<blockquote>
+<p>构造函数创建对象+原型创建对象</p>
+</blockquote>
+<ul>
+<li>将需要改变的属性 交给给早函数 绑定给对象，将不会轻易改变的属性 交给原型继承给对象、</li>
+</ul>
+<pre class="hljs"><code><div>
+    // 一般情况下,我们的公共属性定义到构造函数里面, 公共的方法我们放到原型对象身上
+    function Star(uname, age) {
+        this.uname = uname;
+        this.age = age;
+    }
+    // prototype 原型 定义在原型以后，新建对象不再重新开辟空间
+    Star.prototype.sing = function() {
+        console.log(this.uname+'我会唱歌');
+    }
+    var obj = new Star('刘德华', 18);
+
+</div></code></pre>
+<h3 id="12-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%AE%9E%E4%BE%8B">1.2 面向对象实例</h3>
+<blockquote>
+<p>在面向对象开发效果的时候，我们把对象中的属性分为两类</p>
+</blockquote>
+<ol>
+<li>
+<p>属性 : 描述对象静态特征的属性</p>
+</li>
+<li>
+<p>方法 : 描述动态行为的方法</p>
+</li>
+</ol>
+<pre class="hljs"><code><div>    面向对象做效果
+    1.有对象 就用对象 没有对象 创建对象之后 用对象
+    2.创建对象的时候 需要先写构造函数
+    3.分析要创建的对象 有哪些静态特征  有哪些动态行为 将静态特征作为属性 由构造函数绑定给对象  将动态行为作为方法  由原型继承给对象
+    4.调用构造函数 创建对象 并调用对象的方法实现行为
+
+
+</div></code></pre>
+<h3 id="13-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BB%A7%E6%89%BF">1.3 面向对象继承</h3>
+<h4 id="131-%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF">1.3.1 原型链继承</h4>
+<ul>
+<li>
+<p>原型链：每一个对象都有原型(__proto__得到原型)，原型也是对象，因此也有原型，有此可知，从子对象开始 由__proto__属性引导，产生了一个链式结构，我们称这个链式结构为原型链</p>
+</li>
+<li>
+<p>原型链的终点是 Object.prototype</p>
+</li>
+<li>
+<p>原型链的属性查找原则：当对象使用属性的时候 会先在当前对象中查找，如果有就使用，如果没有，就向原型中查找，如果原型有就可以使用，如果原型没有，继续向上级原型查找，一直就到Object.prototype 如果有就使用，如果还没有 就直接到属性值为undefined</p>
+</li>
+<li>
+<p>优点 : 节省内存</p>
+</li>
+<li>
+<p>缺点 : 属性值不能随意改变</p>
+</li>
+</ul>
+<h4 id="132-%E5%AF%B9%E8%B1%A1%E5%86%92%E5%85%85%E5%BC%8F%E7%BB%A7%E6%89%BF">1.3.2 对象冒充式继承</h4>
+<ol>
+<li>call和apply</li>
+</ol>
+<ul>
+<li>都是函数方法 有函数来调用 作用是改变函数的this指向</li>
+</ul>
+<blockquote>
+<p>call：函数.call(新的this指向,实参1,实参2....)</p>
+</blockquote>
+<ul>
+<li>改变this指向 并立即执行函数</li>
+</ul>
+<pre class="hljs"><code><div>   // call() 可以实现继承
+    function Father(uname,age,sex){
+        this.uname=uname;
+        this.age=age;
+        this.sex=sex;
+    }
+    function Son(uname,age,sex){
+        Father.call(this,uname,age,sex);
+    }
+    var son= new Son('金铲铲',18,'男');
+    console.log(son);
+
+</div></code></pre>
+<blockquote>
+<p>apply: 函数.apply(新的this指向,[实参1,实参2....])</p>
+</blockquote>
+<ul>
+<li>改变this指向 并立即执行函数</li>
+</ul>
+<pre class="hljs"><code><div>    // apply方法
+    // apply() 可以调用函数 可以改变this指向
+    // 参数是数组形式(伪数组)
+    var o1={
+        name : 'andy'
+    }
+    function fn1(arr){
+        console.log(this);
+        console.log(arr);
+    }
+    var arr = [1, 66, 3, 99, 4];
+    fn1.apply(o,arr);
+
+    // 用法 求数组中的最大最小值
+    var max = Math.max.apply(Math, arr);
+    var min = Math.min.apply(Math, arr);
+    console.log(max,min);
+
+</div></code></pre>
+<ol start="2">
+<li>混合式继承</li>
+</ol>
+<ul>
+<li>原型链继承 + 冒充式继承</li>
+</ul>
+<pre class="hljs"><code><div>    function Father(name,age,gender){
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+    }
+    Father.prototype.say = function(){
+        alert(&quot;面向对象&quot;);
+    }
+    var obj = new Father(&quot;张三&quot;,18,&quot;男&quot;);
+
+    console.log(obj);   //{name:张三,age:18,gender:男} say
+    //obj---&gt;Father.prototype
+
+    //来了一个空的构造函数
+    //需求：空构造函数Son创建的对象 可以绑定Fn中的所有属性   并继承到 上述原型链中的所有属性
+    function Son(name1,age1,gender1){
+        //对象冒充继承
+        Son.call(this,name1,age1,gender1);
+    }
+    //原型链继承
+    Son.prototype = obj;
+
+    var obj1 = new Son(&quot;李四&quot;,19,&quot;女&quot;);
+    console.log(obj1);//{name:李四  age:19 ， gender 女}
+    obj1.say();
+
+
+</div></code></pre>
+<ol start="3">
+<li>寄生组合</li>
+</ol>
+<pre class="hljs"><code><div>  function Father(name,age,gender){
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+    }
+    Father.prototype.say = function(){
+        alert(&quot;面向对象&quot;);
+    }
+    var obj = new Father(&quot;张三&quot;,18,&quot;男&quot;);
+
+    function Son(name,age,gender){
+        Father.call(this,name,age,gender);
+    }
+    function Fn(){}
+    Fn.prototype=Father.prototype;
+    Son.prototype=new Fn();
+
+
+    var obj2=new Son(&quot;李四&quot;,18,&quot;男&quot;);
+    console.log(obj2);
+    obj2.say();
+
+
+</div></code></pre>
+<h1 id="%E7%AC%AC%E5%8D%81%E5%9B%9B%E5%A4%A9">第十四天</h1>
+<h2 id="1-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">1 正则表达式</h2>
+<blockquote>
+<p>正则表达式(正则对象)</p>
+</blockquote>
+<ul>
+<li>正则表达式：是对字符串操作的一种逻辑公式，就使用事先定义好的一些特殊字符，及这些特定字符的组合，组成一个‘规则字符串’，这个规则字符串用来表达对字符串的一种过滤逻辑</li>
+<li>规定文本检索的内容，通常用来检索，替换文本</li>
+</ul>
+<h3 id="11-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95">1.1  正则表达式的写法</h3>
+<ol>
+<li>字面量声明</li>
+</ol>
+<ul>
+<li>var reg = /正则表达式内容/</li>
+</ul>
+<ol start="2">
+<li>实例化声明</li>
+</ol>
+<ul>
+<li>var reg = new RegExp('正则内容');</li>
+</ul>
+<h3 id="12-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E4%BF%AE%E9%A5%B0%E7%AC%A6">1.2 正则表达式的修饰符</h3>
+<pre class="hljs"><code><div>    g : global  表示正则全局配置
+    i : ignore case 忽略大小写
+    gi : 全局匹配忽略大小写
+
+    用法：
+    var reg = /表达式/修饰符
+    var reg = new RegExp('正则内容',修饰符);
+
+
+</div></code></pre>
+<h3 id="13-%E6%AD%A3%E5%88%99%E7%9A%84%E5%8C%B9%E9%85%8D%E6%96%B9%E6%B3%95">1.3 正则的匹配方法</h3>
+<h4 id="131-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%8C%B9%E9%85%8D%E6%96%B9%E6%B3%95">1.3.1 正则表达式的匹配方法</h4>
+<blockquote>
+<p>test</p>
+</blockquote>
+<ul>
+<li>正则.text(要检索的字符串)</li>
+<li>使用正则对字符串检测</li>
+<li>符合正则规则 返回true</li>
+<li>不符合正则规则 返回false</li>
+</ul>
+<blockquote>
+<p>exec</p>
+</blockquote>
+<ul>
+<li>正则.exec(要检索的字符串)</li>
+<li>使用正则对字符串检测</li>
+<li>符合正则规则 就返回一个数组</li>
+<li>不符合正则规则 返回null</li>
+<li>只能检测出一个  index出现的位置 input检测的字符串</li>
+<li>可以使用 while 循环重复遍历</li>
+</ul>
+<pre class="hljs"><code><div>    var str='abc1ooabcmm2abc';
+    var res=reg.exec(str);
+    while(res!=null){
+        console.log(res);
+        res=reg.exec(str);
+    }
+    
+</div></code></pre>
+<h4 id="132-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%8C%B9%E9%85%8D%E6%96%B9%E6%B3%95">1.3.2 字符串的匹配方法</h4>
+<blockquote>
+<p>replace</p>
+</blockquote>
+<ul>
+<li>字符串.replace(正则,用来替换的字符串片段)</li>
+<li>使用正则 检测字符串 将检测到的字符串替换为指定内容</li>
+<li>只会替换第一次检测到的内容  全局替换用g</li>
+</ul>
+<blockquote>
+<p>split</p>
+</blockquote>
+<ul>
+<li>字符串.split(正则)</li>
+<li>使用正则检测字符串，遇到检测成功的字符片段 就切一刀</li>
+</ul>
+<blockquote>
+<p>match</p>
+</blockquote>
+<ul>
+<li>字符串.match(正则)</li>
+<li>使用正则检测字符串，若果检测成功就返回数组，如果失败就返回null</li>
+<li>作用和正则 exec 一样</li>
+</ul>
+<blockquote>
+<p>search</p>
+</blockquote>
+<ul>
+<li>字符串.(正则)</li>
+<li>使用正则检查字符串，将检测成功的字符片段的起始下标返回出来，如果检测失败，就返回-1</li>
+<li>如果检测到多次成功 只返回第一次检测成功的下标</li>
+</ul>
+<h3 id="14-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%85%83%E5%AD%97%E7%AC%A6">1.4 正则表达式的元字符</h3>
+<h4 id="141-%E5%85%83%E5%AD%97%E7%AC%A6">1.4.1 元字符</h4>
+<pre class="hljs"><code><div>    1 .表示匹配除了换行符之外的所有字符
+    /./ 表示匹配除了换行符之外的所有字符 \n
+
+    2 [0-9] 表示匹配0-9之间的任意整数 []表示一个匹配的范围
+    [0-9a-zA-Z]表示可以匹配0-9和a-z和A-Z所有的字符
+
+    3 [^0-9] 表示除了0-9之外的任意字符
+    [^0-9a-zA-Z]表示可以匹配非数字非字母的字符
+
+
+    4 \d    \D
+    \d : 匹配所有 0-9 数字
+    \D : 匹配所有非数字
+
+    5 \w    \W
+    \w : 匹配任意的字母 数字 下划线
+    \W : 匹配除了字母 数字 下划线以外的字符
+
+    6 \s    \S
+    \s : 匹配空格(包括换行符\n，制表符\t，回车符\r，垂直制表符\v，空格符\f等)
+    \S : 匹配除了空格(包括换行符，制表符，回车符，垂直制表符，空格符等)以外字符
+
+    7 \b    \B
+    \b : 匹配字符边界 
+    \B : 匹配非字符边界
+    I Love You 字符串中的 空格 就是字符边界
+
+
+    8 ^
+    /^abc/ : 被检测字符串必须以abc开头
+
+    9 $
+    /abc$/ : 被检测字符串必须以abc结尾
+
+    10 正则表达式严格模式
+    /^正则表达式$/ 表示正则检测的字符串必须和正则内容完全一样 不能多一位 也不能少一位
+
+
+
+</div></code></pre>
+<h4 id="142-%E6%AD%A3%E5%88%99%E9%87%8F%E8%AF%8D">1.4.2 正则量词</h4>
+<ol>
+<li>? 只能出先1次或者0次</li>
+</ol>
+<ul>
+<li>/\d?/ 表示匹配 0 位或 1 位数字</li>
+</ul>
+<ol start="2">
+<li>*可以出现0次或者很多次</li>
+</ol>
+<ul>
+<li>/\d*/ 表示匹配任意为数字</li>
+</ul>
+<ol start="3">
+<li>+至少出现一次或者很多次</li>
+</ol>
+<ul>
+<li>/\d*/ 表示匹配任意为数字</li>
+</ul>
+<ol start="4">
+<li>() 优先级</li>
+</ol>
+<ul>
+<li>(xyz)+ : xyz 至少出现一次</li>
+</ul>
+<ol start="5">
+<li>{} 用来规定重复的次数</li>
+</ol>
+<pre class="hljs"><code><div>    {n } 就是重复 n 次 
+    {n, } 至少出现 n 次或以上为true
+    {n,m} 大于等于 n 次,小于等于 m 次
+
+</div></code></pre>
+<h4 id="143-%E5%85%B6%E4%BB%96">1.4.3 其他</h4>
+<ol>
+<li>或运算 : |</li>
+</ol>
+<ul>
+<li>/(a|b|c)/ 匹配a或b或c都可以 除此之外 不行</li>
+</ul>
+<ol start="2">
+<li>分组  : ()</li>
+</ol>
+<ul>
+<li>使用 () 来分组，()内的是一个整体</li>
+</ul>
+<pre class="hljs"><code><div>    如果我们使用exec 检测 有分组的正则 会先使用正则检测字符串 将检测出来的结果存入数组 之后每一个分组 检测字符串 将检测到的结果 存入数组
+
+	在正则中 我们可以单独得到 分组检测到的 字符片段
+    在打印匹配结果之前 一定要先给正则匹配 否则结果不确定
+	方法：RegExp.$n   n是分组的序号 $n就是分组
+
+    var reg1 = /^([a-zA-Z]+) ([a-zA-Z]+) ([a-zA-Z]+)$/;
+    reg1.test(&quot;I love china&quot;);//在打印匹配结果之前 一定要先给正则匹配一次 否则结果不确定
+    console.log(RegExp.$1);//
+    console.log(RegExp.$2);//
+    console.log(RegExp.$3);//
+
+    //在字符串的 replace 方法中 我们可以将获取分组结果的写法 进一步简化 替换第二位
+    var reg2 = /^([a-zA-Z]+) ([a-zA-Z]+) ([a-zA-Z]+)$/
+    var str = &quot;I am Allen&quot;;
+    console.log(str.replace(reg2,&quot;$1 AM $3&quot;));
+
+</div></code></pre>
+<ol start="3">
+<li>正向否定预查 : ?!</li>
+</ol>
+<ul>
+<li>不能为某一个规则</li>
+<li>/^(?!abc)[a-z]{3}/</li>
+<li>正则内容为[a-z]{3}表示任意3个小写字母</li>
+<li>正向否定预查内容为(?!abc) 表示后面不能为 abc</li>
+</ul>
+<h1 id="%E7%AC%AC%E5%8D%81%E4%BA%94%E5%A4%A9">第十五天</h1>
+<h2 id="1-%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0">1 匿名函数</h2>
+<h3 id="11-%E5%87%BD%E6%95%B0%E5%9B%9E%E9%A1%BE">1.1 函数回顾</h3>
+<pre class="hljs"><code><div>    1 回调函数 : 作为其他函数实参的函数 就是回调函数
+    2 构造函数 : 用new关键字调用的函数
+    3 方法函数 : 作为对象汇总某一属性的属性值的函数
+    4 事件处理函数 : 事件绑定的函数
+    5 普通函数 : 调用方式为函数名() 这样的函数就是普通函数
+
+</div></code></pre>
+<h3 id="12-%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0">1.2 匿名函数</h3>
+<blockquote>
+<p>function(){}</p>
+</blockquote>
+<ul>
+<li>调用 : (function(){})()</li>
+<li>参数传入与普通函数相同</li>
+<li>返回值也和普通函数一致</li>
+</ul>
+<pre class="hljs"><code><div>    优点:
+        匿名函数可以在最大程度上节省内存
+        匿名函数在不调用的时候，不会写入内存中。只有在匿名函数调用的时候 才会将函数存入内容中，当调用结束后，又会立即将内存中的匿名函数释放掉
+
+</div></code></pre>
+<h2 id="2-%E9%97%AD%E5%8C%85%E5%87%BD%E6%95%B0">2 闭包函数</h2>
+<ul>
+<li>也被称为 稳妥构造函数</li>
+<li>定义 : 闭包就是，外层函数包裹内层函数，内层函数访问外层函数的变量。</li>
+<li>特点 : 在闭包中的变量，会一直存储在内存中，类似全局变量，避免了全局污染</li>
+</ul>
+<pre class="hljs"><code><div>    例:
+    var lis=document.querySelectorAll('li');
+    for(var i=0;i&lt;lis.length;i++){
+        (function(a){
+            lis[a].onclick=function(){
+                console.log(a);
+            }
+        })(i);
+    }
+
+</div></code></pre>
+<h3 id="21-%E9%97%AD%E5%8C%85%E7%9A%84%E7%A7%81%E6%9C%89">2.1 闭包的私有</h3>
+<pre class="hljs"><code><div>    闭包中实现私有属性
+    public : 公有属性 所有对象都可以访问的属性
+    private : 私有属性 这种属性，可以被别的对象访问，但是需要本对象提供方法规定的规则进行访问。
+    一般 我们将一些核心属性 设置为私有属性
+
+    Js中没有私有属性,因此我们只能使用闭包来模拟私有属性
+
+
+</div></code></pre>
+<h2 id="3-%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5">3 同步异步</h2>
+<pre class="hljs"><code><div>    Js将代码分为两类 同步代码 异步代码
+    执行过程：从上到下依次执行同步代码，遇到异步代码先存入异步队列，跳过继续执行下面的代码，知道所有的同步代码执行完成以后，最后再取出任务队列的异步代码，按先后顺序执行
+
+    异步代码 : 事件，定时器，Ajax
+   
+</div></code></pre>
+<h2 id="4-ajax">4 Ajax</h2>
+<h3 id="41-ajax%E5%9F%BA%E7%A1%80">4.1 Ajax基础</h3>
+<blockquote>
+<p>Async JavaScript and XML 异步的Js和XML</p>
+</blockquote>
+<ul>
+<li>用来进行前端页面和后台数据库之间的数据交互</li>
+</ul>
+<pre class="hljs"><code><div>    1 创建Ajax对象
+    var ajax = new XMLHttpRequest();
+    创建出Ajax对象 也像时间对象一样 拥有自带的一些方法 实现Ajax效果
+
+
+    2 使用Ajax对象 调用open方法 建立前端页面和后台数据库之间的网络连接
+    ajax.open('请求方式get/post','请求地址','是否异步');
+    是否异步是一个布尔值 规定ajax按照同步执行和异步执行 true表示异步默认，false表示同步
+
+
+    3 调用send方法 发送前端页面数据请求
+    ajax.send();
+
+
+    4 提那家ajax对象添加事件 onreadystatechange 监听后台数据响应
+    ajax.onreadystatechange = function(){
+        readystate : 通信状态码/ajax生命周期
+        onreadystatechange 通信状态码改变事件 会在通信状态吗发生改变的时候触发通信状态吗
+            0 : 已经创建了ajax对象 但是还没有对ajax对象进行配置
+            1 : 已经对ajax对象进行配置 但是还没有发送请求
+            2 : 请求已经发送了
+            3 : 已经接收到服务器端的部分数据了
+            4 : 服务器端的响应数据已经接收完成
+
+            // 对ajax状态码进行判断 如果状态码的值为4就代表数据已经接收完成了
+			if (ajax.readyState == 4) {
+                 // responseText 服务器端返回的文本
+				console.log(ajax.responseText);
+			}
+    }
+</div></code></pre>
+<h3 id="42-ajax-get%E8%AF%B7%E6%B1%82">4.2 Ajax Get请求</h3>
+<ul>
+<li>提交数据量 4k</li>
+<li>安全性不高</li>
+<li>请求速度相对较快</li>
+</ul>
+<pre class="hljs"><code><div>    // get请求
+
+    //1.创建ajax对象
+    var ajax = new XMLHttpRequest();
+
+    //2.调用ajax对象的open方法 建立和后台之间的连接
+    ajax.open(&quot;get&quot;,&quot;./data.text&quot;);
+
+    //3.调用ajax对象的 send方法 发送请求
+    ajax.send();
+
+    //4.给ajax对象 添加 onreadystatechange事件 监听通信状态码
+    ajax.onreadystatechange = function(){
+        // console.log(ajax.readyState);
+        if(ajax.readyState==4){
+            console.log(ajax.responseText);
+        }
+    }
+
+</div></code></pre>
+<h3 id="42-ajax-post%E8%AF%B7%E6%B1%82">4.2 Ajax Post请求</h3>
+<ul>
+<li>请求速度相对较慢</li>
+<li>提交的数据不会显示在地址栏中 安全性高</li>
+<li>提交的数据量大，可以达到20mb左右</li>
+</ul>
+<pre class="hljs"><code><div>    // 拼接请求参数
+    var params = 'username='+nameValue+'&amp;age='+ageValue;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('post','http://localhost:3000/post');
+
+    // 设置请求参数格式的类型（post请求必须要设置）
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    
+    xhr.send(params);
+    
+    xhr.onload=function(){
+        console.log(xhr.responseText);
+    }
+
+</div></code></pre>
+<h1 id="%E7%AC%AC%E5%8D%81%E5%85%AD%E5%A4%A9">第十六天</h1>
+<h2 id="1-ajax%E6%94%B6%E5%B0%BE">1 Ajax收尾</h2>
+<h3 id="11-ajax%E7%9A%84%E5%93%8D%E5%BA%94%E7%8A%B6%E6%80%81%E7%A0%81">1.1 Ajax的响应状态码</h3>
+<blockquote>
+<p>ajax.status</p>
+</blockquote>
+<ul>
+<li>ajax.status：获取 ajax的响应状态码</li>
+<li>在ajax中 每次请求都有可能成功，有可能失败</li>
+<li>通过ajax状态码就是一种判断是否成功的一种手段</li>
+</ul>
+<pre class="hljs"><code><div>
+    200 : 请求响应成功 表示数据从后台响应过来 success
+    304 : 请求响应成功 表示从前端本地缓存得来 success
+    403 : 请求响应失败 没有权限访问 forbidden
+    404 : 请求响应失败 找不到地址 Not Found
+    500及以上 : 请求响应失败 后台代码逻辑问题 
+
+</div></code></pre>
+<h3 id="12-ajax%E6%93%8D%E4%BD%9C%E5%AE%9E%E9%99%85%E6%95%B0%E6%8D%AE">1.2 Ajax操作实际数据</h3>
+<h4 id="121-%E6%93%8D%E4%BD%9C%E6%95%B0%E7%BB%84">1.2.1 操作数组</h4>
+<blockquote>
+<p>用法 : eval(指定字符串)</p>
+</blockquote>
+<ul>
+<li>eval 函数可计算指定字符串，并执行其中的JavaScript代码，可以将字符串转换为数组</li>
+</ul>
+<h4 id="122-%E6%93%8D%E4%BD%9Cjson">1.2.2 操作json</h4>
+<ul>
+<li>json 是一种数据格式 这种数据格式是独立的 不属于任何一门语言 但是任何语言都可以使用这种数据格式 来进行数据交互</li>
+<li>优势 : 普适性强，由于不属于任何语言因此改数据格式不需要语法结构，很大程度上节省了数据量</li>
+</ul>
+<pre class="hljs"><code><div>    json写法
+    一个json文件中 只能写一条数据 如果想在一个接送文件中写入多条数据 可以使用数组 或对象的形式。因此一般我们写的接送文件都是 对象 或 数组
+
+    json对象：
+        1. 属性名必须有引号，而且是双引号
+        2. 最后一个属性的后面 不能加逗号
+        3. json文件中不能写注释
+
+    json数组:
+        1. json中数组的最后一个数组项 后面不能加逗号
+
+    json的用法:
+    我们直接获取到json数据 是一个字符串 不能直接使用，如果转换为js的数据 可以使用以下方法
+        1. JSON.parse(指定的json字符串)
+            将json字符串 转换为 js数据
+        2. JSON.stringify
+            将js数据压缩层json字符串
+        
+</div></code></pre>
+<h1 id="%E7%AC%AC%E5%8D%81%E4%B8%83%E5%A4%A9">第十七天</h1>
+<h2 id="1-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E">1 模板引擎</h2>
+<h3 id="11-art-template">1.1 art-template</h3>
+<pre class="hljs"><code><div>
+
+1.模板引擎的简单使用
+  1.引入模板js文件  &lt;script src=&quot;模板js文件路径&quot;&gt;&lt;/script&gt;
+  2.编写模板  
+  &lt;script type=&quot;text/html&quot; id=&quot;poem&quot;&gt;
+        &lt;h1&gt;{{dataArr[0]}}&lt;/h1&gt;
+        &lt;h1&gt;{{dataArr[1]}}&lt;/h1&gt;
+    &lt;/script&gt;
+  3.初始化模板
+    var ret = template(&quot;poem&quot;,{dataArr:[&quot;几人平地上，看我碧霄中&quot;,&quot;不戚戚于贫贱，不汲汲于富贵&quot;]});
+        console.log(ret);
+        document.querySelector(&quot;div&quot;).innerHTML = ret
+
+2.模板引擎的常用语法
+	if判断：
+    for循环
+    原文输出
+</div></code></pre>
+<h1 id="%E7%AC%AC%E5%8D%81%E5%85%AB%E5%A4%A9">第十八天</h1>
+<h2 id="1-href%E5%B1%9E%E6%80%A7-%E5%92%8C-src%E5%B1%9E%E6%80%A7%E7%9A%84%E5%8C%BA%E5%88%AB">1    href属性 和 src属性的区别</h2>
+<pre class="hljs"><code><div>src：将外部文件  引入到当前html文件中  执行效果  因此我们如果使用src 引入外部js文件  就相当于将外部js文件 拿到html文件中执行  因此相对路径应该以html文件为起点
+
+href：将当前html页面的要执行的任务  交给指定路径的外部文件执行   执行环境是外部文件中，因此 使用href外链css文件的时候 相对路径应该以 外部css文件作为起点
+</div></code></pre>
+<h2 id="2-video%E6%A0%87%E7%AD%BE%E7%9A%84%E7%9B%B8%E5%85%B3api">2 video标签的相关api</h2>
+<pre class="hljs"><code><div>play
+video标签.play()  可以让视频播放
+pause
+video标签.pause()  可以让视频暂停
+video标签.currentTime 视频当前播放的时长
+video标签.duration 视频总时长
+</div></code></pre>
+<h1 id="%E7%AC%AC%E5%8D%81%E4%B9%9D%E5%A4%A9">第十九天</h1>
+<h2 id="1-%E5%89%8D%E7%AB%AF%E6%B5%8F%E8%A7%88%E5%99%A8%E6%95%B0%E6%8D%AE%E7%BC%93%E5%AD%98">1 前端浏览器数据缓存</h2>
+<h3 id="11-cookie">1.1 cookie</h3>
+<ul>
+<li>存储量4k</li>
+<li>需要后台设置 前端才可以使用，而且cookie会随着每次请求和响应进行传输</li>
+</ul>
+<h3 id="12-localestorage">1.2 localeStorage</h3>
+<ul>
+<li>localStorage 数据不手动删除永久存在</li>
+<li>存储的数据会被压缩成字符串</li>
+<li>缓存数据量打到 20~40 Mb</li>
+<li>前端独立缓存 跟后台没有关系</li>
+</ul>
+<pre class="hljs"><code><div>    // 存储数据
+    localStorage.setItem('键名',键值);
+
+    // 获取数据
+    localStorage.getItem('键名');
+
+    // 清除数据
+    localStorage.removeItem('键名');
+
+    // 清除所有数据
+    localStorage.clear();
+
+</div></code></pre>
+<h3 id="13-sessionstorage">1.3 sessionStorage</h3>
+<ul>
+<li>缓存数据量打到 20~49Mb</li>
+<li>前端独立缓存</li>
+<li>当浏览器页面关闭 缓存数据被清空</li>
+</ul>
+<pre class="hljs"><code><div>    // 存储数据
+    sessionStorage.setItem('键名',键值);
+
+    // 获取数据
+    sessionStorage.getItem('键名');
+
+    // 清除数据
+    sessionStorage.removeItem('键名');
+
+    // 清除所有数据
+    sessionStorage.clear();
+
+</div></code></pre>
+<h1 id="%E7%AC%AC%E4%BA%8C%E5%8D%81%E5%A4%A9">第二十天</h1>
+<h2 id="1-%E7%A7%BB%E5%8A%A8%E7%AB%AFtouchjs">1 移动端touch.js</h2>
+<h3 id="11-%E5%8E%9F%E7%94%9F%E7%A7%BB%E5%8A%A8%E4%BA%8B%E4%BB%B6">1.1 原生移动事件</h3>
+<h3 id="111-touchstart">1.1.1 touchstart</h3>
+<ul>
+<li>当手指触碰到屏幕的时候 触发该事件</li>
+</ul>
+<h3 id="112-touchmove">1.1.2 touchmove</h3>
+<ul>
+<li>当手指 触摸屏幕且移动的时候 触发该事件</li>
+</ul>
+<h3 id="113-touchend">1.1.3 touchend</h3>
+<ul>
+<li>当手指离开 屏幕 触发该事件</li>
+</ul>
+<h3 id="12-%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BA%8B%E4%BB%B6%E5%92%8Cpc%E7%AB%AF%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB">1.2 移动端事件和pc端事件的区别</h3>
+<ul>
+<li>移动端事件可以使用pc端事件 pc端事件在移动端执行的时候 会延迟300ms触发</li>
+<li>移动端点击事件 当我们触摸上层元素 并让上层元素 隐藏的手 移动端事件就会穿透到下层元素上  如果点击时长超过300ms 可以防止点</li>
+</ul>
+<h2 id="13-%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1">1.3 移动端事件对象</h2>
+<h3 id="131-%E8%8E%B7%E5%8F%96%E6%96%B9%E5%BC%8F">1.3.1 获取方式</h3>
+<ul>
+<li>使用事件处理函数的 第一个形参 来获取移动端事件对象</li>
+</ul>
+<h3 id="132-changedtouches">1.3.2 changedTouches</h3>
+<ul>
+<li>实际触发事件的手指信息集合</li>
+<li>包含当前触发事件的所有 手指 信息</li>
+</ul>
+<h3 id="133-targettouches">1.3.3 targetTouches</h3>
+<ul>
+<li>添加事件元素身上的手指信息集合</li>
+<li>这个属性中包含 当前元素上所有 手指 信息</li>
+</ul>
+<h3 id="134-touches">1.3.4 touches</h3>
+<ul>
+<li>整个屏幕上的手指信集合</li>
+<li>这个属性中 包含当前屏幕上所有手指的信息</li>
+</ul>
+<h3 id="135-%E5%85%B6%E4%BB%96">1.3.5 其他</h3>
+<pre class="hljs"><code><div>    clientX   当前手指到可视窗口 左侧的距离
+    clientY   当前手指到可视窗口 顶部的距离
+
+    pageX：   手指到页面左侧的距离
+    pageY：   手指到页面顶部的距离
+
+    identifier  当前手指的编号
+
+</div></code></pre>
+<h3 id="12-touchjs-%E4%BA%86%E8%A7%A3">1.2 touchJs (了解)</h3>
+<pre class="hljs"><code><div>    Touch.js 是移动设备上的手势识别与事件库，由百度云clouda团队维护，也是在百度内部广泛使用的开发工具.
+    Touch.js手势库专为移动设备设计，请在webkit内核浏览器中使用。
+    touch.js是一个js移动端的插件因此在使用之前一定要先引入js文件
+    touch.js播件握供了一个对象touch该对象身上有很多操作方法
+
+    1.绑定事件
+    使用touch对象的on方法绑定事件
+    touch.on(绑定事件的元素,'事件',处理函数)
+
+    使用touch对象的on方法绑定 多个 事件
+    touch.on(绑定事件的元素,'事件1 事件2...',处理函数)
+
+    2.事件委托
+    touch.on(绑定事件的父元素,'事件类型',实际触发子元素的选择器,处理函数);
+
+    3.事件对象
+    获取方式：处理函数的第一个形参 就会接收到事件对象
+    originEvent 原生事件对象 即touch封装的事件的原生事件的事件对象
+
+    4.touch中的事件
+    点击类事件：tap(单击)  doubletap(双击)  hold(长按)
+
+    
+    小贴士：js操作类名的简便方式
+	元素.classList.add(&quot;添加的类名&quot;)  添加类名
+    元素.classList.remove(&quot;移除的类名&quot;) 移除类名
+    元素.classList.toggle(&quot;切换的类名&quot;) 切换类名  如果有 就移除  没有 就添加
+    
+    缩放类事件：pinchstart 缩放手势起点、pinchend 缩放手势终点、pinch 缩放手势、pinchin 收缩、pinchout 放大
+
+    滑动类事件：swipestart滑动手势起点、swiping滑动中、swipeend滑动手势终点、swipeleft向左滑动、swiperight向右滑动、swipeup向上滑动、swipedown向下滑动、swipe滑动
+
+    拖拽类事件：dragstart	拖动开始、drag拖动、dragend拖动结束
+
+    旋转类事件：rotateleft向左旋转、rotateright向右旋转、rotate旋转
+
+
+
+</div></code></pre>
+<h1 id="%E7%AC%AC-%E4%BA%8C%E5%8D%81%E4%B8%80%E5%A4%A9">第 二十一天</h1>
+<h2 id="1-jquery">1 jQuery</h2>
+<h3 id="11-jquery-%E6%A6%82%E5%BF%B5">1.1 jQuery 概念</h3>
+<ul>
+<li>将一些常用的js功能 封装起来 作为方法函数 存放在js文件中，这个js文件就是jQuery</li>
+<li>优势：jQuery凭借 简洁的语法 和跨平台的兼容性，极大的简化了 JavaScript开发人员 遍历html文档 操作DOM、处理事件、执行动画和开发ajax的操作。</li>
+</ul>
+<blockquote>
+<p>jQuery的优势</p>
+</blockquote>
+<ol>
+<li>轻量级</li>
+<li>强大的选择器jQuery可以完全兼容css3的所有选择器</li>
+<li>出色的DOM操作的封装</li>
+<li>可靠的事件处理机制</li>
+<li>完善的ajax</li>
+<li>不污染顶级变量</li>
+<li>出色的浏览器兼容</li>
+<li>链式操作方式</li>
+<li>隐式迭代</li>
+<li>行为层和结构层的分离</li>
+<li>丰富的括件支持</li>
+<li>完善的文档</li>
+<li>开源</li>
+</ol>
+<h3 id="12-jquery-%E7%9A%84%E5%BC%95%E5%85%A5">1.2 jQuery 的引入</h3>
+<ul>
+<li>jQuery其实就是一个js文件 可以通过两种方式引入</li>
+</ul>
+<pre class="hljs"><code><div>    1.本地引入
+    将 jQuery.js 下载到本地之后 使用 script 标签的src属性 引入本地文件
+    &lt;script scr=&quot;本地地址&quot;&gt;&lt;/script&gt;
+
+    2.线上引入
+    使用jQuery文件的线上地址进行引入
+     &lt;script scr=&quot;线上地址&quot;&gt;&lt;/script&gt;
+
+</div></code></pre>
+<h3 id="13-jquery%E4%BB%A3%E7%A0%81%E7%9A%84%E7%AE%80%E5%8D%95%E7%BC%96%E5%86%99">1.3 jQuery代码的简单编写</h3>
+<ul>
+<li>在js中 window.onload 可以帮助我们实现 在页面所有结构样式和外部资源加载完成之后再执行其中的js代码的效果</li>
+<li>jQuery中 $===jQuery</li>
+<li>jQuery的入口函数</li>
+</ul>
+<pre class="hljs"><code><div>    $(document).ready(function(){
+        ......
+        页面和样式都加载完成以后 再执行
+    });
+
+    简便写法
+    $(function(){
+        ......
+        页面和样式都加载完成以后 再执行
+    });
+    
+    建议编写jQuery的时候 都写入口函数
+    在入口函数中 放置jq代码污染顶级变量(window)
+</div></code></pre>
+<h3 id="14-jquery%E5%AF%B9%E8%B1%A1%E5%92%8C-dom-%E5%AF%B9%E8%B1%A1">1.4 jQuery对象和 DOM 对象</h3>
+<pre class="hljs"><code><div>    DOM对象 : DOM元素
+    jQuery对象：jQuery元素就是通过jQuery的选择器 获取到的元素
+
+    jQuery选择器
+    $(&quot;CSS3选择器&quot;) ===&gt; jQuery对象
+    jQuery对象是一个伪数组 会包含满足选择器条件的 DOM元素
+
+    jQuery对象和DOM对象的区别
+    1.jQuery对象永远是伪数组 如果只有一个元素满足条件 就是单个元素，除非多个元素 满足条件 才是伪数组
+    2.jQuery对象只能使用jQuery方法，DOM对象也只能使用DOM的方法
+
+    jQuery对象和DOM对象的互转
+    jQuery---&gt;DOM : 
+    1. jQuery中包含的数组项就是DOM元素 因此转换方式jQuery元素[指定下标] 
+    2.  $('选择器').get(0)
+
+    DOM---&gt; jQuery : 
+    $(DOM元素)可以将DOM元素转换为jQuery对象
+
+</div></code></pre>
+<h3 id="15-jquery%E5%A4%9A%E5%BA%93%E5%85%B1%E5%AD%98%E9%97%AE%E9%A2%98">1.5 jQuery多库共存问题</h3>
+<pre class="hljs"><code><div>    1. 先引入其他库 最后引入jQuery
+
+    2. jQuery调用方法：noConflict 
+    $.noConflict() 用来将jQuery的 $ 符让出
+
+    3. 使用匿名函数自执行的效果 让jQuery重新可以使用 $ 符
+</div></code></pre>
+<h3 id="16-jquery-%E9%80%89%E6%8B%A9%E5%99%A8">1.6 jQuery 选择器</h3>
+<pre class="hljs"><code><div>    1. 基础选择器
+    标签选择器      标签名
+    id选择器        #id
+    类名选择器      .类名
+    层级选择器      父级&gt;子级   父级 子级
+    并集选择器      选择器1,选择器2
+
+    $('a+b') : 获取 紧跟 在a元素后面的b元素
+    $('a~b') : 获取 紧跟 在a元素后面的所有b元素
+
+    2. 过滤选择器
+    基础选择器 : 
+    $('选择器 :first') 获取所有满足选择器条件的第一个元素
+    $('选择器 :last')  获取所有满足条件的最后一个元素
+    $('选择器 : not(指定条件)' )   获取所有满足选择器条件但是不满足指定条件的元素
+    $('选择器 :eq(n)')   获取选择器中的下标为n的项
+    $('选择器 :lt(n)')   获取指定选择器中的下标小于n的所有项
+    $('选择器 :gt(n)')   获取指定选择器中的下标大于n的所有项
+    $('选择器 :odd()')   获取指定选择器中的下标为奇数的所有项
+    $('选择器 :even()')   获取指定选择器中的下标为偶数的所有项
+
+    内容过滤选择器
+    $('选择器 :contains(指定内容)')    获取指定选择器且内容包含指定内容的元素
+    $('选择器 :has(指定html标签)')    获取指定选择器且内容包含指定标签的元素
+    $('选择器 :empty')   获取指定选择器且内容为空的元素  
+    $('选择器 :parent')  获取指定选择器且内容不为空的元素
+
+    可见性过滤选择器
+    $('选择器 :visible')   获取可见元素
+    $('选择器 :hidden')   获取不可见元素
+
+    表单过滤选择器
+    $('选择器 :selected') 获取下拉列表中选中的列表项
+    $('选择器 :checked') 获取选中的复选框
+    $('选择器 :disabled') 获取禁用的元素
+
+    属性过滤选择器
+    $(&quot;元素[属性名]&quot;)	获取带有指定属性
+    $(&quot;元素[属性名 = 属性值]&quot;)	获取带有指定属性且值为指定值的元素
+    $(&quot;元素[属性名^=值]&quot;)	获取属性值以指定值开头的元素
+    $(&quot;元素[属性名]$=值&quot;)	获取属性值以指定值结尾的元素
+    $(&quot;元素[属性名]*=值&quot;)	获取属性值包含指定值的元素
+    $(&quot;元素[属性名]！=值&quot;)	获取属性值不是指定值的元素
+
+    子元素过滤选择器
+    $(&quot;元素:nth-chi1d(n)&quot;)  获职指定序号的元素
+    $(&quot;元素:nth-chi1d(even)&quot;)   获取序号为偶数的元素
+    $(&quot;元素:nth-chi1d(odd)&quot;)    获取序号为奇数的元素
+    $(&quot;元素:nth-chi1d(公式)&quot;)   获取序号为满足公式条件的元素
+
+    表单选择器
+    $(:text)    获取文本输入框
+    $(:password)    获取输入框
+    .....
+    $(:input)    获取所有表单元素
+    
+
+</div></code></pre>
+<h3 id="17-jquery%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C">1.7 jQuery基础操作</h3>
+<pre class="hljs"><code><div>    1. jQuery 元素节点
+        获取父元素
+        子级元素.parent()   获取子元素最近一级的父元素
+
+        获取子元素
+        父级元素.children()  获取父级元素的子元素
+        父级元素.find()      获取父级元素的后代元素
+
+        获取兄弟元素
+        元素.next()     获取下一个兄弟元素
+        元素.nextAll()  获取后面所有兄弟元素
+        元素.prev()     获取上一个兄弟元素
+        元素.prevAll()  获取前面所有的兄弟元素
+        元素.siblings() 选中除了自己的其余元素 
+
+
+    2. jQuery 元素属性
+        attr可以对元素的任意属性进行操作
+        元素.attr('属性名')             获取属性值
+        元素.attr('属性名','属性值')    设置元素属性
+
+        prop 可以对元素的固有属性进行操作
+        元素.prop('属性名')             获取属性值
+        元素.prop('属性名','属性值')    设置元素属性
+
+        // 可以获取 data-xxx 前缀属性
+        元素.data('属性名')             获取属性值
+        元素.data('属性名','属性值')    设置元素属性
+
+    3. jQuery 元素类名
+        // addClass 添加类名
+        元素.addClass('类名');
+
+        // removeClass  删除类名
+        元素.removeClass('类名');
+
+        // toggleClass 切换类名
+        元素.toggleClass('类名');
+
+        // hasClass 判断元素有没有这个类名
+        元素.hasClass('类名');  有为true，无为false
+
+    4. jQuery 元素样式
+        
+        获取 获取的样式可以是任意样式
+        元素.css(&quot;属性名&quot;)	返回对应的属性值
+
+        批量获取	只有在低版本中才能使用 高版本中已废弃
+        元素.css([&quot;属性名1&quot;,&quot;属性名2&quot;,......])
+
+        设置 css方法设置的所有样式都是行内样式
+        元素.css(&quot;属性名&quot;，&quot;属性值&quot;)
+
+        批量设置
+        元素. css({
+                属性名:属性值，
+                属性名:属性值...
+            })
+                
+
+    5. jQuery 元素内容
+        html内容
+        元素.html()     获取元素的html的内容
+        元素.html('html内容')     设置元素的html的内容
+
+        text
+        元素.html()     获取元素的文本内容
+        元素.html('文本内容')     设置元素的文本内容
+
+        val
+        元素.input()     获取input元素文本内容
+        元素.input('设置内容')     设置input元素的文本内容
+
+</div></code></pre>
+<h3 id="18-jquery%E4%B8%AD%E6%93%8D%E4%BD%9C%E5%BE%AA%E7%8E%AF%E7%9A%84%E6%96%B9%E6%B3%95">1.8 jQuery中操作循环的方法</h3>
+<pre class="hljs"><code><div>    each
+    循环数组、对象的each方法
+    $.each(要循环的数组/对象,function(idx,item){
+        item : 数组项/属性值
+        idx  : 下标/属性名
+    })
+
+    循环jQuery对象的方法
+    元素.each(function(idx,item){
+        item : 数组项(DOM元素)
+        idx  : 下标
+    });
+
+</div></code></pre>
+<h3 id="19-jquery%E4%B8%AD%E7%9A%84extend%E6%96%B9%E6%B3%95">1.9 jQuery中的extend方法</h3>
+<pre class="hljs"><code><div>    1.拼接对象
+    $.extend(对象1,对象2,...) 将对象拼接在第一个对象身上，有返回值
+
+    2.克隆 当第一个对象为空时，可以实现克隆对象
+    1. 浅拷贝把原来对象里面的复杂数据类型地址拷贝给目标对象
+    var obj = $.extend({},源对象);
+
+    2. 深拷贝把里面的数据完全复制一份给目标对象 如果里面有不冲突的属性,会合并到一起 
+    var obj = $.extend(true,{},源对象);
+
+</div></code></pre>
+<h2 id="%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%BA%8C%E5%A4%A9">第二十二天</h2>
+<h2 id="1-jquery-%E7%9A%84bom">1 jQuery 的BOM</h2>
+<h3 id="11-%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0%E7%9A%84%E5%AE%BD%E9%AB%98">1.1 获取元素的宽高</h3>
+<pre class="hljs"><code><div>    原生 js
+    clientWidth/Hight   获取可视宽高 自身宽高+padding
+    offsetWidth/Hight   获取元素占位宽高 自身宽高+padding+border
+    scrollWidth/Hight   获取元素实际内容宽高 元素内容的实际宽高
+
+    jQuery获取元素宽高
+    width/height    自身宽高
+    innerWidth/innerHeight  自身宽高+padding
+    outerWidth/outerHeight  自身矿高+padding+border
+    outerWidth(true)/outerHeight(true)  自身宽高+padding+border+margin
+
+</div></code></pre>
+<h3 id="12-%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0%E4%BD%8D%E7%BD%AE">1.2 获取元素位置</h3>
+<pre class="hljs"><code><div>    原生 js
+    offsetLeft/Top 获取元素位置
+
+    jQuery获取元素位置
+    offset      可以直接获取到元素位置 值为数字  可以直接参与运算 元素离文档的距离
+    position    获取元素离父盒子的距离 不能设置 只能获取
+
+
+</div></code></pre>
+<h3 id="13-%E6%93%8D%E4%BD%9C%E5%85%83%E7%B4%A0%E6%BB%9A%E5%8A%A8%E6%9D%A1">1.3 操作元素滚动条</h3>
+<pre class="hljs"><code><div>    scrollTop
+    获取滚动条当前所在位置  jQuery.scrollTop()
+    
+    设置滚动位置 jQuery.scrollTop(被卷去的高度(数字))
+   
+</div></code></pre>
+<h2 id="2-jquery-%E7%9A%84dom">2 jQuery 的DOM</h2>
+<h3 id="21-%E5%88%9B%E5%BB%BA%E8%8A%82%E7%82%B9">2.1 创建节点</h3>
+<pre class="hljs"><code><div>    DOM创建节点
+    document.createElement 创建元素节点
+    document.createTextNode  创建文本节点
+
+    jQuery创建节点
+    $('html标签内容') 
+
+</div></code></pre>
+<h3 id="22-%E8%BF%BD%E5%8A%A0%E5%85%83%E7%B4%A0">2.2 追加元素</h3>
+<pre class="hljs"><code><div>    DOM追加元素
+    appendChild
+    insertBefore
+
+    jQuery追加元素
+    append类：
+    append：jquery父级元素.append(要追加的元素) 将要追加的元素追加到父元素的末尾
+    appendTo：要追加的元素.appendTo(父元素)	作用同上
+
+    prepend 类
+    prepend：jquery父级元素.prepend(要追加的元素) 将要追加的元素追加到父元素的开头
+    prependTo：appendTo：要追加的元素.prependTo(父元素) 作用同上
+
+    insert类：
+    before  要追加的元素.before(旧元素)    在旧元素之前插入要追加的元素
+    insertBefore：旧元素.before(要追加的元素)	在旧元素前面 插入 要追加的元素
+    after：要追加的元素.after(旧元素)	在旧元素后面 插入 要追加的元素
+    insertAfter：旧元素.before(要追加的元素)	在旧元素后面 插入 要追加的元素
+
+
+</div></code></pre>
+<h3 id="23-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0">2.3 删除元素</h3>
+<pre class="hljs"><code><div>    remove
+    元素.remove()   移除元素 会删除jQuery元素身上的事件
+    detach
+    元素.detach()   移除元素 会保留jQuery元素身上的事件
+    empty
+    元素.empty()    清空元素html内容
+
+</div></code></pre>
+<h3 id="24-%E5%85%8B%E9%9A%86%E5%85%83%E7%B4%A0">2.4 克隆元素</h3>
+<pre class="hljs"><code><div>    clone
+    元素.clone()    可以自动实现深层可伶 可以将克隆元素的内容直接克隆下来 但是不能克隆事件 如果事件也想克隆 传入 参数 true
+    
+
+</div></code></pre>
+<h3 id="25-%E6%9B%BF%E6%8D%A2%E8%8A%82%E7%82%B9">2.5 替换节点</h3>
+<pre class="hljs"><code><div>    replaceAll
+    新元素.replaceAll(旧元素)   新元素替换旧元素
+
+    replaceWith
+    旧元素.replaceWith(新元素)  新元素替换旧元素
+
+</div></code></pre>
+<h3 id="26-%E5%8C%85%E8%A3%B9%E8%8A%82%E7%82%B9">2.6 包裹节点</h3>
+<pre class="hljs"><code><div>    wrap
+    元素.wrap('&lt;标签&gt;')   使用指定标签包裹元素
+   
+    wrapAll
+    元素组.wrapAll('&lt;标签&gt;')  适用指定标签 包裹所有元素
+    
+    wrapInner
+    元素.wrapInner('&lt;标签&gt;') 适用指定标签 嵌套进jQuery元素中
+    
+    unwrap
+    元素.unwrap()   删除元素的父元素，如果父元素为body则不能删除
+
+</div></code></pre>
+<h2 id="3-jquery%E7%9A%84%E4%BA%8B%E4%BB%B6">3 jQuery的事件</h2>
+<h3 id="31-%E6%B7%BB%E5%8A%A0%E4%BA%8B%E4%BB%B6%E7%9A%84%E6%96%B9%E6%B3%95">3.1 添加事件的方法</h3>
+<pre class="hljs"><code><div>    元素.事件名(function(){
+        处理函数
+    });
+
+    事件对象
+     元素.事件名(function(even){
+        even 就是事件对象
+    });
+    pageX、pageY 鼠标的位置 可视区为基准点
+    target 事件目标
+    ctrlKey、altKey、shiftKey   功能键
+    even.which  相当于keyCode 而且可以记录鼠标的键值，123(左中右)
+    ev.delegateTarget   事件绑定对象
+
+</div></code></pre>
+<h3 id="32-%E4%BA%8B%E4%BB%B6">3.2 事件</h3>
+<pre class="hljs"><code><div>    单个事件绑定
+    元素.on('事件名称',function(){
+        事件对象
+    });
+
+    多事件绑定
+    元素.on('事件1,事件2,....',function(){
+        事件对象
+    });
+
+    多时间绑定，多事件处理
+    元素.on({
+        事件1 : function(){},
+        事件2 : function(){}
+    });
+
+    自定义事件
+    元素.on('自定义事件',function(){
+        处理函数
+    });
+    元素.trigger('自定义事件');
+
+    事件委托
+    元素.on('事件名称','实际绑定子元素的选择器',function(){
+        处理函数
+    });
+
+    解绑事件
+    元素.off('事件名称')    可以解绑掉相同事件名的所有事件
+
+    事件命名空间
+    元素.on('事件名.命名空间',function(){});
+    绑定事件添加了命名空间，我们可以使用命名空间来进行解绑
+    元素.off('事件名.命名空间');
+
+    one方法绑定事件
+    元素.one('事件名称',function(){
+        事件对象
+        one绑定的方法 只能执行一次 执行完一次以后 就不能重复执行
+    });
+
+    合成事件 hover
+    元素.hover(function(){
+        函数1 处理鼠标移入事件 mouseenter
+    },function(){
+        函数2 处理鼠标移出事件 mouseleave
+    })
+
+
+</div></code></pre>
+<h1 id="%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%B8%89%E5%A4%A9">第二十三天</h1>
+<h2 id="1-jquery%E5%8A%A8%E7%94%BB">1 jQuery动画</h2>
+<h3 id="11-jquery%E7%9A%84%E9%A2%84%E5%88%B6%E5%8A%A8%E7%94%BB">1.1 jQuery的预制动画</h3>
+<ul>
+<li>jQuery提前设置好的动画 动画效果固定，相对比较死板</li>
+<li>操作简单</li>
+</ul>
+<pre class="hljs"><code><div>    显示隐藏动画
+    show    显示元素
+    元素.show()       直接显示
+    元素.show(2000)   表示动画时间 2000ms
+    元素.show(2000,easing)   动画时间 2000ms,速度曲线easing
+    元素.show(2000,easing,function(){}) 动画执行完成之后 回调函数立即执行
+    jQuery速度曲线只有 linear(匀速) swing(先慢后快再慢)
+
+    hide    隐藏元素
+    元素.hide()    直接显示
+    ...     其余效果和 show 一样 效果相反
+
+
+    toggle  切换隐藏显示状态
+    元素.toggle()  直接切换状态
+    ...     其余效果和show一样 实现切换隐藏显示状态
+
+    上拉下拉动画
+    slideUp
+    元素.slideUp()      将元素高度不断减小 到0时隐藏
+    元素.slideUp(n)     n表示事件 单位为ms 
+    元素.slideUp(n,easing)  easing表示速度曲线 linear swing
+    元素.slideUp(n,easing,function(){}) 动画执行完成以后 回调函数立即执行
+
+
+    slideDown   下拉动画 将元素显示出来 不断增大元素高度 直到元素高度增大到指定高度为止
+    ...     用法和上拉一样 效果相反
+
+
+    slideToggle   切换上拉下拉效果 
+    ...     其余用法和上述一样
+
+
+    淡入淡出动画
+    fadeIn  淡入	
+    用法和 slide系列和show 系列完全一样
+    效果：元素透明度从 0 逐步增大 一直到 1，之后显示
+
+    fadeOut 淡出
+    用法和 fadeIn 完全一样
+    效果：元素透明度从 1 逐步奸笑 一直到 1，之后隐藏
+
+    fadeToggle  淡入淡出切换
+    用法和fadeIn一样
+    效果：如果显示就淡出 如果隐藏就淡入
+
+    fadeTo  淡入淡出到n
+    jquery元素.fadeTo(speed,to,easing,callback)
+	jquery元素.fadeTo(动画时间,透明度终点,easing,callback) 透明到多少
+
+</div></code></pre>
+<h3 id="12-jquery%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%A8%E7%94%BB">1.2 jQuery的自定义动画</h3>
+<ul>
+<li>jQuery的一个方法，用户可以自由定义动画效果 相对灵活。</li>
+</ul>
+<pre class="hljs"><code><div>    animate
+    元素.animate({
+        属性 : 终点值,
+        属性 : 终点值,
+        ...
+    },动画时间,easing,function(){})
+    第一个对象必须传递 剩余参数 可以传递 可以不传递
+    第一个参数对象 用来设置要添加动画的属性 及终点值
+
+    元素.animate({
+        属性 : 终点值,
+        属性 : 终点值,
+        ...
+    },{
+        easing : linear,    // 速度曲线
+        duration : n,   // 动画时间
+        complete : function(){} // 动画完成以后的回调函数
+        queue : true/false  // 操作动画队列 控制当前动画是否存入动画队列，true 表示将当前动画存入队列，后续要排队执行。false当前动画不存入动画队列，后续动画可以直接执行
+    });
+
+</div></code></pre>
+<h3 id="13-jquery%E5%8A%A8%E7%94%BB%E9%98%9F%E5%88%97">1.3 jQuery动画队列</h3>
+<ul>
+<li>当jQuery动画被多次触发的时候，就会自动进行排队，按照队列顺序，依次执行动画。</li>
+</ul>
+<h3 id="14-jquery%E5%81%9C%E6%AD%A2%E5%8A%A8%E7%94%BB">1.4 jQuery停止动画</h3>
+<pre class="hljs"><code><div>    元素.stop(是否清空动画队列,是否将当前动画立即执行到终点)
+    参数都为布尔值
+
+    元素.stop()  == 元素.stop(false,false)      // 停止当前动画到当前位置
+    元素.stop(true) == 元素.stop(true,false)    //清空后续动画队列  不立即执行到当前动画的终点
+    元素.stop(true,true)    //清空后续动画队列  立即执行到当前动画的终点
+    元素.stop(false,false)  //不清空后续动画队列  立即执行到当前动画的终点
+
+</div></code></pre>
+<h3 id="15-jquery%E5%BB%B6%E8%BF%9F%E5%8A%A8%E7%94%BB">1.5 jQuery延迟动画</h3>
+<pre class="hljs"><code><div>    delay
+    元素.delay(n)   n表示延迟时间 单位ms 不写单位
+
+</div></code></pre>
+<h3 id="15-jquery%E5%8A%A8%E7%94%BB%E9%98%9F%E5%88%97%E6%8F%92%E9%98%9F%E6%96%B9%E6%B3%95">1.5 jQuery动画队列插队方法</h3>
+<pre class="hljs"><code><div>    queue
+    元素.queue(function(形参){
+        要插队的代码
+        形参会接受一个函数 函数可以解决后续动画队列无法执行的问题，只用调用即可
+    });
+
+
+</div></code></pre>
+<h2 id="2-jquery%E7%9A%84ajax">2 jQuery的Ajax</h2>
+<pre class="hljs"><code><div>    ajax
+    $.ajax({
+        url : 请求数据的后台地址,   必填
+        type : 请求方式,
+        dataType : 前后端数据交互格式,
+        data : {    请求提交的数据
+            键名 : 键值,
+            ...
+        },
+        timeout : n, n是超时时间 单位ms，请求超时时间 
+        beforeSend : function(){
+            请求发送前调用的函数
+        },
+        success : function(res){
+            请求成功后调用
+            res形参就是响应成功后返回的数据
+        },
+        error : function(err){
+            请求响应失败时候调用
+            err就是错误信息
+        },
+        complete : function(){
+            会在请求响应结束时候调用
+        }
+    });
+
+    get
+    $.get(url地址,{键名 : 键值,...},function(res){
+        res为响应数据
+    })
+
+    post
+    $.post(url地址,{键名 : 键值,...},function(res){
+        res为响应数据
+    })
+
+
+
+    跨域请求
+    同源策略 : 如果两个页面的协议 域名 和端口号都相同 就称这两个页面为同源页面
+    https://www.baidu.com/:80
+    协议        域名        端口号
+    同源页面可以 互相 访问数据
+
+    两个页面如果不是同源页面 则为跨域页面
+    跨域页面不能访问数据
+
+    实际开发中 很多情况下 必须能从跨域网页获取到数据
+
+    jQuery中的 jsonp 跨域写法
+    res只能使用get方法 不能使用其他方法
+    $.ajax({
+        url : 地址,
+        dataType : 'jsonp',
+        success : function(res){
+            res是相应数据
+        }    
+    });
+
+    jsonp跨域请求 只能使用get方法 不能使用其他方法,
+    如果一定要用post 实现跨域 可以用 cors 服务器端开放权限
+
+
+
+    jQuery的数据串联化
+    serialize
+    表单元素.serialize();
+    表单元素 表示的是 $('form')
+    将form中的所有 input 的name属性和value属性拼接为键值字符串
+    拼好的字符串 可以 直接提交
+
+    serializeArray
+    表单元素.serializeArray()
+    效果：将form表单中所有的input 的name属性和value属性拼接为数组项为对象的数组
+    拼接好的数组可以直接提交
+    
+
+    
+</div></code></pre>
+<h1 id="%E7%AC%AC%E4%BA%8C%E5%8D%81%E5%9B%9B%E5%A4%A9">第二十四天</h1>
+<h2 id="1-jquery%E7%9A%84%E6%8F%92%E4%BB%B6">1 jQuery的插件</h2>
+<ul>
+<li>插件的概念，jQuery为了更方便的开发，因此将一些内容封装在一起，这些封装好的复杂功能，就被称之为插件</li>
+</ul>
+<pre class="hljs"><code><div>    手动封装插件
+    jquery中的插件分为两类
+        
+        1. 类级别插件：就是 $(jQuery)的方法 调用方法：$/jquery.类级别插件名()
+        类级别插件封装方法：
+        $.extend({
+            方法名 : function(){};
+        });
+        封装规范:
+            1 命名格式为jQuery.插件名.js
+            2 jQuery插件应该在开头和结尾都加上分号，防止压缩时报错。
+            3 jQuery在编写内容的时候 应尽量不使用 $ 符 可以使用匿名函数来实现效果
+
+        2. 对象级别插件：就是jQuery元素的方法 调用方法：$('元素').对象级别插件名()
+        对象级别的封装方法：
+        $.fn.extend({
+            方法名 : function(){}
+        });
+        封装规范:
+            1 jQuery对象级别插件中 函数的返回值 应尽量是调用方法的jQuery元素，为了能够链式编程。
+            2 对象级别插件中 this-&gt;调用方法的jQuery元素
+        
+        绝大多数jQuery元素的方法的返回值 都是调用方法的jquery元素，所以可以链式调用
+        但是某些jQuery元素的方法返回值不是调用它的jQuery元素
+        如： css html获取元素内容 text获取元素文本内容 不可以使用链式调用
+
+    使用第三方插件
+    
+
+</div></code></pre>
+<h2 id="2-zepto">2 zepto</h2>
+<ul>
+<li>zepto 是轻量级的jQuery替代品 最小可以压缩到9.6k 一般用在移动端开发中</li>
+<li>zepto 为了进一步精简代码 因此提出了模块化概念</li>
+<li>zepto 源码质保函一些必要的模块 另外一些可以根据用户需求进行引入</li>
+</ul>
+<pre class="hljs"><code><div>    zepto和jQuery的区别
+    1 获取宽高的方法
+    jQuery :  width  innerWidth  outerWidth()
+    zepto:
+        元素.width()    元素+padding+border 其余两种不可用
+
+    2 获取位置的方法
+    jQuery : offset position
+    zepto : 
+        元素.offset()   返回一个对象包含当前元素到页面左侧和顶部的距离，还包含元素的宽高
+        元素.position() 返回结果和jQuery相同。
+
+    3 zepto 移动端事件
+    tap类事件
+        tap         手指点击事件
+        doubleTap   手指双击事件
+        longTap     手指长按事件
+
+    swipe类事件
+        swipe       滑动事件
+        swipeLeft   左滑事件
+        swipeRight  右滑事件
+        swipeUp     上滑事件
+        swipeDown   下滑事件
+
+    
+</div></code></pre>
+
+</body>
+</html>

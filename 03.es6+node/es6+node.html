@@ -1,0 +1,2846 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>第三阶段总结.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+html{
+    padding: 0 100px;
+}
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%E7%AC%AC%E4%B8%80%E5%A4%A9">第一天</h1>
+<h2 id="1-es6%E7%AE%80%E4%BB%8B">1 ES6简介</h2>
+<ul>
+<li>ECMAscript6.0(简称ES6)，是下一代script标准的泛称。2015年6月发布，ES6的目标是使JavaScript这门编程语言也可以用来编写大型的企业级的应用程序，成为企业级的开发语言。</li>
+</ul>
+<pre class="hljs"><code><div>    1998年6月     ECMAscript2.0(第一版)
+    1999年12月    ECMAscript3.0(应用比较广泛)
+    2009年12月    ECMAscript5.0
+    2015年6月     ECMAscript6.0
+    2016 ES7
+    2017 ES8
+    ...
+    2020 ES2020
+
+</div></code></pre>
+<h2 id="2-es6%E7%9B%B8%E6%AF%94es5%E7%9A%84%E5%8D%87%E7%BA%A7">2 ES6相比ES5的升级</h2>
+<ul>
+<li>ES6比ES5更安全、更合理、更严谨一些。</li>
+</ul>
+<h3 id="21-%E6%96%B0%E5%A2%9E%E9%A1%B9">2.1 新增项</h3>
+<pre class="hljs"><code><div>    let和const
+    解构赋值
+    字符串、数值、对象、数组、函数 扩展
+    异步编程：itertor\generator\promise\async...await
+    ES6模块化
+
+</div></code></pre>
+<h3 id="22-%E8%AF%AD%E6%B3%95%E7%B3%96">2.2 语法糖</h3>
+<ul>
+<li>ES6其实是ES5的语法糖、ES6中的语法或功能ES5也能写，但是比较繁琐。</li>
+</ul>
+<h2 id="3-vscode%E6%8F%92%E4%BB%B6">3 vscode插件</h2>
+<ol>
+<li>jquery code snippets</li>
+<li>live server</li>
+<li>node-snippets</li>
+<li>open in browser</li>
+</ol>
+<h2 id="4-es6%E5%9F%BA%E7%A1%80">4 ES6基础</h2>
+<h3 id="41-let%E7%9A%84%E4%BD%BF%E7%94%A8">4.1 let的使用</h3>
+<ul>
+<li>let在ES6中声明变量</li>
+</ul>
+<pre class="hljs"><code><div>    ES6与ES5的区别:
+    1. let是块级作用域，var是函数作用域
+        let的用法和var一样
+        let在if、for语句中的声明的变量也是局部变量
+        相比var，let声明的变量可以防止全局污染
+
+    2. let不存在变量提升(具有暂时性死区特性)
+        let生命的变量必须先声明在使用
+        对于开发者来说，代码更严谨，错误提示一目了然
+
+    3. let在统一作用域下
+        函数的形参也不允许重复声明
+        再敷在的项目开发中，let声明的变量出国产生声明重复，会直接报错比较直观容易排除。
+
+</div></code></pre>
+<h3 id="42-const%E5%B8%B8%E9%87%8F">4.2 const常量</h3>
+<pre class="hljs"><code><div>    1. const声明一个只读的常量，一旦声明常量的值就不能改改变。
+    2. const一旦声明必须初始化
+    3. const作用域与let完全相同
+    4. 如果声明的是复杂数据类型，地址不可修改，但是地址执向的内容可以改变
+
+</div></code></pre>
+<h2 id="5-let%E4%B8%8Econst%E4%B8%8E%E9%A1%B6%E7%BA%A7%E5%AF%B9%E8%B1%A1%E8%A7%A3%E7%BB%91">5 let与const与顶级对象解绑</h2>
+<ul>
+<li>var声明的全局变量也是window对象的属性，这个被认为是JavaScript语言设计支出的败笔，会带来一些问题，ES6为了改变这一点，一方面规定了兼容性，var和function声明的依然是window对象的属性和方法，另外从ES6开始let、const声明就不在是 window对象的属性，即全局变量与顶层对象的绑定。</li>
+</ul>
+<h2 id="6-%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC">6 解构赋值</h2>
+<ul>
+<li>ES6允许按照一定的模式，将数组对象中的数据提取出来，赋值给变量,这个过程就叫解构赋值，作用可以简化代码</li>
+</ul>
+<pre class="hljs"><code><div>    1. 解构赋值 一定要有赋值运算
+    2. 等号的右边 是需要结构的数组或对象
+    3. 等号的左边是模式和变量
+
+
+    数组解构
+    1 完全解构（数狙中所有内容与变量个数相等）
+    2 不完全解构，变量比解构的内容少
+    3 不完全解构，变量比解构的内客多
+    4 不完全解构的缺含情况（用逗号分隔）
+    5 解构的默认值 当解构失败或严格等于(===)undefined时才生效
+
+
+    对象解构
+    对象中的键是没有次序的，对象是依靠键名匹配实现解构赋值
+    对象解构赋值的默认值和数组一样，当对象属性严格等于undefine时才生效
+
+
+    函数解构
+    函数形参的解构赋值，注意，注意圆括号内的[x,y]不是数组
+    利用对象的解构赋值给形参赋值，比较适合参数较多，并且不需要次序时的情况
+    注意，注意{x,y} 不是对象
+    函数形参解构赋值 也可以有默认值
+
+
+</div></code></pre>
+<h2 id="7-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%89%A9%E5%B1%95">7 字符串扩展</h2>
+<ul>
+<li>ES6中引入模板字符串(``)，用来实现字符串的拼接。</li>
+</ul>
+<h2 id="8-%E5%AF%B9%E8%B1%A1%E6%89%A9%E5%B1%95">8 对象扩展</h2>
+<h3 id="81-%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E5%90%8D%E6%96%B9%E6%B3%95%E5%90%8D%E7%AE%80%E5%86%99">8.1 对象属性名，方法名简写</h3>
+<pre class="hljs"><code><div>  let uname = &quot;张三&quot;;
+         let obj = {
+             uname,
+             say(){
+                 console.log(&quot;hello&quot;);
+             }
+         }
+         obj.say()
+
+</div></code></pre>
+<h3 id="82-%E5%AF%B9%E8%B1%A1%E4%B8%AD%E7%9B%B4%E6%8E%A5%E5%86%99%E5%85%A5%E5%8F%98%E9%87%8F%E5%92%8C%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95">8.2 对象中直接写入变量和函数，作为对象的属性和方法</h3>
+<pre class="hljs"><code><div>    let uname = &quot;姓名&quot;;
+    let obj1 = {
+        [uname+&quot;是&quot;] : &quot;张三&quot;
+    }
+    // obj1[uname] = '李四';
+    console.log(obj1);
+</div></code></pre>
+<h2 id="9-%E6%95%B0%E7%BB%84%E6%89%A9%E5%B1%95">9 数组扩展</h2>
+<h3 id="91-arrayform">9.1 Array.from()</h3>
+<ul>
+<li>将类数组转换为真正的数组</li>
+</ul>
+<pre class="hljs"><code><div>  // 类数组对象，可以适应 Array.from() 将其转换为真正的数组
+  let obj = {
+    0:&quot;hello&quot;,
+    1:&quot;ok&quot;,
+    2:&quot;world&quot;,
+    length:3
+  }
+  console.log( obj );
+  console.log( Array.from(obj) );
+</div></code></pre>
+<h3 id="92-includes">9.2 includes()</h3>
+<ul>
+<li>作用：用来查找数组中是否有给定的值，有返回true; 没有返回 false</li>
+</ul>
+<pre class="hljs"><code><div>    //includes()弥补了indexOf对NaN无效的缺陷，并且写法更简洁
+    if( arr.includes(NaN) ){
+        console.log( &quot;找到了&quot;);
+    }else{
+        console.log(&quot;没找到&quot;);
+    }
+</div></code></pre>
+<ul>
+<li>es6书籍：https://es6.ruanyifeng.com/</li>
+</ul>
+<h1 id="%E7%AC%AC%E4%BA%8C%E5%A4%A9">第二天</h1>
+<h2 id="1-%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0">1 箭头函数</h2>
+<ul>
+<li>ES6允许使用箭头( =&gt; )来声明函数，简化代码</li>
+</ul>
+<h3 id="11-%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E4%BB%A5--%E4%B8%BA%E7%95%8C%E9%87%8D%E7%82%B9%E5%85%B3%E6%B3%A8%E4%B8%A4%E4%B8%AA%E7%82%B9">1.1 箭头函数以 =&gt; 为界，重点关注两个点：</h3>
+<pre class="hljs"><code><div>    1 箭头前面是形参
+    2 箭头后面是函数体
+
+    形参只有一个的话可以省略
+    没有形参 或者有多个 必须用 () 括起
+
+
+    如果函数中有多条代码，必须用大括号包起来
+    如果函数中只有一条，大括号可以省略
+
+    如果只有一条代码，而且是return语句，return也可以省略
+
+    如果只有一句代码，而且返回一个对象，则为了避免歧义，需要用小括号包起来
+
+
+</div></code></pre>
+<h3 id="12-%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84this">1.2 箭头函数中的this</h3>
+<pre class="hljs"><code><div>    普通函数this指向规律：
+        1 全局中指向window，在定时器中指向window
+        2 事件处理函数中，this指向事件源
+        3 在对象的方法中，this指向对象本身
+        4 call() apply() bind() 可改变this指向
+
+    箭头函数中的this指向：
+        1 当前头函数定义好后，this的指向就是固定的。
+        2 永远指向上层环境(函数内、全局)
+        3 箭头函数中的this与事件绑定，call、apply统统没有关系
+
+    小经验:向上找箭头函数所在最近的父作用城，看能否写console.log(this)，如果能那么this指向谁，箭头函数中的this也指向谁。如果不能，继续向上重复过程，一直到script标签位置。│
+        例子：
+        var title = '张三';
+        let obj = {
+            title:&quot;jack&quot;,
+            op:{
+                title:&quot;rose&quot;,
+                say(){
+                    return {
+                        play:() =&gt;{
+                            console.log(&quot;我是：&quot;+this.title); // rose
+                        }
+                    }
+                }
+            }
+        }
+        let oo = obj.op.say();
+        oo.play();
+    
+</div></code></pre>
+<h3 id="13-%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E4%B8%8D%E9%80%82%E7%94%A8%E7%9A%84%E6%83%85%E5%86%B5">1.3 箭头函数不适用的情况</h3>
+<ul>
+<li>不适合在dom的事件绑定函数中</li>
+<li>不能作为构造函数。</li>
+</ul>
+<h3 id="14-%E5%87%BD%E6%95%B0%E5%BD%A2%E5%8F%82%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC">1.4 函数形参的默认值</h3>
+<pre class="hljs"><code><div>  /*    function fn1(name) {  
+            // if(name == undefined){
+            //     name = '张三'
+            // }
+            // if(!undefined){
+            //     name = '张三';
+            // }
+            name = name || &quot;张三&quot;;//短路语法
+            console.log(name);
+        } */
+        
+        //ES6 允许为形参指定默认值
+        function fn1(name = '张三'){
+            console.log(name);
+        }
+        fn1(&quot;lisi&quot;);
+
+</div></code></pre>
+<h3 id="15-rest-%E5%89%A9%E4%BD%99%E5%8F%82%E6%95%B0%E8%BF%90%E7%AE%97%E7%AC%A6">1.5 rest 剩余参数运算符(...)</h3>
+<ul>
+<li>获取函数的多余的实参，作为数组返回。</li>
+<li>... 运算符必须应用在最后一个形参上</li>
+</ul>
+<pre class="hljs"><code><div>    function fn(a,b,...c){
+        console.log(c);
+    }
+    fn(1,2,3,4,5);
+
+</div></code></pre>
+<h3 id="16-spread-%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6">1.6 spread 扩展运算符(...)</h3>
+<ul>
+<li>类型rest的逆运算，将一个数组转换为逗号分隔的参数列表。</li>
+</ul>
+<pre class="hljs"><code><div>    1） 用于函数调用时传参
+    let arr = [2,3,4];
+    let add = (x,y,z)=&gt;{
+    console.log( x+y+z );
+    }
+    add(...arr)
+    console.log( Math.max(...arr) ); 
+
+    // 2) 复制或合并数组 
+    let arr1 = [1,2,3];
+    let arr3 = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;];
+
+    // 可实现数组的深拷贝
+    let arr2 = [...arr1,...arr3];
+    arr1.push( 4 );
+    console.log( arr2 );
+
+    // 3） 实现对象的合并
+    let obj1 = {name:&quot;jack&quot;};
+    let obj2 = {age:20};
+    let obj3 = {
+        ...obj1,
+        ...obj2
+    }
+    console.log( obj3 )
+</div></code></pre>
+<h2 id="2-symbol-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">2 symbol 数据类型</h2>
+<ul>
+<li>symbol 有七种数据类型</li>
+<li>string 、number、boolean、object、undefined、Null、symbol</li>
+</ul>
+<pre class="hljs"><code><div>    // symbol类型，用于提供一个独一无二的值
+    let s1 = Symbol();
+    let s2 = Symbol();
+    console.log(typeof s1);
+    console.log(s1 === s2);
+    console.log(s1,s2);
+
+
+    // 用于对象的属性名，可以保证不会出现同名属性
+    let obj={
+        [s1] : '张三',
+        [s2] : '李四',
+    }
+    console.log(obj);
+
+
+</div></code></pre>
+<h2 id="3-set%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">3 set数据类型</h2>
+<ul>
+<li>ES6中新增的set,类似于数组的数据结构，但是set其中的成员都是唯一的，是不可能重复的，set主要作用用来过滤</li>
+</ul>
+<pre class="hljs"><code><div>    set类型提供的属性和方法
+    add()添加某个值
+    delete() 删除某个值
+    has() 返回bool类型，表示是否包含指定的值
+    clear() 清除所有值
+    size 返回set中内容的长度，类似数组中的length
+
+</div></code></pre>
+<h2 id="4-map%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">4 map数据类型</h2>
+<ul>
+<li>ES6中新增的map,类似于对象的数据结构，map也是键值对的集合，但是'键'的范围限于字符串，任意类型doukeyi做键。</li>
+<li>综合来说 map比普通的json更强大，但是目前开发环境用处不大，因为前后台交互的数据格式主要是json、JSON.stringify() JSON.parse(),可以方便的实现字符串与对象的转换，单map不支持此方法。而且 map 不支持解构赋值。</li>
+</ul>
+<pre class="hljs"><code><div>    // map类独享类型，任意类型都可以做键
+    let btns = document.querySelectorAll('input');
+
+    let arr=[1,2,3,4];
+    
+    let m1 = new Map();
+    m1.set(btns,'所有的input');
+    m1.set(arr,'数组');
+    console.log(m1);
+
+
+</div></code></pre>
+<h2 id="5-iterator">5 iterator</h2>
+<ul>
+<li>Js中有 '集合'性质的数据类型，array、object、set、map等，我们需要一个机制，来比遍历这些数据结构的每一项。</li>
+<li>for...of 遍历数组</li>
+<li>iterator 就是用来提供统一的遍历机制的接口</li>
+</ul>
+<pre class="hljs"><code><div>    在对象上实现 iterator 接口
+    obj[Symbol.iterator] = function(){
+        let keys = Object.keys(obj);
+        let index = 0;
+        return {
+            next : function(){
+                let key = keys[index++];
+                let done=false;
+                if(index&gt;keys.length){
+                    done=true;
+                }
+                return {value:obj[key],done}
+            }
+
+        }
+    }
+    
+</div></code></pre>
+<h2 id="6-generator-%E5%87%BD%E6%95%B0">6 generator 函数</h2>
+<ul>
+<li>generator 是 ES6提供的用于异步编程的解决方法，generator可以看成一个状态生成器，其内部都可以保存多个状态，使用iterator实现遍历，generator函数的调用结果会产生一个iterator</li>
+</ul>
+<h2 id="7-promise-%E5%87%BD%E6%95%B0">7 promise 函数</h2>
+<ul>
+<li>
+<p>promise是ES6提供的异步编程解决方案，比传统的解决方法(回调函数)更合理强大，使用promise可以将异步操作同步的形式表现出来，避免了层层嵌套的回调函数，此外promise还提供了一些接口，使得控制异步操作更容易。</p>
+</li>
+<li>
+<p>promise 对象有以下特点</p>
+</li>
+<li>
+<p>一般只有异步操作的结过决定是哪一种状态</p>
+</li>
+</ul>
+<ol>
+<li>pending(程序运行中)</li>
+<li>fulfilled(已成功的)</li>
+<li>rejected(已失败的)</li>
+</ol>
+<ul>
+<li>一旦状态完成 就不会在改变，任何时候都是这个结过。promise状态的改变只有两种可能：pending=&gt;fulfilled 或者 pending=&gt;rejected，这两种状态一旦有一个发生，就会保存这个结过，被称为 resolved (已定型)</li>
+</ul>
+<h3 id="71-promise%E7%9A%84%E9%93%BE%E5%BC%8F%E8%AF%AD%E6%B3%95">7.1  promise的链式语法</h3>
+<pre class="hljs"><code><div>        function p1(){
+            return  getData({url:'./data/provinice.json',promise:true});
+        }
+
+        function p2(){
+            return  getData({url:'./data/city.json',promise:true});
+        }
+
+        function p3(){
+            return  getData({url:'./data/town.json',promise:true});
+        }
+        p1().then((res) =&gt; {
+            console.log(res);
+            return p2();
+        })
+        .then((res) =&gt; {
+            console.log(res);
+            return p3();
+        })
+        .then((res) =&gt; {
+            console.log(res);
+        });
+
+
+</div></code></pre>
+<h3 id="72-promise%E7%9A%84-all%E6%96%B9%E6%B3%95-%E5%92%8C-race%E6%96%B9%E6%B3%95">7.2 promise的 all()方法 和 race()方法</h3>
+<ul>
+<li>all()方法作用 : 当有多个异步请求发送时，等待所有的异步操作都成功，在进行下一步。</li>
+</ul>
+<pre class="hljs"><code><div>    // 等最慢的
+        // all()等所有的resolve都执行成功再执行then
+        Promise.all([
+            getData({url:'./data/provinice.json',promise:true}),
+            getData({url:'./data/city.json',promise:true}),
+            getData({url:'./data/town.json',promise:true})
+        ]).then((res) =&gt; {
+            console.log(res);
+            let [provinice,city,town]=res;
+            console.log(provinice);
+            console.log(city);
+            console.log(town);
+        });
+
+
+        // race 竞速,找最快的
+        // 大的互联网企业为了用户体验，会有多个分布式数据中心，race()方法同时发送发送多个ajax请求到多个数据中心，优先使用最先返回数据的那个
+
+</div></code></pre>
+<h1 id="%E7%AC%AC%E4%B8%89%E5%A4%A9">第三天</h1>
+<h2 id="1-asyncawait-%E5%87%BD%E6%95%B0">1 async...await 函数</h2>
+<ul>
+<li>ES2017标准引入的 async...await 函数，是的异步操作变得更加方便。async是generator函数的语法糖。将*修饰为了 async,将yield替换为了 await</li>
+</ul>
+<h3 id="11-async-%E5%87%BD%E6%95%B0%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%89%B9%E5%BE%81">1.1 async 函数的基本特征</h3>
+<ul>
+<li>async 函数调用后返回一个promise实例对象。不管有没有resolve()，默认promsie对象的状态就是fulfiled(已成功的)。除非报错的情况下返回rejected(失败的)</li>
+<li>async 函数返回的promise状态是自动的，不需要像promise一样手动的调用resolve()和reject()方法。</li>
+</ul>
+<pre class="hljs"><code><div>        async function fn(){
+            // 模拟错误
+            // console.log(a);
+            return 'ok'
+        }
+
+        let a=fn();
+        // console.log(a);
+        a.then((res)=&gt;{
+            console.log(res);
+        }).catch((err)=&gt;{
+            console.log(err);
+        })
+
+</div></code></pre>
+<h3 id="12-await-%E8%A1%A8%E8%BE%BE%E5%BC%8F">1.2 await 表达式</h3>
+<ul>
+<li>await 不能单独使用，必须放在async函数中，await为等待，一般await后面是一个promise的返回结果</li>
+</ul>
+<pre class="hljs"><code><div>   async function fn1(){
+            let pro = await  getData({url:'./data/provinice.json',promise:true});
+            let city =  await   getData({url:'./data/city.json',promise:true});
+            let town =  await  getData({url:'./data/town.json',promise:true});
+
+            console.log(pro);
+            console.log(city);
+            console.log(town);
+        }
+        fn1();
+
+
+</div></code></pre>
+<h3 id="13-asyncawait%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86">1.3 async...await的错误处理</h3>
+<blockquote>
+<p>try{}catch{}</p>
+</blockquote>
+<pre class="hljs"><code><div>    try{
+        // 可能出错的代码、
+    }catch(err){
+        console.log(err);
+    }
+</div></code></pre>
+<blockquote>
+<p>promise的catch()</p>
+</blockquote>
+<pre class="hljs"><code><div>    async函数调用结果是返回一个 promise实例独享，因此可以再async函数之后写.catch()方法。
+       async function fn1(){
+                let pro = await  getData({url:'./data/provinice.json',promise:true});
+                console.log(pro);
+        }
+        fn1().catch((err)=&gt;{
+            console.log(err);
+        });
+
+</div></code></pre>
+<h2 id="2-es6%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1">2 ES6的面向对象</h2>
+<ul>
+<li>面向过程编程：事件驱动、注重流程。下一步的操作依赖上一步的结果。</li>
+<li>面向对象编程：将现实生活中的实体抽象为计算机中的类，更注重的类、属性、方法等等。</li>
+<li>面向对象编程思路由上世纪70年代，图美奖的获得者(艾伦·凯)提出的。主要是将一类实体作为一个类(class),内部封装了属性(变量)和方法(函数):在使用时将类实例化为对象，这样实例对象就用用了类所有属性和方法。</li>
+</ul>
+<h3 id="21-es6%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%86%99%E6%B3%95">2.1 ES6面向对象的写法</h3>
+<pre class="hljs"><code><div>    // 类的声明
+    class Person{
+        // 构造函数 必须要有，类实例化时构造函数自动执行
+        constructor(name,age){
+            this.name = name;
+            this.age = age;
+        }
+        // 自定义普通函数
+        say(){
+            console.log('此时来了一位：'+this.name);
+        }
+        // 静态函数
+        static play(){
+            console.log('heello word');
+        }
+    }
+    let stu1=new Person('陈冬晨',20);
+
+</div></code></pre>
+<h3 id="22-%E9%9D%99%E6%80%81%E5%87%BD%E6%95%B0">2.2 静态函数</h3>
+<ul>
+<li>正常情况下所有类中定义的方法都会被实例继承，但是如果加上 static 关键词，表示此方法为静态方法不能实例调用。而是直接通过类调用。</li>
+</ul>
+<pre class="hljs"><code><div>    调用方法： 
+    类名.静态函数名()
+    
+</div></code></pre>
+<h3 id="23-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0">2.3 构造函数</h3>
+<ul>
+<li>构造函数constructor()是类的默认方法，使用 new 实例化 会自欧东调用constructor()。</li>
+<li>实例化时需要自动运行的方法可以写在constructor()中，必须要有此方法，没有会自动创建一个。</li>
+</ul>
+<h3 id="24-%E7%BB%A7%E6%89%BF">2.4 继承</h3>
+<ul>
+<li>ES6使用extends关键字 实现继承，比ES5的通过修改原型链实现继承要清晰的多。</li>
+</ul>
+<pre class="hljs"><code><div>    class Girl extends Person{
+
+    }
+    Girl.play();
+
+</div></code></pre>
+<h3 id="25-super%E6%96%B9%E6%B3%95">2.5 super()方法</h3>
+<ul>
+<li>子类函数中super()必须放在构造函数第一行，否则会出错，子类必须通过super方法得到父类相同的属性和方法，如果对子类添加属性。</li>
+</ul>
+<pre class="hljs"><code><div>
+    1. 需要使用super(参数1,参数2，...)实现对父类代码的&quot;借用”(实际是把this指向子类)
+
+    constructor(name,age,sex){
+        // 子类函数中super必须放在构造函数第一行，否则会报错
+        // 子类通过 super()得到父类相同的属性和方法
+        super(name,age);
+        this.sex=sex;
+    }
+
+    2. 在子类添加同名属性，覆盖父类属性
+        constructor(name,age,sex){
+        // 子类函数中super必须放在构造函数第一行，否则会报错
+        // 子类通过 super()得到父类相同的属性和方法
+        super(name,age);
+        this.name=name;
+        this.age=age;
+        this.sex=sex;
+    }
+
+
+</div></code></pre>
+<h3 id="26-super-%E5%AF%B9%E8%B1%A1">2.6 super 对象</h3>
+<ul>
+<li>super对象用在 子类覆盖的父类同名方法内，用来调用父类被覆盖的同名方法</li>
+</ul>
+<pre class="hljs"><code><div>    class A{
+        say(){};
+    }
+
+    class B extends A{
+        say(){};
+        go(){
+            // 父类 say 方法调用
+            super.say();
+            console.log('运动');
+        };
+    }
+
+</div></code></pre>
+<h2 id="3-%E6%B5%85%E5%A4%8D%E5%88%B6%E5%92%8C%E6%B7%B1%E5%85%8B%E9%9A%86">3 浅复制和深克隆</h2>
+<pre class="hljs"><code><div>    // 思路：
+    // 首先判断复制目标是数组还是对象，然后分别创建空[] 或 空 {}
+    // 使用 for...in遍历复制目标，然后创建同名的键，再根据键取得对应的值，保存到上一步创建的[]或{}。
+    // 在遍历时重复第一步
+    //  console.log( Array.isArray(obj.score)  );
+
+    function deepCopy(obj){
+    let result = Array.isArray(obj)?[]:{}; //创建空数组或空对象
+    for(let item in obj){
+        if( typeof obj[item] == &quot;object&quot; ){ 
+            // 如果复制的目标是 数组或对象，则递归调用
+            result[item] = deepCopy( obj[item] )
+        }else{
+            // 如果复制目标是普通类型，则直接复制
+            result[item] = obj[item];
+        }
+    }
+    return result;
+    }
+    console.log( deepCopy(obj) ); 
+    obj.score.push(100);
+    console.log( obj );
+</div></code></pre>
+<h1 id="%E7%AC%AC%E5%9B%9B%E5%A4%A9">第四天</h1>
+<h2 id="1-node%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%89%B9%E5%BE%81">1 node的基本特征</h2>
+<ol>
+<li>异步I/O</li>
+<li>单线程</li>
+<li>事件驱动</li>
+</ol>
+<h2 id="2-node%E9%A1%B6%E7%BA%A7%E5%AF%B9%E8%B1%A1">2 node顶级对象</h2>
+<pre class="hljs"><code><div>    console.log(global); // node 中的顶级对象
+    console.log(__dirname);// 返回当前js所在的目录
+    console.log(__filename);// 返回当前js的完整目录
+</div></code></pre>
+<h2 id="3-%E6%A8%A1%E5%9D%97%E5%8C%96">3 模块化</h2>
+<ul>
+<li>模块化编程思想非常流行。</li>
+<li>早期外部js引入的方式不适合越来越复杂的大型项目。主要问题:js的加载顺序有要求，每次应用都需要开发人员重新下载。还有能不能声明重复的变量或函数。</li>
+<li>node的模块化是结局按了common.js 做出了一些改进，node的模块化主要有三步：导出模块、标识模块、引入模块。</li>
+<li>使用模块还可以避免函数名和变量名冲突。相同名字的函数和变量完全可以分别存在不同的模块中，因此，我们自己在编写模块时，不必考虑名字会与其他模块冲突。但是也要注意，尽量不要与内置函数名字冲突。</li>
+</ul>
+<h2 id="4-node%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6">4 node的模块化加载机制</h2>
+<ul>
+<li>node中每一个js都是独立的模块，需要谁就require()谁</li>
+<li>js文件天生具有隔离作用域,乜咯js中的变量和函数默认情况下不能被其他js使用。</li>
+<li>可以使用 exports.x=x; 向外暴露</li>
+</ul>
+<pre class="hljs"><code><div>    exports就是node中内置的一个空对象 {} ，其实 expor.xx=xx;实际是为exports添加属性和方法。
+
+</div></code></pre>
+<ul>
+<li>使用  module.exports=xx 暴露</li>
+</ul>
+<pre class="hljs"><code><div>    let module = {
+        exports:{}
+    }
+    exports 可以理解为 module.exports 的一个引用。因此，无论任何情况下，都可以使用 module.exports 来代替 exports
+
+    如果要向外暴露一个class，使用module.exports 更方便
+    导入后，如果是 exports导出，实例化 let p1 = new Person.Person()
+    如果是module.exports， 实例化:  let p1 = new Person()
+
+</div></code></pre>
+<h2 id="5-npm%E6%98%AF%E4%BB%80%E4%B9%88">5 NPM是什么</h2>
+<ul>
+<li>NPM(node package manger)node的包管理器</li>
+<li>官网 npmjs.com</li>
+<li>中文网 npajs.cn</li>
+<li>他是世界上最大的软件注册表，每周有30亿次下载量，包含超过60000个包(package)，既代码模块</li>
+</ul>
+<h3 id="51-npm-%E7%9A%84%E4%BD%BF%E7%94%A8">5.1 npm 的使用</h3>
+<blockquote>
+<p>1 初始化</p>
+</blockquote>
+<ul>
+<li>npm init</li>
+<li>快速创建 npm init -y</li>
+<li>回答完所有问题后会在目录下生成 package.json配置文档</li>
+</ul>
+<h3 id="52-%E4%B8%8B%E8%BD%BD-npm-%E5%8C%85">5.2 下载 npm 包</h3>
+<ul>
+<li>nmp install 包名</li>
+<li>快捷方式 npm i 包名</li>
+<li>安装完成以后 会生成 package-lock.json 和 node_modules文件夹</li>
+<li>mode_modules 目录存放的就是下载的包，每个文件夹就是一个包</li>
+<li>package-lock.json 和package.json 为项目配置文件，有个dependencies字段，其中保存了您的项目所需要的包和版本号。其中package-lock.json为备份配置文件，万一项目使用了新版本导致兼容性问题，可以使用它还原为初始版本。</li>
+</ul>
+<pre class="hljs"><code><div>
+    第三方模块 nrm 切换下载地址
+    下载 nrm 
+    npm install nrm -g
+    nrm ls ： 查看国内可用下载地址列表
+    nrm use 下载地址名称 ：切换地址名称 
+
+</div></code></pre>
+<h3 id="53-npm%E5%8C%85%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6">5.3 npm包的加载机制</h3>
+<pre class="hljs"><code><div>    node内部有一个全局变量: module.paths
+
+    这个模块的加载路径，node会根据这个数组从上到下一次寻找有没有要加载的包名。
+    注意：如果require有路径，那加载的就是自定义模块。如果没有路径，那加载就是npm下载的包。
+    除此以外的加载机制为:
+    1 如果没有扩展名，node会自动按照.js .json .node的顺序来加载
+    2 如果找到一个目录，那么就会将其当做一个包来处理。
+    首先找有没有package.json文件，如果有，分析其中的main属性，找到对应的文件。
+    如果没有package.json文件，那么node会自动查找index.js文件，index.json，index.node，如果还没有就提示找不到路径
+
+</div></code></pre>
+<h3 id="54-%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83%E8%B7%AF%E5%BE%84">5.4 系统环境路径</h3>
+<ul>
+<li>安装node时，会自动创建一个系统环境路径，用来保存全局安装的包</li>
+</ul>
+<h3 id="55">5.5</h3>
+<ul>
+<li>本地安装 npm i 包名</li>
+<li>全局安装 npm i 包名 -g</li>
+<li>卸载安装 pun uninstall 包名</li>
+</ul>
+<h3 id="56-%E8%A1%A5%E5%85%85">5.6 补充</h3>
+<ul>
+<li>如果安装过程出错，或者需要把您的项目发给别人。可以删除package-lock.json 和 node_modules文件夹，然后执行npm install 命令，可以根据package.json自动重新安装所有的包</li>
+</ul>
+<h3 id="57-dos%E5%91%BD%E4%BB%A4">5.7 Dos命令</h3>
+<pre class="hljs"><code><div>    dir/w   查看文件夹下文件
+    del **  删除文件
+    cd 文件 切换路径
+    cd..    返回上级
+
+</div></code></pre>
+<h2 id="6-node%E4%B8%AD%E7%9A%84buffer">6 node中的Buffer</h2>
+<ul>
+<li>里面，没有提供关于二进制的操作，前端主要用来操作DOM和BOM;在nodejs当中引入了buffer这个概念，用来处理网络和文件操作，因为网络的请求和响应或文件的读写都是二进制操作，所以需要有这样的技术，我们在nodejs中使用buffer来操作。</li>
+<li>实际来说，计算机内部所有的文件存储都是二进制。包括文本图片视频等。计算机软件读取二进制文档后，经过一系列的转换显示为utf8编码，我们即可看到文字内容了。</li>
+</ul>
+<h2 id="7-node%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6">7 node中的事件</h2>
+<pre class="hljs"><code><div>    nodejs里的事件处理与前端的JavaScript不一样。node中事件的触发不了click等交互操作，而是通过event对象的emit()方法去主动触发。
+    例:
+    // 注册事件
+    event.on('click',function(){
+        console.log('我是点击事件');
+    });
+    event.addListener('xxx',function(){
+        console.log('大家好');
+    });
+
+    // 触发事件
+    event.emit('click');
+    event.emit('xxx');
+
+
+    其他事件处理方法:
+    1 addListener 注册一个事件，同名事件可以注册多个，不会覆盖
+    2 on on是addListener的简写，功能—样
+    3 once 注册事定的事件只触发一次
+    4 removeListener 移除一个事件
+    5 removeAllListeners 移除所有指定事什名称的事件，注意是需要传递一个事件名称参数的g)emit 发射、触发一个事件，是一个函数，需要主动调用
+
+</div></code></pre>
+<h2 id="8-node%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E6%A8%A1%E5%9D%97fs">8 node中的文件读写模块(fs)</h2>
+<h3 id="81-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6">8.1 读取文件</h3>
+<pre class="hljs"><code><div>    fs.readFile('./hello.txt',(err,data)=&gt;{
+        if(!err){
+            console.log(data.toString());
+            return;
+        }
+    });
+</div></code></pre>
+<h3 id="82-%E5%86%99%E6%96%87%E4%BB%B6%E5%92%8C%E8%BF%BD%E5%8A%A0%E6%96%87%E4%BB%B6">8.2 写文件和追加文件</h3>
+<pre class="hljs"><code><div>    // 写文件 writeFile()
+    // writeFile 异步版本  writeFileSync同步办法
+    // 异步意味着 node会继续向下执行其他代码
+    fs.writeFile('./hello.txt','今天天气不错啊 小啊 giao',err =&gt; {
+        if(err!=null){
+            console.log('写入失败');
+            return;
+        }
+        console.log('写入完成');
+    });
+    fs.appendFile('./hello.txt',str,err=&gt;{
+        console.log('追加完成1');
+    }); 
+
+</div></code></pre>
+<h3 id="83-%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6">8.3 删除文件</h3>
+<pre class="hljs"><code><div>    fs.unlink('./hello.md',err=&gt;{
+        console.log('已删除');
+    });
+
+</div></code></pre>
+<h3 id="84-%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8">8.4 判断文件是否存在</h3>
+<ul>
+<li>true 文件存在</li>
+</ul>
+<pre class="hljs"><code><div>    fs.exists('./hello.txt',exists=&gt;{
+        console.log(exists);
+    });
+</div></code></pre>
+<h3 id="85-%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E7%9A%84%E4%BF%A1%E6%81%AF">8.5 获取文件的信息</h3>
+<pre class="hljs"><code><div>    // 获取文件信息 返回为对象
+    let stats = fs.statSync('./hello.txt');
+    console.log(stats);
+    // 判断指定路径是否为目录
+    console.log(2,stats.isDirectory());
+    // 判断指定路径是否为文件
+    console.log(3,stats.isFile());
+
+    size : 字数 英文有效
+
+</div></code></pre>
+<h1 id="%E7%AC%AC%E4%BA%94%E5%A4%A9">第五天</h1>
+<h2 id="1-%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C">1 目录操作</h2>
+<h3 id="11-%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95">1.1 创建目录</h3>
+<blockquote>
+<p>fs.mkdir(路径,callback);</p>
+</blockquote>
+<h3 id="12-%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95">1.2 删除目录</h3>
+<blockquote>
+<p>fs.rmdir(路径,callback);</p>
+</blockquote>
+<h3 id="13-%E8%AF%BB%E7%9B%AE%E5%BD%95">1.3 读目录</h3>
+<blockquote>
+<p>fs.readdir(路径,callback(err,files));</p>
+</blockquote>
+<h2 id="2-node%E4%B8%AD%E7%9A%84%E6%B5%81-stream">2 node中的流 (stream)</h2>
+<ul>
+<li>流技术对于读取、上传较大的文件(mp3/mp4/rar)非常有用，它将大文件分为若干个小文件(chunk)，每次就搬运一个chunk，结束后再把这些小块拼合为一个大的文件。</li>
+<li>stream是node的一个接口，node中很多对象都实现了这个接口。</li>
+</ul>
+<h3 id="21-fs%E6%A8%A1%E5%9D%97%E7%9A%84%E8%AF%BB%E5%8F%96%E6%B5%81">2.1 fs模块的读取流</h3>
+<ul>
+<li>fs.createReadStream()</li>
+</ul>
+<blockquote>
+<p>常用的事件</p>
+</blockquote>
+<pre class="hljs"><code><div>    open   打开文件时触发
+    data   当有数据可读时触发
+    end    没有更多的数据时触发
+    error  在接收和写入过程中发生错误时触发
+
+    1 bit(字节)
+    1 byte(字) = 8 bit
+    1 Kb  = 1024 byte
+    1 Mb = 1024kb
+    1Gb = 1024Mb
+
+</div></code></pre>
+<h3 id="22-fs%E6%A8%A1%E5%9D%97%E7%9A%84%E5%86%99%E5%85%A5%E6%B5%81">2.2 fs模块的写入流</h3>
+<ul>
+<li>fs.createWriteStream()</li>
+</ul>
+<blockquote>
+<p>常用事件</p>
+</blockquote>
+<pre class="hljs"><code><div>    write	向目标文件写入数据，该方法可以反复调用多次
+
+    end		表示文件写入完毕，然后关闭文件，end方法只能调用一次。
+
+    finish	只有当end方法调用后，finish事件才会被调用，否则不会触发finish事件
+
+</div></code></pre>
+<h3 id="23-%E7%AE%A1%E9%81%93">2.3 管道</h3>
+<p>-管道提供了一个输出流到输入流的机制。通常我们用于从一个流中获取数据并将数据传递到另外一个流中。我们把文件比作装水的桶，而水就是文件里的内容，我们用一根管子(pipe)连接两个桶使得水从一个桶流入另一个桶，这样就慢慢的实现了大文件的复制过程。</p>
+<pre class="hljs"><code><div>    // 边读边写
+    readStream.on('data',(chunk)=&gt;{
+        writeStream.write(chunk);
+    });
+
+    // 读取结束
+    readStream.on('end',()=&gt;{
+        writeStream.end();
+    });
+
+    // 写入完成
+    writeStream.on('finish',()=&gt;{
+        console.log('复制结束');
+    });
+
+    // node提供了pipe方法封装了以上代码
+    readStream.pipe(writeStream);
+
+</div></code></pre>
+<h1 id="%E7%AC%AC%E5%85%AD%E5%A4%A9">第六天</h1>
+<h2 id="1-web%E6%9C%8D%E5%8A%A1%E5%99%A8">1 Web服务器</h2>
+<ul>
+<li>web服务器（www服务器）。是用来放置网站程序的服务器。一台服务器上可以托管多个网站。</li>
+<li>网站开发者把网页程序上传到web服务器上，再注册域名后，就可以向全世界提供网页访问服务（http服务）。</li>
+</ul>
+<pre class="hljs"><code><div>​		1） 分析URL
+​		2） 根据用户的请求调用响应的程序处理该请求
+​		3） 搭建数据库，设计数据库表，表中数据增删改查
+​		4）node和数据库结合：通过node对数据库进行处理为json
+​		5） node将json 渲染为html代码，发送给浏览器
+
+</div></code></pre>
+<h2 id="2-web%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84%E5%BA%94%E7%94%A8%E4%BB%8B%E7%BB%8D">2 web服务器上的应用介绍</h2>
+<ul>
+<li>硬件：超线程处理+超大内存+带宽</li>
+<li>软件： 操作系统： Linux 、Unix</li>
+</ul>
+<blockquote>
+<p>提供http服务的软件：</p>
+</blockquote>
+<pre class="hljs"><code><div>    Apache(音译为阿帕奇) 是世界使用排名第一的Web服务器软件。它可以运行在几乎所有广泛使用的计算机平台上，由于其跨平台和安全性被广泛使用，是最流行的Web服务器端软件之一。
+
+    Nginx(engine x) 是一个高性能的[HTTP](https://baike.baidu.com/item/HTTP)和[反向代理](https://baike.baidu.com/item/反向代理/7793488)web服务器，同时也提供了IMAP/POP3/SMTP服务。Nginx是由伊戈尔·赛索耶夫为[俄罗斯](https://baike.baidu.com/item/俄罗斯/125568)访问量第二的Rambler.ru站点（俄文：Рамблер）开发的，第一个公开版本0.1.0发布于2004年10月4日
+</div></code></pre>
+<ul>
+<li>web编程开发语言： Java、php、python、go...</li>
+<li>数据库：Oracle、SQLserver、mysql、NoSQL</li>
+<li>node既是平台又是开发语言</li>
+</ul>
+<h2 id="3-%E5%9F%9F%E5%90%8D%E5%92%8Cip%E5%9C%B0%E5%9D%80web%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E5%85%B3%E7%B3%BB">3 域名和IP地址、web服务器的关系</h2>
+<ul>
+<li>实际上通过ip地址（127.109.1.11）来访问web服务器，但是ip地址不方便记忆，因此发明域名（www.baidu.com），通过域名来访问web服务器。其中特殊IP地址（127.0.0.1）永远用于分配给本地服务器。</li>
+</ul>
+<h2 id="4-url%E5%85%A8%E7%A7%B0-uniform-resource-locator%E7%BB%9F%E4%B8%80%E8%B5%84%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%AC%A6">4 URL：全称 uniform resource locator(统一资源定位符)</h2>
+<ul>
+<li>Protocal：协议，我们通过客户端访问的内容是服务器（www world wide web服务器），想要访问www服务器，需要使用http或https协议。除了http或https协议外，还有很多协议，比如：邮件协议（SMTP），FTP协议（文件传输协议）</li>
+<li>Host：host分为hostname和port，host认为是主机的意思，实际来说我们使用hostname来区别不同的主机，hostname的表现形式为ip地址或域名，hostname在整个网络中都是唯一的，相当于是服务器在网络中的身份证。</li>
+<li>port用来区分不同的服务，因为一台硬件服务器如果只部署一个服务的话难免有些浪费，如果是多个服务的话可以使用port端口来区分。端口号就是一个Number数字，范围从1~65536；有一些软件安装后会有默认的端口占用。</li>
+</ul>
+<pre class="hljs"><code><div>    http协议：80端口
+    https协议：443端口
+    Mysql：3306端口
+    Mongodb：27017端口
+    自己的服务器端口不要和一些默认端口冲突，否则会导致服务启动失败
+
+</div></code></pre>
+<h2 id="5-http%E5%8F%91%E5%B1%95%E5%8E%86%E5%8F%B2">5 http发展历史</h2>
+<h3 id="51-http-09">5.1 http 0.9</h3>
+<ul>
+<li>协议非常简单，只有get方法，客户端发送请求，服务器返回html。传输完成后TCP自动中断</li>
+<li>http、tcp、html 之间的关系</li>
+<li>TCP： 客户端与服务器就建立一条连接通道。TCP好像一条高速公路。HTTP可理解为一辆货车，HTML相当于货车上的货。</li>
+</ul>
+<h3 id="52-http10">5.2 http1.0</h3>
+<ul>
+<li>增加了请求头与响应头，用来描述请求和响应的基本信息。除了GET，新添了POST方法。服务器除了可以响应html以外，还支持图片、视频、音频等。</li>
+<li>高速公路上只能跑一辆车。每次连接只能返回一个内容，导致效率特别低。</li>
+</ul>
+<h3 id="53-http11">5.3 http1.1</h3>
+<ul>
+<li>默认开启了keep-alive(持久连接)，保存连接特性。</li>
+<li>缺陷：http请求必须依次进行。假如有多个请求的话，容易造成网络堵塞。为了适应这种情况，产生了精灵图、合并css一些网络优化技术。</li>
+</ul>
+<h3 id="54-http20">5.4 http2.0</h3>
+<p>-更加安全、高效。具有压缩传输、加密、流技术、复路多用等等。浏览器目前基本都支持，但后台应用逐渐的普及中。</p>
+<h2 id="6-%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94">6 请求与响应</h2>
+<ul>
+<li>当在浏览的地址栏输入url、所有的超级接都是一个请求、所有ajax也是请求。</li>
+</ul>
+<pre class="hljs"><code><div>    所有的请求都可以分成三部分：
+    a) 请求行：
+    b) 请求头
+    c) 请求体：用户提交的个人信息
+
+    所有响应分成三部分：
+    a) 状态行：
+    b) 响应头：
+    c) 响应体： html、图片、css
+
+
+    常见状态码：
+    状态代码有三位数字组成，第一个数字定义了响应的类别，共分五种类别:
+    1xx：指示信息--表示请求已接收，继续处理
+    2xx：成功--表示请求已被成功接收、理解、接受（200仅仅表示http层面的成功，也就说请求到了服务器，服务器也给客户端响应了，但是未必能得到预期的结果数据，这要前后端好好对接一下）
+    3xx：重定向--要完成请求必须进行更进一步的操作
+    4xx：客户端错误--请求有语法错误或请求无法实现
+    5xx：服务器端错误--服务器未能实现合法的请求
+
+    常见状态码：
+    200 OK            //客户端请求成功
+    400 Bad Request     //客户端请求有语法错误，不能被服务器所理解
+    401 Unauthorized    //请求未经授权，这个状态代码必须和WWW-Authenticate报头域一起使用 
+    403 Forbidden       //服务器收到请求，但是拒绝提供服务
+    404 Not Found       //请求资源不存在，eg：输入了错误的URL
+    500 Internal Server Error   //服务器发生不可预期的错误
+    503 Server Unavailable    //服务器当前不能处理客户端的请求，一段时间后可能恢复正常
+
+</div></code></pre>
+<h2 id="7-%E8%A7%A3%E6%9E%90url">7 解析URL</h2>
+<h3 id="71-%E5%85%B8%E5%9E%8B%E7%9A%84url%E7%BB%9F%E4%B8%80%E8%B5%84%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%AC%A6">7.1 典型的URL(统一资源定位符)</h3>
+<ul>
+<li>http://localhost:3000/public/index.html?name=张三&amp;age=12#abc</li>
+<li>协议  IP/域名   端口号 资源路径   资源      查询字符串    hash(哈希 锚点)</li>
+</ul>
+<h3 id="72-node-%E4%B8%AD%E7%9A%84%E6%A8%A1%E5%9D%97">7.2 node 中的模块</h3>
+<blockquote>
+<p>1 url模块</p>
+</blockquote>
+<pre class="hljs"><code><div>    // url模块 用来解析url,返回对象 加true参数 将查询字符串也解析为对象
+    let urlObj = url.parse(urlStar);
+    let urlObject =  url.parse(urlStar,true);
+
+    console.log(urlObj);
+    console.log(urlObject);
+
+    // 提取其中的键值(查询字符串)
+    let {query:{name,age}} = urlObject;
+
+   
+
+</div></code></pre>
+<blockquote>
+<p>2 path 模块</p>
+</blockquote>
+<pre class="hljs"><code><div>
+    let { pathname } = urlObject;
+    console.log(pathname);
+
+    // 获取资源文件扩展名
+    let extName = path.extname( pathname );
+    console.log(extName);
+
+    // 获取目录名
+    let dirname = path.dirname ( pathname );
+    console.log( dirname );
+
+    // 拼接路径
+    console.log(path.join('public','123.html'));
+
+    console.log(path.resolve('../pub','../ok'));
+
+    console.log(path.join(__dirname,'public','../ok.html'));
+
+    // 判断是否是绝对路径
+    console.log(path.isAbsolute('d:/MongpDB/Server/log/mongod.log'));
+</div></code></pre>
+<blockquote>
+<p>3 querystring模块</p>
+</blockquote>
+<pre class="hljs"><code><div>    // 将查询字符串转换为对象
+    let { query } = url.parse(urlStar);
+
+    let obj = queryString.parse( query );
+    console.log(obj);
+</div></code></pre>
+<h2 id="8-%E8%B7%AF%E7%94%B1">8 路由</h2>
+<h3 id="81-node%E4%B8%AD%E7%9A%84%E8%B7%AF%E7%94%B1">8.1 node中的路由</h3>
+<ul>
+<li>路由：URL到函数的映射。由开发者事先规划好的url，用户通过访问这些url得到特定的服务。</li>
+</ul>
+<blockquote>
+<p>node 路由的特征</p>
+</blockquote>
+<ul>
+<li>content-type: 文档内容类型</li>
+<li>nodejs的路由设计时没有真实物理文件域路由的映射关系的，这叫做顶设计，目前能实现顶层路由设计的只有node和python两种语言。</li>
+<li>也就是说 加入伪造一个不存在的网页，我们可以修改路由代码实现&quot;正常&quot;的&quot;访问&quot;</li>
+</ul>
+<blockquote>
+<p>node 路由的优点</p>
+</blockquote>
+<ol>
+<li>简化路由访问</li>
+<li>批量匹配路由</li>
+</ol>
+<h3 id="82-%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E4%B8%8B%E8%BD%BD%E6%9C%8D%E5%8A%A1">8.2 静态资源下载服务</h3>
+<ul>
+<li>制作网站时往往会用到很多静态资源（css，各种格式的图片、js）。在开发动态网站时往往把静态资源统一放在一个目录下（public）。然后根据请求类型的后缀名设置MIME类型，同时根据后缀名去public目录下去找相应的资源文件。</li>
+<li>然后根据 后缀名 设置相应的 MIME</li>
+<li>再根据后缀名去public目录下读取相应的文件</li>
+<li>实际上，所有的服务支持的文件类型，只要放置在public目录下，路径正确的，那么就会自动下载该资源发送到浏览器。</li>
+</ul>
+<h3 id="83-%E5%8C%BA%E5%88%86get%E4%B8%8Epost">8.3 区分GET与POST</h3>
+<ul>
+<li>表单的method属性，可选择get或 post。</li>
+<li>可以使用 request.method 来区分是get 还是post请求。</li>
+</ul>
+<h1 id="%E7%AC%AC%E4%B8%83%E5%A4%A9">第七天</h1>
+<h2 id="1-express">1 express</h2>
+<h3 id="11-express-%E7%AE%80%E4%BB%8B">1.1 express 简介</h3>
+<ul>
+<li>基于Node.js平台，快速、开放、极简的web开发框架。后端开发框架中排名前五。和jQuery一样，目前非常受欢迎，是nodejs后台开发的事实的企业标准。</li>
+</ul>
+<h3 id="12-express-4x%E7%9A%84%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8">1.2 express 4.x的安装使用</h3>
+<blockquote>
+<p>1.安装步骤</p>
+</blockquote>
+<ul>
+<li>npm init 初始化pack.json文件</li>
+<li>npm i express</li>
+</ul>
+<blockquote>
+<p>2.基础代码示例</p>
+</blockquote>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
+    <span class="hljs-keyword">const</span> app = express();
+    <span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+
+    app.use(express.static(<span class="hljs-string">'./public'</span>));
+
+    <span class="hljs-comment">// 路由设置</span>
+    app.get(<span class="hljs-string">'/'</span>, (req, res) =&gt; {
+        <span class="hljs-comment">// send设置响应头的mime，向浏览器发送响应</span>
+        res.send(<span class="hljs-string">'&lt;h2&gt;Hello World!&lt;/h2&gt;'</span>);
+    });
+
+    app.get(<span class="hljs-string">'/game'</span>, (req, res) =&gt; {
+        <span class="hljs-comment">// 发送文件</span>
+        <span class="hljs-keyword">let</span> pathFile = path.join(__dirname,<span class="hljs-string">'public'</span>,<span class="hljs-string">'game.html'</span>);
+        res.sendFile(pathFile);
+    })
+
+    <span class="hljs-comment">// 启动服务</span>
+    app.listen(<span class="hljs-number">3000</span>, () =&gt; {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'服务器已启动'</span>);
+    })
+</div></code></pre>
+<h3 id="12-%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E8%AE%BE%E7%BD%AE">1.2 动态路由设置</h3>
+<blockquote>
+<ol>
+<li>正则表达式路由</li>
+</ol>
+</blockquote>
+<pre class="hljs"><code><div>    app.get(<span class="hljs-regexp">/^\/student\/(\d{5})$/</span>, (req, res) =&gt; {
+    res.send(<span class="hljs-string">'学号为'</span> + req.params[<span class="hljs-number">0</span>]);
+    });
+
+</div></code></pre>
+<blockquote>
+<ol start="2">
+<li>冒号引导变量</li>
+</ol>
+</blockquote>
+<pre class="hljs"><code><div>    app.get(<span class="hljs-string">'/studentPage/:page/name/:name'</span>, (req, res) =&gt; {
+        <span class="hljs-built_in">console</span>.log(req.params);
+    res.send(<span class="hljs-string">'学生页面 ：'</span>+req.params.page+<span class="hljs-string">' name:'</span>+req.params.name)
+    })
+
+</div></code></pre>
+<h3 id="13-router%E4%BA%8C%E7%BA%A7%E8%B7%AF%E7%94%B1">1.3 router二级路由</h3>
+<ul>
+<li>为了避免index.js这个入口文件过于臃肿，express实现了router二级路由。</li>
+</ul>
+<blockquote>
+<p>1.创建一个二级路由</p>
+</blockquote>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
+    <span class="hljs-keyword">const</span> music = express.Router();
+
+    
+
+    music.get(<span class="hljs-string">'/'</span>, (req, res) =&gt; {
+    res.send(<span class="hljs-string">'二级路由下的music频道'</span>)
+    });
+
+    music.get(<span class="hljs-string">'/chinese'</span>, (req, res) =&gt; {
+    res.send(<span class="hljs-string">'chinese华语频道'</span>)
+    });
+
+    <span class="hljs-comment">// 向外暴露路由对象</span>
+    <span class="hljs-built_in">module</span>.exports = music;
+
+</div></code></pre>
+<blockquote>
+<p>2.在入口文件中导入music.js</p>
+</blockquote>
+<pre class="hljs"><code><div>    app.use('/music',require('./router/music.js'));
+
+</div></code></pre>
+<blockquote>
+<p>3.访问</p>
+</blockquote>
+<pre class="hljs"><code><div>    /music/
+    /music/chinese
+
+</div></code></pre>
+<h2 id="2-express-%E4%B8%AD%E9%97%B4%E4%BB%B6">2 express 中间件</h2>
+<ul>
+<li>express本身的功能极简，其他功能主要靠中间件(插件)实现。中间件就是封装了request对象和response对象的实现特定功能的函数。</li>
+<li>中间件的使用一般放在app.use()方法中。</li>
+</ul>
+<h3 id="21-express%E5%86%85%E7%BD%AE%E4%B8%AD%E9%97%B4%E4%BB%B6">2.1 express内置中间件</h3>
+<blockquote>
+<p>1 express.static() 静态资源下载服务</p>
+</blockquote>
+<pre class="hljs"><code><div>    <span class="hljs-comment">//  第二个参数 可选参数，默认网页</span>
+    app.use(express.static(<span class="hljs-string">'./public'</span>,{<span class="hljs-attr">index</span> : <span class="hljs-string">'index.html'</span>}));
+
+</div></code></pre>
+<blockquote>
+<p>2 错误消息处理中间件</p>
+</blockquote>
+<pre class="hljs"><code><div>
+    app.use(<span class="hljs-function">(<span class="hljs-params">req,res</span>)=&gt;</span>{
+    res.status(<span class="hljs-number">404</span>);
+    res.send(<span class="hljs-string">'年轻人不讲武德，没有这个页面！'</span>)
+    });
+
+</div></code></pre>
+<blockquote>
+<p>3 中间件中的next</p>
+</blockquote>
+<ul>
+<li>在express中，路由是有先后顺序的，用户的请求一旦被某个路由匹配上，就不会向下继续匹配了。next()方法可以继续向下匹配。</li>
+<li>当路由代码顺序不对时，可能会产生冲突，写在后面的路由不会被匹配。</li>
+</ul>
+<pre class="hljs"><code><div>    app.get('/:name/:xuehao', (req, res,next) =&gt; {
+        req.params.name!='admin' ?
+        res.send('&lt;h2&gt;我是'+req.params.name+'，这是一个'+req.params.xuehao):
+        next();
+    });
+
+    app.get('/admin', (req, res) =&gt; {
+        res.send('&lt;h2&gt;GET admin&lt;/h2&gt;')
+    });
+
+</div></code></pre>
+<h3 id="22-express%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E4%B8%AD%E9%97%B4%E4%BB%B6">2.2 express的第三方中间件</h3>
+<h4 id="221-nodemon-%E7%83%AD%E6%9B%B4%E6%96%B0-%E5%85%A8%E5%B1%80%E5%AE%89%E8%A3%85">2.2.1 nodemon 热更新 全局安装</h4>
+<ul>
+<li>npm i nodemon -g</li>
+<li>自动检测文件改动，自动重启</li>
+<li>安装成功后在根目录创建 nodemon.json 文件配置</li>
+<li>以后使用时，需要把 nodemon.json拷贝到您的项目目录中，然后执行nodemon xxx.js 即可</li>
+</ul>
+<h4 id="222-formidable%E4%B8%AD%E9%97%B4%E4%BB%B6">2.2.2 formidable中间件</h4>
+<ul>
+<li>用来解析表单数据，特别是表单中有上传文件控件时，可使用formidable 中间件很容易实现上传功能。</li>
+<li>安装: npm i formidable</li>
+<li>解析出的数据为:</li>
+</ul>
+<pre class="hljs"><code><div>    {
+        <span class="hljs-attr">"fields"</span>: {
+            <span class="hljs-attr">"uname"</span>: <span class="hljs-string">"陈冬"</span>,
+            <span class="hljs-attr">"sex"</span>: <span class="hljs-string">"女"</span>
+        },
+        <span class="hljs-attr">"files"</span>: {
+            <span class="hljs-attr">"photo"</span>: {
+            <span class="hljs-attr">"size"</span>: <span class="hljs-number">92880</span>,
+            <span class="hljs-attr">"path"</span>: <span class="hljs-string">"upload\\upload_a1e125ff925f15d7ba9cec8d1a486013.jpg"</span>,
+            <span class="hljs-attr">"name"</span>: <span class="hljs-string">"木纹.jpg"</span>,
+            <span class="hljs-attr">"type"</span>: <span class="hljs-string">"image/jpeg"</span>,
+            <span class="hljs-attr">"mtime"</span>: <span class="hljs-string">"2020-12-22T07:57:47.477Z"</span>
+            }
+    }
+}
+
+</div></code></pre>
+<ul>
+<li>fields 表示普通控件，将所有控件的name和value作为对象的键值</li>
+<li>files 表示上传控件，将上传控件的属性作为对象的键值。</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">const</span> form = formidable({ <span class="hljs-attr">multiples</span>: <span class="hljs-literal">true</span> });
+    <span class="hljs-comment">// 设置上传文件的保存目录</span>
+    form.uploadDir = <span class="hljs-string">'./upload'</span>;
+    <span class="hljs-comment">// 保留文件后缀</span>
+    <span class="hljs-comment">// form.keepExtensions = true;</span>
+    <span class="hljs-comment">// 解析提交表单中的数据</span>
+    form.parse(req,(err,fields,files)=&gt;{
+        <span class="hljs-comment">// res.writeHead(200, { 'content-type': 'application/json' });</span>
+        <span class="hljs-comment">// 获取表单数据</span>
+        <span class="hljs-keyword">let</span> {uname,sex}= fields;
+        <span class="hljs-comment">// 获取文件名和路径</span>
+        <span class="hljs-keyword">let</span> { <span class="hljs-attr">photo</span>:{ name,path} } = files;
+        <span class="hljs-comment">// 获取后缀名</span>
+        <span class="hljs-keyword">let</span> extName = Path.extname(name);
+        <span class="hljs-comment">// fs.rename() 实现文件更名操作 </span>
+        fs.rename(path, path+extName, (err)=&gt;{
+            <span class="hljs-keyword">if</span>(!err){
+                <span class="hljs-keyword">let</span> person = {uname,sex,<span class="hljs-attr">photo</span>:path+extName}
+                fs.writeFile(<span class="hljs-string">'./data/'</span>+uname+<span class="hljs-string">'.json'</span>,<span class="hljs-built_in">JSON</span>.stringify(person),(err)=&gt;{
+                    <span class="hljs-keyword">if</span>(!err){
+                        res.send(<span class="hljs-string">'报名成功'</span>);
+                    }
+                });      
+            }
+        });
+    });
+
+
+</div></code></pre>
+<h4 id="223-cookie-parser">2.2.3 cookie-parser</h4>
+<ul>
+<li>负责设置客户端的cookie，获取浏览器的cookie信息。</li>
+<li>npm i cookie-parser</li>
+</ul>
+<blockquote>
+<p>cookie配置项</p>
+</blockquote>
+<pre class="hljs"><code><div>    domain: cookie在什么域名下有效，类型为string,。默认为网站域名
+    expires: cookie过期时间类型为Date。如果没有设置或者设置为0，那么该cookie只在这个这个session(会话)有效，即关闭浏览器后，这个cookie会被浏览器删除。
+    maxAge:实现expires的功能，设置cookie过期的时间，类型为String，指明从现在开始，多少毫秒以后，cookie到期。
+    path: cookie在什么路径下有效，默认为∵，类型为stringsecure:只能被HTTPS使用，类型Boolean，默认为false
+    httpOnly:只能被web服务器访问，类型Boolean。即浏览器端不能访问使用cookie，可以防止XSS(跨站脚本攻击)攻击。
+    signed:使用签名，类型Boolean，默认为false。express会使用req.secret来完成签名
+
+
+</div></code></pre>
+<blockquote>
+<p>签名 cookie</p>
+</blockquote>
+<pre class="hljs"><code><div>    1. 设置 cookie 时，添加 signed : true
+
+    2. 配置 cookie 中间件时，需要添加一个密匙
+
+    3. 读取签名 cookie 时，使用 request.signedCookies
+
+
+</div></code></pre>
+<h4 id="224-express-session">2.2.4 express-session</h4>
+<ul>
+<li>session技术是一种基于后端的临时存储数据的技术，session保存的位置在服务器端的缓存中，浏览器端无法读写</li>
+<li>npm i express-session配置项</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-comment">// 配置 express-session</span>
+    <span class="hljs-keyword">let</span> options = {
+        <span class="hljs-attr">secret</span> : <span class="hljs-string">'offcn.com'</span>,
+        <span class="hljs-attr">resave</span> : <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">saveUninitialized</span> : <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">cookie</span> : {<span class="hljs-attr">path</span>:<span class="hljs-string">'/'</span>,<span class="hljs-attr">httpOnly</span>:<span class="hljs-literal">true</span>,<span class="hljs-attr">secure</span>:<span class="hljs-literal">false</span>,<span class="hljs-attr">maaAge</span>:<span class="hljs-literal">null</span>},
+        <span class="hljs-attr">rolling</span> : <span class="hljs-literal">false</span>
+    }
+    app.use(session(options))
+
+
+</div></code></pre>
+<h4 id="225-svg-captcha">2.2.5 svg-captcha</h4>
+<ul>
+<li>svg格式的图形验证码，把text内容转换为 svg 图形返回</li>
+<li>npm i svg-captcha</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-comment">// 配置svg-captcha</span>
+    <span class="hljs-keyword">let</span> optionSvg = {
+    <span class="hljs-attr">size</span>: <span class="hljs-number">4</span>,  <span class="hljs-comment">//验证码长度</span>
+    <span class="hljs-attr">width</span>: <span class="hljs-number">200</span>,
+    <span class="hljs-attr">height</span>: <span class="hljs-number">100</span>,
+    <span class="hljs-attr">background</span>: <span class="hljs-string">"#f4f3f2"</span>,
+    <span class="hljs-attr">noise</span>: <span class="hljs-number">3</span>, <span class="hljs-comment">//干扰线条数</span>
+    <span class="hljs-attr">fontSize</span>: <span class="hljs-number">32</span>,
+    <span class="hljs-attr">ignoreChars</span>: <span class="hljs-string">'0o1i'</span>,  <span class="hljs-comment">//验证码字符中排除'0o1i'</span>
+    <span class="hljs-attr">color</span>: <span class="hljs-literal">true</span>   <span class="hljs-comment">// 验证码的字符是否有颜色，默认没有，如果设定了背景，则默认有</span>
+    }
+
+    <span class="hljs-keyword">let</span> captcha = svgCaptcha.create(optionSvg);
+
+</div></code></pre>
+<h3 id="23-%E5%85%B3%E4%BA%8E%E8%A1%A8%E5%8D%95%E6%A0%87%E7%AD%BE%E4%B8%ADmethod">2.3 关于表单标签中method</h3>
+<ul>
+<li>关于表单标签中method方法为post时, enctype属性旳设置有三种选择:</li>
+</ul>
+<ol>
+<li>enctype=&quot;Application / x-www-form-urlencoded&quot;</li>
+</ol>
+<pre class="hljs"><code><div>
+    enctype=<span class="hljs-string">"Application / x-www-form-urlencoded"</span>
+
+    application/x-www-form-urlencoded 使用所有的普通控件，不包括file，即如果表单中有上传空间，则这种属性无法提交上传文件数据。
+</div></code></pre>
+<ol start="2">
+<li>enctype=&quot;multipart/form-data&quot;</li>
+</ol>
+<pre class="hljs"><code><div>
+    enctype=<span class="hljs-string">"multipart/form-data"</span>
+
+    multipart/form-data 适用于所有普通空间，包括file，可以提交二进制类型文件。
+
+</div></code></pre>
+<ol start="3">
+<li>enctype=&quot;text/plain&quot;</li>
+</ol>
+<ul>
+<li>纯文本</li>
+</ul>
+<h1 id="%E7%AC%AC%E5%85%AB%E5%A4%A9">第八天</h1>
+<h2 id="1-ejs%E6%A8%A1%E6%9D%BF">1 ejs模板</h2>
+<ul>
+<li>EJS是一套简单的模板语言，帮你利用普通的JavaScript代码生成html页面。</li>
+<li>npm i ejs</li>
+</ul>
+<blockquote>
+<p>特点：</p>
+</blockquote>
+<ul>
+<li>纯 JavaScript 语法</li>
+<li>快速开发</li>
+<li>执行迅速</li>
+</ul>
+<h3 id="11-%E9%85%8D%E7%BD%AE">1.1 配置</h3>
+<pre class="hljs"><code><div>    // ejs的配置
+    1 设置ejs 为默认的模板引擎
+    app.set(&quot;view engine&quot;,&quot;ejs&quot;);
+
+    2 指定模板文件的存放目录，默认是 views 目录,可以修改为其他目录，但不建议修改
+    app.set(&quot;views&quot;,&quot;./templates&quot;);
+
+</div></code></pre>
+<h3 id="12-ejs-%E6%A0%87%E7%AD%BE%E5%90%AB%E4%B9%89">1.2 ejs 标签含义</h3>
+<pre class="hljs"><code><div>    &lt;% '脚本' 标签，用于流程控制，无输出。
+    &lt;%_ 删除其前面的空格符
+    &lt;%= 输出数据到模板（输出是转义 HTML 标签）
+    &lt;%- 输出非转义的数据到模板
+    &lt;%# 注释标签，不执行、不输出内容
+    &lt;%% 输出字符串 '&lt;%'
+    %&gt; 一般结束标签
+    -%&gt; 删除紧随其后的换行符
+    _%&gt; 将结束标签后面的空格符删除
+
+</div></code></pre>
+<h3 id="13-include%E5%91%BD%E4%BB%A4%E5%BC%95%E5%85%A5%E5%85%B6%E4%BB%96%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6">1.3  include()命令引入其他模板文件</h3>
+<ul>
+<li>当页面结构比较复杂时，可以将页面按照布局“拆”分为多个ejs模板文件，然后使用include()合并为完整的。</li>
+</ul>
+<h1 id="%E7%AC%AC%E4%B9%9D%E5%A4%A9">第九天</h1>
+<h2 id="1-express-%E7%94%9F%E6%88%90%E5%99%A8">1 express 生成器</h2>
+<ul>
+<li>npm i express-generator -g</li>
+<li>express生成器可以用来快速的搭建一个应用程序的骨架，包括常见的express、中间件配置，public和views文件夹等。</li>
+</ul>
+<h3 id="11%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4">1.1使用步骤</h3>
+<blockquote>
+<p>1  express --view=ejs 项目名</p>
+</blockquote>
+<ul>
+<li>创建应用程序的所有目录配置清单。但没有安装相应的包</li>
+</ul>
+<blockquote>
+<p>2 cd 项目名 进入目录 执行 npm install</p>
+</blockquote>
+<ul>
+<li>安装 npm 依赖包</li>
+</ul>
+<blockquote>
+<p>3 将拷贝的 nodemon.json 到刷新的项目下，然后修改 package.json文件,增加一行</p>
+</blockquote>
+<pre class="hljs"><code><div>    &quot;scripts&quot; : {
+        &quot;start&quot; : &quot;node ./bin/www&quot;,
+        &quot;dev&quot; : &quot;nodemon ./bin/www&quot;
+    }
+
+</div></code></pre>
+<h2 id="2-mysql-%E6%95%B0%E6%8D%AE">2 Mysql 数据</h2>
+<h3 id="21-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%91%E5%B1%95">2.1 数据库发展</h3>
+<ol>
+<li>数据库技术产生于60年代末期，是计算机科学的中重要分支</li>
+<li>数据库技术是信息系统的核心和基础，它的出现极大地促进了计算机应用向各行各业的普及，比如商城、银行、学校、通信等。</li>
+<li>数据库的建设规模、数据库信息量的大小和使用频度已成为衡量一个国家信息化程度的重要标志</li>
+</ol>
+<h3 id="22-%E5%B8%B8%E8%A7%81%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F">2.2 常见的数据库系统</h3>
+<ul>
+<li>oracle美国甲骨文公司的一款RMDBS(关系数据库管理系统)。处理速度快，非常快。安全级别高。支持快闪以及完美的恢复，即使硬件坏了也可以恢复到故障发前一秒。几台数据库做负载数据库，可以做到30s以内故障转移。</li>
+<li>SQL server美国微软公司司发布的一款关系型数据库。</li>
+</ul>
+<blockquote>
+<p>优点:</p>
+</blockquote>
+<pre class="hljs"><code><div>    1.图形化用户界面，更加直观、简单。
+    2.丰富的编程接口工具，为用户进行程序设计提供更多选择余地。
+    3.SQLserver和Windows NT完美集成，可以利用NT的愈多功能。
+    5、具有很好的伸缩性，可跨界运行
+</div></code></pre>
+<ul>
+<li>mysql开游软件，支持Windows，ios，unix,Linux等操作系统，是一个小型关系型数据库管理系统,被广泛地应用在中小型网站中。</li>
+</ul>
+<blockquote>
+<p>特点有:</p>
+</blockquote>
+<pre class="hljs"><code><div>    1.开放源码;
+    2.高度非过程化;
+    3.面向集合的操作方式;
+    4.以一种语法结构提供多种使用方式;语言简洁，易学易用
+</div></code></pre>
+<h3 id="23-%E6%95%B0%E6%8D%AE%E7%9A%84%E5%88%86%E7%B1%BB">2.3 数据的分类</h3>
+<ul>
+<li>目前主要分为两大类:关系型数据库(SQL)、非关系型数据库(noSQL)</li>
+</ul>
+<h4 id="231-%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%931970%E5%B9%B4%E7%94%B1%E7%BE%8E%E5%9B%BD%E7%9A%84ibm%E5%85%AC%E5%8F%B8%E7%9A%84ef-codd%E6%8F%90%E5%87%BA%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%9E%8B">2.3.1 关系型数据库，1970年由美国的IBM公司的E.F codd提出关系模型。</h4>
+<ul>
+<li>关系型数据库的四个基本概念: 数据（data)、数据库（database)、数据库管理系统(DBMS)、数据库系统(DBS)</li>
+<li>数据:数据库中存储的基本对象，是描述事物的记录(文字、图片、声音、视频等等)</li>
+<li>数据库:存储在计算机内的、有组织的、可共享的大量的数据集合。</li>
+<li>数据库管理系统:数据库管理软件，可方便的组织、存储、获取和维护数据。</li>
+<li>数据库系统:是一个总称，包括数据库、应用软件、管理员、开发人员和用户。关系型数据库与常见的excel表格比例类似，不同的是表与表之间有复杂的关联关系。</li>
+</ul>
+<h4 id="232-%E9%9D%9E%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93nosql">2.3.2 非关系型数据库(noSQL)</h4>
+<ul>
+<li>NoSQL数据库不需要固定的表结构，通常也不存在关联关系，但在互联网大数据存取上具有关系型数据库无法比拟的性能优势。非关系数据库目前仍然没有统一的标准:主要分两类;</li>
+</ul>
+<ol>
+<li>键值存储型数据库: 主要通过key来添加、删除、查询数据,优点高性能，易用、高并发。典型产品: Redis</li>
+<li>面向文档型数据库: 类似与json，比键值存储型数据库查询效率稍高，允许嵌套键值。典型产品:MongoDB I</li>
+</ol>
+<h3 id="24-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1">2.4 数据库设计</h3>
+<ul>
+<li>通常 我们设计数据库需要满足第一范式(1NF)、第二范式(2NF)、第三范式(3NF)。</li>
+</ul>
+<h4 id="241-%E7%AC%AC%E4%B8%80%E8%8C%83%E5%BC%8F1fn%E8%A6%81%E6%B1%82%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%AF%8F%E4%B8%80%E5%88%97%E9%83%BD%E6%98%AF%E4%B8%8D%E5%8F%AF%E5%88%86%E5%89%B2%E7%9A%84%E5%8E%9F%E5%AD%90%E9%A1%B9%E6%95%B0%E6%8D%AE">2.4.1 第一范式(1FN):要求数据库的每一列都是不可分割的原子项数据</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">姓名</th>
+<th style="text-align:center">性别</th>
+<th style="text-align:center">生日</th>
+<th style="text-align:center">手机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">张三</td>
+<td style="text-align:center">男</td>
+<td style="text-align:center">2000/10/1</td>
+<td style="text-align:center">18438888888</td>
+</tr>
+</tbody>
+</table>
+<h4 id="242-%E7%AC%AC%E4%BA%8C%E8%8C%83%E5%BC%8F2fn%E5%B1%9E%E6%80%A7%E5%AE%8C%E5%85%A8%E4%BE%9D%E8%B5%96%E4%BA%8E%E4%B8%BB%E9%94%AE">2.4.2 第二范式(2FN):属性完全依赖于主键</h4>
+<ul>
+<li>实体：显示世界可相互区分的个体</li>
+</ul>
+<h4 id="243-%E7%AC%AC%E4%B8%89%E8%8C%83%E5%BC%8F3fn%E5%B1%9E%E6%80%A7%E4%B8%8D%E8%83%BD%E4%BC%A0%E9%80%92%E4%BE%9D%E8%B5%96%E4%BA%8E%E4%B8%BB%E9%94%AE">2.4.3 第三范式(3FN):属性不能传递依赖于主键</h4>
+<ul>
+<li>在满足第二范式的前提下，如果某一属性依赖于其他非主键属性，而其他非主键属性又依赖于主键，那么这个属性就是间接依赖于主键。或被称为传递依赖于主键。</li>
+<li>属性：描述实体的特征。身份证号，姓名、性别、籍贯、体重、爱好，....</li>
+<li>键：能够唯一区分实体的属性。身份证号，指纹、虹膜、DNA，，，</li>
+<li>主键：用来适合数据库中使用的键。身份证号，</li>
+</ul>
+<h4 id="244-%E5%8F%8D%E4%B8%89%E8%8C%83%E5%BC%8F">2.4.4 反三范式</h4>
+<ul>
+<li>完全没有冗余数据的设计可以做到，但不见的是最好的数据库设计。有时为了提高效率，就必须降低范式标准，适当保留冗余数据。具体遵循第三范式，在实际建库工作时，根据情况适当降低范式标准。达到以空间换时间的目的。</li>
+</ul>
+<h3 id="25-mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">2.5 mysql数据库的数据类型</h3>
+<pre class="hljs"><code><div>    类型		    大小	              用途
+    CHAR		0-255字节	          定长字符串，只能存储数字、英文
+    VARCHAR		0-65535 字节	      变长字符串，可存储汉字
+    TINYTEXT	0-255字节	          短文本字符串
+    TEXT		0-65535字节	          长文本数据
+    MEDIUMTEXT	0-16 777 215字节	  中等长度文本数据
+    LONGTEXT	0-4 294 967 295字节   极大文本数据
+
+    整数类型 		 字节       范围（有符号）      范围（无符号）       用途 
+    TINYINT			1字节        (-128，127)         (0~255)        小整数值 
+    SMALLINT		2字节      (-32 768，32 767)     (0~65 535)     大整数值 
+    INT或INTEGER	4字节   			大整数值 
+    BIGINT			8字节   		   极大整数值 
+    FLOAT			4字节   		 单精度浮点数值 
+    DOUBLE			8字节 			 双精度浮点数值 
+
+    AUTO_INCREMENT（自动递增）
+    每次插入一条新数据时，自动的创建主键字段的值。它的开始值是1，每条新纪录自动加1；
+</div></code></pre>
+<h3 id="26-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%A4%87%E4%BB%BD">2.6 数据库的备份</h3>
+<ul>
+<li>冷备份： 停掉数据库服务，拷贝数据库安装目录下的data文件夹。</li>
+<li>热备份：转储为sql文件。</li>
+<li>恢复： 新建数据库，然后运行sql，即可恢复</li>
+</ul>
+<h3 id="27-crud%E6%93%8D%E4%BD%9C">2.7 CRUD操作</h3>
+<ul>
+<li>C（create 新建，新增）、R（Retrieve 查询）、U（Update 更新）、D（Delete 删除）这几个单词首字母缩写。主要用作描述软件系统中数据的基本操作（增删改查）</li>
+</ul>
+<h4 id="271-ddl%E8%AF%AD%E5%8F%A5">2.7.1 DDL语句</h4>
+<ul>
+<li>此类操作不多，建议使用可视化的管理软件操作。如Navicat、phpmyadmin等</li>
+<li>DDL 数据定义语言。用于定义和管理SQL数据库中的所有对象。（数据库、表、字段进行管理）</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-comment">-- 创建数据库</span>
+    <span class="hljs-keyword">CREATE</span>  <span class="hljs-keyword">DATABASE</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> test22  <span class="hljs-built_in">CHARACTER</span>  <span class="hljs-keyword">SET</span> utf8;
+    <span class="hljs-comment">-- 创建数据库中表</span>
+    <span class="hljs-keyword">USE</span> test22;
+    <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> student(<span class="hljs-keyword">id</span> <span class="hljs-built_in">int</span>, 姓名 <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">30</span>), 性别 <span class="hljs-built_in">TINYINT</span>)
+    <span class="hljs-comment">-- 删除表</span>
+    <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> student
+    <span class="hljs-comment">--  删除库</span>
+    <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">DATABASE</span> test22
+
+</div></code></pre>
+<h4 id="272-dml%E8%AF%AD%E5%8F%A5">2.7.2 DML语句</h4>
+<ul>
+<li>使用sql语句对数据库中的数据记录进行增删改查</li>
+</ul>
+<blockquote>
+<ol>
+<li>插入语句</li>
+</ol>
+</blockquote>
+<ul>
+<li>语法： INSERT INTO 表名(字段1，字段2,  ...) VALUES (值1，值2，...)</li>
+</ul>
+<pre class="hljs"><code><div>
+    <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-string">`学生`</span>(<span class="hljs-string">`学生`</span>.<span class="hljs-string">`姓名`</span>, <span class="hljs-string">`学生`</span>.<span class="hljs-string">`学号`</span>, <span class="hljs-string">`学生`</span>.<span class="hljs-string">`性别`</span>, <span class="hljs-string">`学生`</span>.<span class="hljs-string">`手机号`</span>) <span class="hljs-keyword">VALUES</span>(<span class="hljs-string">'黄恒'</span>,<span class="hljs-string">'B192'</span>,<span class="hljs-number">1</span>,<span class="hljs-string">'13712345678'</span>)
+</div></code></pre>
+<ul>
+<li>1）数值的数量和顺序必须和字段名的数量和顺序一致</li>
+<li>2）插入数值的数据类型必须和字段的数据类型匹配</li>
+<li>3）插入数值如果是字符串类型、日期类型需要加单引号包起来。数值类型不用加。</li>
+<li>4）汉字字段或特殊符号，如果提示有错误，使用反引号包起来。</li>
+</ul>
+<blockquote>
+<ol start="2">
+<li>修改/更新语句</li>
+</ol>
+</blockquote>
+<ul>
+<li>语法：UPDATE 表名 SET 字段1名=值1, 字段2名=值2, ... WHERE 条件</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">UPDATE</span> <span class="hljs-string">`学生`</span> <span class="hljs-keyword">SET</span> <span class="hljs-string">`学生`</span>.<span class="hljs-string">`班号`</span>=<span class="hljs-string">'B192'</span>, <span class="hljs-string">`学生`</span>.<span class="hljs-string">`学号`</span>=<span class="hljs-string">'B20201'</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">id</span> = <span class="hljs-number">20</span>    
+
+</div></code></pre>
+<blockquote>
+<ol start="3">
+<li>删除语句</li>
+</ol>
+</blockquote>
+<ul>
+<li>DELETE FROM 表名 WHERE 条件</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> <span class="hljs-string">`学生`</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">id</span>=<span class="hljs-number">17</span>
+
+</div></code></pre>
+<blockquote>
+<ol start="4">
+<li>查询语句</li>
+</ol>
+</blockquote>
+<pre class="hljs"><code><div>    语法： <span class="hljs-keyword">SELECT</span> 字段<span class="hljs-number">1</span>名 <span class="hljs-keyword">AS</span> 别名<span class="hljs-number">1</span>, 字段<span class="hljs-number">2</span>名 <span class="hljs-keyword">AS</span> 别名<span class="hljs-number">2</span>, ... <span class="hljs-keyword">FROM</span> 表<span class="hljs-number">1</span>名 
+​			<span class="hljs-keyword">WHERE</span> 条件<span class="hljs-number">1</span> （等于 = 不等于 !=  大于&gt;=  小于 &lt;=）
+​					<span class="hljs-keyword">AND</span>  条件<span class="hljs-number">2</span> （ 当左右两边的条件都成立返回结果）
+​					<span class="hljs-keyword">OR</span>	条件<span class="hljs-number">2</span> （当左右两边的条件有一个成立即返回结果）
+​					<span class="hljs-keyword">LIKE</span>	模糊查询，匹配<span class="hljs-keyword">like</span>指定的字符串
+
+    <span class="hljs-comment">-- 查找所有的记者</span>
+    <span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> caijing2016 <span class="hljs-keyword">WHERE</span> title <span class="hljs-keyword">LIKE</span> <span class="hljs-string">'%记者%'</span> <span class="hljs-keyword">AND</span> <span class="hljs-keyword">name</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">'张%'</span>
+
+</div></code></pre>
+<blockquote>
+<ol start="5">
+<li>多表联查</li>
+</ol>
+</blockquote>
+<ol>
+<li>内连接
+-语法： SELECT 表1.字段1，表1.字段2，表2.字段1，表2.字段2, .... FROM 表1  INNER  JOIN 表2 ON 表1.联结字段=表2.联结字段</li>
+</ol>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">`学生`</span>.<span class="hljs-string">`姓名`</span>,
+        <span class="hljs-string">`班级`</span>.<span class="hljs-string">`班主任`</span>,
+        <span class="hljs-string">`班级`</span>.<span class="hljs-string">`班长`</span>,
+        <span class="hljs-string">`班级`</span>.<span class="hljs-string">`教室`</span>
+    <span class="hljs-keyword">FROM</span>
+        <span class="hljs-string">`学生`</span>
+    <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-string">`班级`</span> <span class="hljs-keyword">ON</span> <span class="hljs-string">`学生`</span>.<span class="hljs-string">`班号`</span> = <span class="hljs-string">`班级`</span>.<span class="hljs-string">`班号`</span>
+    <span class="hljs-keyword">WHERE</span>
+        姓名 = <span class="hljs-string">'斛晓强'</span>
+
+</div></code></pre>
+<ol start="2">
+<li>左连接右连接</li>
+</ol>
+<ul>
+<li>SELECT *  FROM 主表1 LEFT JOIN 从表2 ON 主表.联结字段=从表.联结字段</li>
+<li>合并两个表，全部显示主表记录，从表没有记录的话以null 填充</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-string">`班级`</span> <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-string">`学生`</span> <span class="hljs-keyword">ON</span> <span class="hljs-string">`班级`</span>.<span class="hljs-string">`班号`</span> = <span class="hljs-string">`学生`</span>.<span class="hljs-string">`班号`</span>
+</div></code></pre>
+<ol start="3">
+<li>三表连接</li>
+</ol>
+<pre class="hljs"><code><div>    语法： <span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> 表<span class="hljs-number">1</span>  <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> 表<span class="hljs-number">2</span> <span class="hljs-keyword">ON</span> 表<span class="hljs-number">1.</span>连接字段=表<span class="hljs-number">2.</span>连接字段
+​					           <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> 表<span class="hljs-number">3</span>  <span class="hljs-keyword">ON</span> 表<span class="hljs-number">1.</span>连接字段=表<span class="hljs-number">3.</span>连接字段
+
+    <span class="hljs-keyword">SELECT</span>
+	<span class="hljs-string">`学生`</span>.<span class="hljs-string">`姓名`</span>,<span class="hljs-string">`课程`</span>.<span class="hljs-string">`课程名`</span>,<span class="hljs-string">`选修`</span>.<span class="hljs-string">`成绩`</span>
+    <span class="hljs-keyword">FROM</span>
+        <span class="hljs-string">`选修`</span>
+    <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-string">`学生`</span> <span class="hljs-keyword">ON</span> <span class="hljs-string">`选修`</span>.<span class="hljs-string">`学号`</span> = <span class="hljs-string">`学生`</span>.<span class="hljs-string">`学号`</span>
+    <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-string">`课程`</span> <span class="hljs-keyword">ON</span> <span class="hljs-string">`选修`</span>.<span class="hljs-string">`课程编号`</span> = <span class="hljs-string">`课程`</span>.id
+    <span class="hljs-keyword">WHERE</span> <span class="hljs-string">`学生`</span>.<span class="hljs-string">`姓名`</span> = <span class="hljs-string">'斛晓强'</span>
+
+</div></code></pre>
+<h1 id="%E7%AC%AC%E5%8D%81%E5%A4%A9">第十天</h1>
+<h2 id="1-node%E6%93%8D%E4%BD%9C-%E6%95%B0%E6%8D%AE%E5%BA%93">1 node操作 数据库</h2>
+<h3 id="11-%E5%AE%89%E8%A3%85mysql%E5%8C%85">1.1 安装mysql包</h3>
+<ul>
+<li>npm i mysql</li>
+</ul>
+<h3 id="12-%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93">1.2 操作数据库</h3>
+<ul>
+<li>配置连接的参数</li>
+<li>创建连接</li>
+<li>执行sql语句，实现CRUD的操作</li>
+<li>断开连接，释放资源</li>
+</ul>
+<blockquote>
+<p>执行CRUD操作返回的结果：</p>
+</blockquote>
+<ul>
+<li>如果是 select 语句：</li>
+</ul>
+<pre class="hljs"><code><div>    connection.query(<span class="hljs-string">"select * from 学生 where 性别=?"</span>,[<span class="hljs-number">1</span>],(err,result,fields)=&gt;{
+        <span class="hljs-comment">// err 查询操作失败的消息</span>
+        <span class="hljs-comment">// result 查询操作成功的结果</span>
+        <span class="hljs-comment">// fields 不常用，查询的字段名</span>
+        <span class="hljs-built_in">console</span>.log( err );
+    }); 
+
+    如果查询成功：	
+    err  为 <span class="hljs-literal">null</span>
+    result	如果有查询结果，返回为包含 对象的数组
+    ​	     如果没有查询结果，返回 []
+
+    如果查询失败：
+    err  返回 包含错误消息的对象
+
+    result 返回对象：
+    {
+        <span class="hljs-attr">fieldCount</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">affectedRows</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">insertId</span>: <span class="hljs-number">28</span>,
+        <span class="hljs-attr">serverStatus</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">warningCount</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">message</span>: <span class="hljs-string">''</span>,
+        <span class="hljs-attr">protocol41</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">changedRows</span>: <span class="hljs-number">0</span>
+    }
+    注意，affectedRows意思为受影响的行数，某些情况下只有affectedRows的值大于<span class="hljs-number">0</span>，才能证明数据库确实发生了变化。
+</div></code></pre>
+<h3 id="13-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C%E5%B0%81%E8%A3%85-dbjs">1.3 数据库操作封装 db.js</h3>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">const</span> optionsMysql = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./db.config'</span>)
+    <span class="hljs-keyword">const</span> mysql = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mysql'</span>);
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Db</span> </span>{
+        <span class="hljs-keyword">constructor</span>({ host = <span class="hljs-string">'localhost'</span>, user = <span class="hljs-string">'root'</span>, password = <span class="hljs-string">''</span>, port = <span class="hljs-string">'3306'</span>, database }) {
+            <span class="hljs-keyword">this</span>.options = {
+                host,
+                user,
+                password,
+                port,
+                database
+            }
+            <span class="hljs-keyword">this</span>.connection = <span class="hljs-literal">null</span>;
+        }
+        <span class="hljs-comment">// 创建链接</span>
+        initConn() {
+            <span class="hljs-keyword">let</span> conn = mysql.createConnection(<span class="hljs-keyword">this</span>.options);
+            <span class="hljs-keyword">this</span>.connection = conn;
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+                conn.connect(<span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+                    <span class="hljs-comment">// 如果数据库链接成功 返回连接对象 </span>
+                    err ? reject(err) : resolve(conn);
+                });
+            });
+        }
+        <span class="hljs-comment">// 执行curd操作</span>
+        <span class="hljs-keyword">async</span> query(sql,arr) {
+            <span class="hljs-keyword">let</span> connection = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.initConn();
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+                connection.query(sql, arr, (err, result, fields) =&gt; {
+                    err ? reject(err) : resolve(result);
+                });
+            });
+        }
+        <span class="hljs-comment">// 关闭链接，释放资源</span>
+        close() {
+            <span class="hljs-keyword">this</span>.connection.end();
+        }
+
+    }
+
+    <span class="hljs-keyword">let</span> db = <span class="hljs-keyword">new</span> Db(optionsMysql);
+    <span class="hljs-built_in">module</span>.exports = db;
+
+</div></code></pre>
+<h1 id="%E7%AC%AC%E5%8D%81%E4%B8%80%E5%A4%A9">第十一天</h1>
+<h2 id="1-%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96">1 前端模块化</h2>
+<ul>
+<li>前端开发中，最初只是在script 标签中嵌入几十上百行代码就能实现一些基本的交互效果，后来js得到重视,应用也广泛起来，jQuery，Ajax，Node.Js，MVC，MVVM等的助力也使得前端开发得到重视，也使得前端项目越来越复杂。有了模块，我们就可以更方便地使用别人的代码，想要什么功能，就加载什么模块。模块开发需要遵循一定的规范，否则项目中的代码将会变得难以维护。</li>
+</ul>
+<h2 id="2-%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84%E5%8F%91%E5%B1%95">2 前端模块化的发展</h2>
+<pre class="hljs"><code><div>- 封装函数 =&gt; 面向对象封装 =&gt;闭包 =&gt; &lt;script&gt;引入
+</div></code></pre>
+<h2 id="3-%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96%E8%A7%84%E8%8C%83%E4%BB%8B%E7%BB%8D">3 前端模块化规范介绍</h2>
+<h3 id="31-es6%E6%A8%A1%E5%9D%97%E5%8C%96%E8%A7%84%E8%8C%83%E4%BB%8B%E7%BB%8D">3.1 ES6模块化规范介绍</h3>
+<ul>
+<li>在ES中的模块化主要有两个命令： export规定模块的对外的接口 和 import输入其他模块提供的变量和函数</li>
+</ul>
+<blockquote>
+<p>export 导出</p>
+</blockquote>
+<pre class="hljs"><code><div>    <span class="hljs-comment">// ES6模块导出</span>
+    <span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn</span>(<span class="hljs-params"></span>) </span>{  
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'ok'</span>);
+    }
+    <span class="hljs-comment">// 第一种，具名导出</span>
+    <span class="hljs-comment">// export {</span>
+    <span class="hljs-comment">//     a,</span>
+    <span class="hljs-comment">//     fn</span>
+    <span class="hljs-comment">// }</span>
+
+    <span class="hljs-comment">// 不具名导出</span>
+    <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+        a,
+        fn
+    }
+
+</div></code></pre>
+<blockquote>
+<p>import导入</p>
+</blockquote>
+<pre class="hljs"><code><div>    &lt;script type=<span class="hljs-string">"module"</span>&gt;
+        <span class="hljs-comment">// 具名导入方法</span>
+        <span class="hljs-comment">// import {a,fn} from './js/text.js'</span>
+        <span class="hljs-comment">// console.log(a);</span>
+        <span class="hljs-comment">// fn()</span>
+
+        <span class="hljs-keyword">import</span> test <span class="hljs-keyword">from</span> <span class="hljs-string">'./js/text.js'</span>
+        <span class="hljs-built_in">console</span>.log(test.a);
+        test.fn()
+
+    &lt;<span class="hljs-regexp">/script&gt;
+
+
+</span></div></code></pre>
+<h3 id="32-common%E8%A7%84%E8%8C%83">3.2 common规范</h3>
+<pre class="hljs"><code><div>    common.js
+    exports 或 module.exports 向外暴露 require()引入
+</div></code></pre>
+<h3 id="33-amd%E8%A7%84%E8%8C%83-cmd%E8%A7%84%E8%8C%83">3.3 AMD规范 CMD规范</h3>
+<ul>
+<li>AMD和CMD是ES6之前的前端模块化的规范</li>
+</ul>
+<h4 id="331-amd%E8%A7%84%E8%8C%83">3.3.1 AMD规范</h4>
+<ul>
+<li>AMD异步加载，所有的模块不管用不用，都全部引入，因此第一次加载缓慢，后面比较快。</li>
+</ul>
+<h4 id="332-cmd%E8%A7%84%E8%8C%83">3.3.2 CMD规范</h4>
+<ul>
+<li>CMD同步按需加载，第一次比较快，但后面每次都比较慢</li>
+</ul>
+<h2 id="4-webpack%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8">4 webpack打包工具的使用</h2>
+<h3 id="41-webpack%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7%E7%9A%84%E7%94%B1%E6%9D%A5">4.1 webpack打包工具的由来</h3>
+<blockquote>
+<p>前面介绍的几种模块化方案中，所有的模块都需要从服务器端传输到浏览器，那么这个过程有两种情况:</p>
+</blockquote>
+<ol>
+<li>一个请求得到一个模块</li>
+</ol>
+<ul>
+<li>优点:只有需要的模块被传输。</li>
+<li>缺点:多个请求意味着占用更多带宽，请求延迟导致应用启动很慢。</li>
+</ul>
+<ol start="2">
+<li>一个请求得到所有模块</li>
+</ol>
+<ul>
+<li>优点:更少的请求，更少延迟。</li>
+<li>缺点:不需要的模块也被下载。</li>
+</ul>
+<blockquote>
+<p>webpack的出现是为了解决以上前端模块化的一些缺陷，主要是三个方面;</p>
+</blockquote>
+<ul>
+<li>
+<ol>
+<li>公共的模块椎够复用的打包成一个) +单个用的模块（不能复用的单独打包)</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>webpack本身只能处理.js模块，但是可以通过插件实现打包处理其他类型文件，如css、图片等</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>加载模块时，实现动态分析，只加载需要使用的js</li>
+</ol>
+</li>
+</ul>
+<h3 id="42-webpack-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE">4.2 webpack 安装配置</h3>
+<ul>
+<li>npm init</li>
+</ul>
+<h4 id="421-%E5%AE%89%E8%A3%85webpack-%E5%8F%8A-webpack-cli">4.2.1  安装webpack 及 webpack-cli</h4>
+<ul>
+<li>npm i webpack webpack-cli --save-dev</li>
+</ul>
+<h4 id="422-%E5%88%9D%E5%A7%8B%E5%8C%96%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6indexjs">4.2.2 初始化入口文件(index.js)</h4>
+<ul>
+<li>创建文件夹 src ，里面创建index.js文件</li>
+<li>根目录下创建webpack.config.js文件，输入以下内容：</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">"path"</span>); <span class="hljs-comment">//path是node的模块，获取当前文件的路径</span>
+    <span class="hljs-built_in">module</span>.exports = {
+        <span class="hljs-attr">entry</span>: {
+            <span class="hljs-attr">index</span>: <span class="hljs-string">"./src/index.js"</span> <span class="hljs-comment">//入口文件，若不配置webpack4将自动查找src目录下的index.js文件</span>
+        },
+        <span class="hljs-attr">output</span>: {
+            <span class="hljs-attr">filename</span>: <span class="hljs-string">"[name].bundle.js"</span>,<span class="hljs-comment">//输出文件名，[name]表示入口文件js名</span>
+            <span class="hljs-attr">path</span>: path.join(__dirname, <span class="hljs-string">"public"</span>)<span class="hljs-comment">//输出文件路径</span>
+        }
+    }
+
+</div></code></pre>
+<h4 id="423-css%E6%96%87%E4%BB%B6%E6%89%93%E5%8C%85%E6%8F%92%E4%BB%B6%E5%8F%8A%E9%85%8D%E7%BD%AE">4.2.3 CSS文件打包插件及配置</h4>
+<ul>
+<li>
+<p>npm i css-loader@3.6.0 style-loader -D</p>
+</li>
+<li>
+<p>创建 style.css，并导入到index.js中。</p>
+</li>
+<li>
+<p>在index中导入 import './style.css'</p>
+</li>
+</ul>
+<blockquote>
+<p>然后在webpack.config.js中增加css插件的配置项：</p>
+</blockquote>
+<pre class="hljs"><code><div>    <span class="hljs-comment">// webpack的相关插件配置项：</span>
+    module:{
+        rules:[
+            {test:/\.css$/,use:['style-loader','css-loader']} <span class="hljs-comment">//处理.css文件</span>
+        ]
+    }
+
+</div></code></pre>
+<h4 id="424-css%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86">4.2.4 CSS中的图片处理</h4>
+<ul>
+<li>
+<p>图片的处理需要 file-loader和url-loader</p>
+</li>
+<li>
+<p>npm i file-loader url-loader -D</p>
+</li>
+<li>
+<p>在style.css中添加图片，其中home.gif 文件小于8k.</p>
+</li>
+<li>
+<p>小于8k的图片自动转为base64编码。大的图片放在public/images 目录下。但<img>标签里的图片还是src目录下</p>
+</li>
+<li>
+<p>在webpack.config.js中的添加配置</p>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-built_in">module</span>:{
+        <span class="hljs-attr">rules</span>:[
+            {
+                <span class="hljs-attr">test</span>:<span class="hljs-regexp">/\.(png|gif|jpg)$/</span>,
+                <span class="hljs-attr">use</span>:[
+                    {
+                        <span class="hljs-attr">loader</span>:<span class="hljs-string">'url-loader'</span>,
+                        <span class="hljs-attr">options</span>:{
+                            <span class="hljs-attr">outputPath</span>:<span class="hljs-string">'images/'</span>,
+                            <span class="hljs-attr">limit</span>:<span class="hljs-number">8192</span> <span class="hljs-comment">// 小于 8k 的图片自动转成 base64 格式</span>
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+
+</div></code></pre>
+<h4 id="425-indexhtml%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86html-webpack-plugin">4.2.5 index.html模板文件处理（html-webpack-plugin）</h4>
+<ul>
+<li>npm i html-webpack-plugin -D</li>
+<li>该插件的作用是自动生成index.html模板文件，并自动的写入 打包后的js文件；当入口文件的文件名不固定时特别有用。</li>
+<li>首先修改webpack.config.js</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">const</span> HtmlWebpackPlugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">'html-webpack-plugin'</span>);
+
+    plugins: [
+        <span class="hljs-keyword">new</span> HtmlWebpackPlugin({
+            <span class="hljs-attr">template</span>:<span class="hljs-string">'./src/index.html'</span>  <span class="hljs-comment">//参照物，从这儿移动复制到output指定的目录下</span>
+        })
+    ]
+
+</div></code></pre>
+<h4 id="426-html-%E4%B8%AD%E5%9B%BE%E7%89%87%E7%9A%84%E5%BC%95%E7%94%A8%E5%A4%84%E7%90%86">4.2.6 HTML 中图片的引用处理</h4>
+<ul>
+<li>npm i html-withimg-loader -D</li>
+</ul>
+<pre class="hljs"><code><div>    output: { <span class="hljs-attr">publicPath</span> : <span class="hljs-string">'./'</span> },
+    <span class="hljs-attr">options</span>: { <span class="hljs-attr">esModule</span> : <span class="hljs-literal">false</span> }
+    添加配置：
+    {<span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.(htm|html)$/</span>,<span class="hljs-attr">use</span>: <span class="hljs-string">'html-withimg-loader'</span>}
+
+</div></code></pre>
+<h4 id="427-%E6%B8%85%E9%99%A4%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95%E6%8F%92%E4%BB%B6-clean-webpack-plugin">4.2.7 清除指定目录插件 clean-webpack-plugin</h4>
+<ul>
+<li>npm i clean-webpack-plugin --save-dev</li>
+<li>报错用管理员方式打开</li>
+<li>在webpack.config.js的开头添加：</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">const</span> { CleanWebpackPlugin } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'clean-webpack-plugin'</span>);
+
+</div></code></pre>
+<h4 id="428-less%E6%8F%92%E4%BB%B6">4.2.8  less插件</h4>
+<ul>
+<li>npm i less less-loader -D</li>
+</ul>
+<pre class="hljs"><code><div>    index.js中引入
+    <span class="hljs-keyword">import</span> <span class="hljs-string">'./demo.less'</span>;
+   {
+        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.less$/</span>,
+        <span class="hljs-attr">use</span>: [<span class="hljs-string">"style-loader"</span>,<span class="hljs-string">"css-loader"</span>,<span class="hljs-string">"less-loader"</span>]
+    }
+
+</div></code></pre>
+<h4 id="429-jquery%E6%8F%92%E4%BB%B6">4.2.9 jquery插件</h4>
+<ul>
+<li>npm i jquery</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">const</span> Webpack = <span class="hljs-built_in">require</span>(<span class="hljs-string">'webpack'</span>);
+    <span class="hljs-keyword">new</span> Webpack.ProvidePlugin({
+        <span class="hljs-attr">$</span>: <span class="hljs-string">'jquery'</span>
+    })
+</div></code></pre>
+<h2 id="5-koa-%E4%BB%8B%E7%BB%8D">5 KOA 介绍</h2>
+<ul>
+<li>Koa是一个新的web 框架，由Express幕后的原班人马打造，致力于成为web应用和API开发领域中的一个更小、更富有表现力、更健壮的基石。通过利用async函数，Koa帮你丢弃回调函数，并有力地增强错误处理。Koa并没有捆绑任何中间件，而是提供了一套优雅的方法，帮助您快速而愉快地编写服务端应用程序。</li>
+</ul>
+<h3 id="51-express%E4%B8%8Ekoa%E7%9A%84%E5%8C%BA%E5%88%AB">5.1 express与KOA的区别</h3>
+<ol>
+<li>express是基于回掉函数的,koa2使用 async.await去掉了回调函数</li>
+<li>express中有内置中间件，KOA没有内置任何中间件</li>
+</ol>
+<ul>
+<li>express.static()  设置静态目录</li>
+<li>express.json()    设置json格式</li>
+<li>express.urlencoded({ extended:false })    解析表单数据，但不能实现文件上传</li>
+</ul>
+<ol start="3">
+<li>KOA将request和response封装到了一个对象ctx中</li>
+</ol>
+<ul>
+<li>
+<p>ctx.header 和 ctx.request.header等价</p>
+</li>
+<li>
+<p>ctx.body 和 ctx.response.body等价</p>
+</li>
+</ul>
+<ol start="4">
+<li>KOA中可以直接使用cookie，express 需要安装cookieParser 中间件才可以。</li>
+</ol>
+<pre class="hljs"><code><div>    app.use(<span class="hljs-keyword">async</span> (ctx)=&gt;{
+        app.keys = [<span class="hljs-string">"offcn.com"</span>]; <span class="hljs-comment">//设置cookie的签名密钥</span>
+        ctx.cookies.set(<span class="hljs-string">"uname"</span>,<span class="hljs-string">"zhangsan"</span>, {<span class="hljs-attr">maxAge</span>:<span class="hljs-number">1000</span>*<span class="hljs-number">60</span>*<span class="hljs-number">60</span>*<span class="hljs-number">24</span>}); <span class="hljs-comment">//设置cookie</span>
+        ctx.body = <span class="hljs-string">"hello world"</span>;
+    })
+
+</div></code></pre>
+<h3 id="52-%E6%B4%8B%E8%91%B1%E7%9A%AE%E6%A8%A1%E5%9E%8B">5.2 洋葱皮模型</h3>
+<pre class="hljs"><code><div>    app.use(<span class="hljs-keyword">async</span> (ctx,next)=&gt;{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-number">1</span>);
+    next(); <span class="hljs-comment">// 等待下一个中间件执行完成后再继续</span>
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-number">5</span>);
+    })
+
+    app.use(<span class="hljs-keyword">async</span> (ctx,next)=&gt;{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-number">2</span>);
+    next();
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-number">4</span>);
+    })
+
+    app.use(<span class="hljs-keyword">async</span> (ctx,next)=&gt;{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-number">3</span>);
+    })
+
+</div></code></pre>
+<h3 id="53-koa%E8%B7%AF%E7%94%B1%E5%8A%9F%E8%83%BD">5.3 KOA路由功能</h3>
+<ul>
+<li>需要安装 koa-router的路由模块实现路由功能。</li>
+<li>npm i  koa-router</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-comment">// 路由模块的引入</span>
+    <span class="hljs-keyword">let</span> Router = <span class="hljs-built_in">require</span>(<span class="hljs-string">"koa-router"</span>);
+    <span class="hljs-keyword">let</span> router = <span class="hljs-keyword">new</span> Router();
+
+    <span class="hljs-comment">// 添加路由</span>
+    router.get(<span class="hljs-string">"/"</span>, <span class="hljs-keyword">async</span> (ctx)=&gt;{
+    ctx.body = <span class="hljs-string">"&lt;h1&gt;hello， 欢迎访问首页&lt;/h1&gt;"</span>;
+    })
+    <span class="hljs-comment">// 启动路由</span>
+    app.use( router.routes() );
+
+</div></code></pre>
+<h3 id="54-koa%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E7%9B%AE%E5%BD%95">5.4 KOA设置静态资源目录</h3>
+<ul>
+<li>npm i koa-static</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-comment">// 引入静态资源模块</span>
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">static</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">"koa-static"</span>);
+    <span class="hljs-keyword">let</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">"path"</span>);
+
+    <span class="hljs-comment">// 设置pubLic目录设置为静态资源目录</span>
+    app.use( <span class="hljs-keyword">static</span>( path.join(__dirname,<span class="hljs-string">"public"</span>)) );
+
+</div></code></pre>
+<h3 id="55-%E8%A7%A3%E6%9E%90%E8%A1%A8%E5%8D%95%E6%95%B0%E6%8D%AE">5.5 解析表单数据</h3>
+<ul>
+<li>npm  i koa-bodyparser</li>
+<li>如果是 GET 提交， ctx.request.query</li>
+<li>如果是POST 提交,  ctx.request.body</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">let</span> bodyParser = <span class="hljs-built_in">require</span>(<span class="hljs-string">"koa-bodyparser"</span>);
+    <span class="hljs-comment">// 配置 bodyparser 中间件</span>
+    app.use( bodyParser() );
+
+    router.get(<span class="hljs-string">"/reg"</span>, <span class="hljs-keyword">async</span> (ctx)=&gt;{
+        <span class="hljs-built_in">console</span>.log( ctx.request.query );
+    })
+
+    router.post(<span class="hljs-string">"/reg"</span>, <span class="hljs-keyword">async</span> (ctx)=&gt;{
+        <span class="hljs-built_in">console</span>.log( ctx.request.body );
+    })
+
+</div></code></pre>
+<h2 id="6-websocket%E5%8D%8F%E8%AE%AE">6 websocket协议</h2>
+<ul>
+<li>我们在上网过程中经常用到的是HTTP和HTTPS协议，HTTP协议和HTTPS协议通信过程通常是客户端通过浏览器发出一个请求，服务器接受请求后进行处理并返回结果给客户端，客户端处理结果。</li>
+<li>这种机制对于信息变化不是特别频繁的应用可以良好支撑，但对于实时要求高、海量并发的应用来说显得捉襟见肘，尤其在移动互联网蓬勃发展的趋势下，高并发与用户实时响应是Web应用经常面临的问题，比如金融证券的实时信息、社交网络的实时消息推送等。</li>
+<li>WebSocket出现前我们实现推送技术，用的都是轮询，在特定的时间间隔，浏览器自动发出请求，将服务器的消息主动的拉回来，这种情况下，我们需要不断的向服务器发送请求，并且HTTP 请求 的header非常长，里面包含的数据可能只是一个很小的值，这样会占用很多的带宽和服务器资源，并且服务器不能主动向客户端推送数据。在这种情况下需要一种高效节能的双向通信机制来保证数据的实时传输，于是基于HTML5规范的WebSocket应运而生。</li>
+<li>WebSocket是HTML5下一种新的协议。它实现了浏览器与服务器全双工通信，能更好的节省服务器资源和带宽并达到实时通讯的目的。</li>
+</ul>
+<h3 id="61-websocketio-%E6%A1%86%E6%9E%B6">6.1 websocket.io 框架</h3>
+<ul>
+<li>
+<p>node.js原生是支持websocket协议的，但是如果从底层开始自己一步步搭建一个socket服务器非常难。websockt.io框架屏蔽了底层细节，让顶层调用非常简单。</p>
+</li>
+<li>
+<p>npm i  socket.io</p>
+</li>
+</ul>
+<blockquote>
+<p>服务器端代码：</p>
+</blockquote>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">let</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">"http"</span>);
+    <span class="hljs-keyword">let</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">"fs"</span>);
+
+    <span class="hljs-keyword">let</span> server = http.createServer(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (req.url == <span class="hljs-string">"/"</span>) {
+        fs.readFile(<span class="hljs-string">"./index.html"</span>, (err, data) =&gt; {
+        res.end(data.toString());
+        })
+    }
+    })
+    server.listen(<span class="hljs-number">3000</span>,()=&gt;{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"服务已启动"</span>);
+    })
+    <span class="hljs-comment">// 创建一个socket服务</span>
+    <span class="hljs-keyword">let</span> io = <span class="hljs-built_in">require</span>(<span class="hljs-string">"socket.io"</span>)(server);
+    <span class="hljs-comment">// 添加事件监听</span>
+    io.on(<span class="hljs-string">"connection"</span>, (socket)=&gt;{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"有1个客户端连接了"</span>);
+
+    <span class="hljs-comment">// 自定义事件</span>
+    socket.on(<span class="hljs-string">"tiwen"</span>, (msg)=&gt;{
+        <span class="hljs-built_in">console</span>.log( msg );
+        <span class="hljs-comment">// 服务器触发客户端的自定义事件</span>
+        socket.emit(<span class="hljs-string">"qianduan"</span>,<span class="hljs-string">"大家好"</span>); 
+    })
+    })
+</div></code></pre>
+<blockquote>
+<p>客户端代码：</p>
+</blockquote>
+<pre class="hljs"><code><div>    <span class="hljs-comment">// &lt;!-- 引入秘密js文件 --&gt;</span>
+    &lt;script src=<span class="hljs-string">"./socket.io/socket.io.js"</span>&gt;&lt;<span class="hljs-regexp">/script&gt;
+    &lt;script&gt;
+    let socket = io();
+    let btn = document.getElementById("btn");
+    let msg = document.getElementById("msg");
+    btn.onclick = function(){
+        socket.emit("tiwen", msg.value )
+    }
+    /</span><span class="hljs-regexp">/ 客户端定义 qiandduan 事件。
+    socket.on("qianduan",(msg)=&gt;{
+        console.log("服务器回答：", msg); /</span><span class="hljs-regexp">/浏览器控制台打印输出
+        
+    })
+    &lt;/</span>script&gt;
+</div></code></pre>
+<h1 id="%E7%AC%AC%E5%8D%81%E4%BA%8C%E5%A4%A9">第十二天</h1>
+<h2 id="1-%E8%A7%84%E8%8C%83%E5%8F%8A%E6%9D%83%E9%99%90">1 规范及权限</h2>
+<h3 id="11-%E6%8E%A5%E5%8F%A3%E8%AE%BE%E8%AE%A1%E8%A7%84%E5%88%99">1.1 接口设计规则</h3>
+<ul>
+<li>
+<p>现代网站项目、app、小程序等web开发普遍采用后台接口+前端框架渲染的模式实现前后端分离开发。</p>
+</li>
+<li>
+<p>接口(Application Programming Interface，应用程序接口)︰后台开发人员提供的一个个url地址。由前端人员通过JS发送ajax请求接口与后台交互(对数据库进行增删改查的操作)，最终按照指定的格式(json，xml,string,text)返回给前端人员。再前端开发人员完成前端页面渲染工作。</p>
+</li>
+<li>
+<p>接口设计一般有请求url、请求字段说明、响应示例、响应字段说明等。
+json的一般结构为code-data-msg：</p>
+</li>
+</ul>
+<pre class="hljs"><code><div>    {
+        <span class="hljs-attr">"code"</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">"data"</span>: {
+            <span class="hljs-attr">"userid"</span>:<span class="hljs-number">1</span>,
+            <span class="hljs-attr">"username"</span>:<span class="hljs-string">"老马"</span>
+        },
+        <span class="hljs-attr">"msg"</span>: <span class="hljs-string">"用户登录成功"</span>
+    }
+</div></code></pre>
+<ul>
+<li>code 说明数据返回的状态</li>
+<li>200：接口正常请求并返回</li>
+<li>2xx：业务层面的出错代码，比如登录时密码不正确</li>
+<li>4XX：客户端非法请求</li>
+<li>5XX：服务器运行错误</li>
+<li>data 返回的详细数据，一般有两种类型 ，数组（Array）和对象（Object），数组是[]，对象是{}
+msg 是针对code的文字描述</li>
+<li>通常情况下，客户端判断code=200，说明有正常数据返回，可以从data中读取，如果不是code=200，则说明发生问题，有可能是系统级别的错误，也可能是业务级别的错误（如登录错误）。
+对一些不需要服务器端返回数据的操作，比如赞、收藏，等服务器端会返回 code=200 ,msg=&quot;操作成功&quot;之类的数据。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>200</th>
+<th>操作成功</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>201</td>
+<td>操作不成功</td>
+</tr>
+<tr>
+<td>207</td>
+<td>数据不存在</td>
+</tr>
+<tr>
+<td>208</td>
+<td>参数不完整</td>
+</tr>
+<tr>
+<td>209</td>
+<td>数据已存在</td>
+</tr>
+<tr>
+<td>403</td>
+<td>未授权</td>
+</tr>
+<tr>
+<td>401</td>
+<td>请求的HTTP METHOD不支持，请检查是否选择了正确的POST/GET方式</td>
+</tr>
+<tr>
+<td>500</td>
+<td>服务器发生未知错误</td>
+</tr>
+<tr>
+<td>20001</td>
+<td>用户名密码错误</td>
+</tr>
+<tr>
+<td>20002</td>
+<td>用户名已经存在</td>
+</tr>
+<tr>
+<td>20003</td>
+<td>用户名格式不正确</td>
+</tr>
+<tr>
+<td>20004</td>
+<td>用户名不存在</td>
+</tr>
+<tr>
+<td>40001</td>
+<td>未经授权的客户端数据</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-node%E7%9A%84%E5%86%85%E7%BD%AE%E5%AF%86%E7%A0%81%E6%A8%A1%E5%9D%97-crypto">1.2 node的内置密码模块 crypto</h3>
+<ul>
+<li>在线加密：https://tool.oschina.net/encrypt?type=2</li>
+<li>程序员的基本准则，永远不能将用户的明文密码存储在数据库中，防止被撞库。</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">let</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">"crypto"</span>);
+
+    <span class="hljs-comment">// let hash = crypto.createHash("md5");</span>
+
+    <span class="hljs-comment">// 使用密钥混合加密，加密强度更高。</span>
+    <span class="hljs-comment">// createHmac() 第一个参数为加密算法，第二个参数为密钥字符串</span>
+    <span class="hljs-keyword">let</span> hash = crypto.createHmac(<span class="hljs-string">"md5"</span>,<span class="hljs-string">"offcn.com"</span>)
+
+    hash.update(<span class="hljs-string">"zhangsan"</span>);
+    <span class="hljs-keyword">let</span> pwd = hash.digest(<span class="hljs-string">"hex"</span>);
+
+</div></code></pre>
+<h3 id="13-%E7%99%BB%E5%BD%95%E6%8E%A5%E5%8F%A3%E8%AE%BE%E8%AE%A1%E5%AE%9E%E7%8E%B0%E6%B5%81%E7%A8%8B">1.3 登录接口设计实现流程</h3>
+<ol>
+<li>在express的登录拦截中间件中判断用户是否有登录的凭证（cookie）,没有就提示其去登录</li>
+<li>当用户输入账号和密码，ajax提交后，判断用户的账号和密码是否正确（需要将用户的明文密码再次加密和数据中存储的密码进行对比），如果正确的就返回前端一个json，同时写一个cookie。如果不正确，也返回前端一个json，提示用户密码不正确。</li>
+<li>前端收到json，执行下一步操作。正确的话跳转到后台页面，不正确就弹窗提示</li>
+</ol>
+<h2 id="2-mvc%E5%88%86%E5%B1%82%E5%BC%80%E5%8F%91">2 MVC分层开发</h2>
+<ul>
+<li>MVC是由 Model( 模型) , View( 视图 )，Controller( 控制器) 的首字母缩写。MVC是软件设计的典范，用一种将数据处理、业务逻辑、界面UI 分离的组织代码方式，方便实现产品的升级迭代、测试。</li>
+<li>Model（模型）是应用程序中用于处理应用程序数据逻辑的部分，是应用程序核心。</li>
+<li>通常模型对象负责在数据库中存取数据。最底层、最原子、最脏、最累的活儿要交给Model层完成。</li>
+<li>View（视图）是应用程序中处理数据显示的部分。</li>
+<li>通常视图是依据控制器汇总的模型数据创建的。模型数据由控制器来汇总。</li>
+<li>Controller（控制器）是应用程序中处理用户交互的部分。</li>
+<li>通常控制器负责从视图读取数据，控制用户输入，并向模型发送数据。模型发回的数据，控制器要汇总、分析交由视图呈递。</li>
+</ul>
+<h2 id="3-mvp%E6%A8%A1%E5%BC%8F">3 MVP模式</h2>
+<ul>
+<li>MVP(Model–view–presenter ) 是 MVC 设计模式派生出来的。MVP 经常用来创建用户界面。 presenter是作为一个“中间人”的角色存在。在MVP中，所有页面显示逻辑都会被推送到presenter处理</li>
+</ul>
+<h2 id="4-json-web-token-%E5%BA%94%E7%94%A8">4  JSON  web token 应用</h2>
+<h3 id="41-localstorage-%E4%B8%8E-sessionstorage">4.1 localStorage 与 sessionStorage</h3>
+<ul>
+<li>H5新增了两种本地存储类型来代替cookie。localStorage中一般浏览器支持的是5M大小。</li>
+</ul>
+<blockquote>
+<p>特点</p>
+</blockquote>
+<ol>
+<li>
+<p>永久性保存数据，浏览器关闭不会消失</p>
+</li>
+<li>
+<p>按域名存储，可访问同域名下的任何 storage</p>
+</li>
+<li>
+<p>键值对读取存储</p>
+</li>
+</ol>
+<pre class="hljs"><code><div>    设置：   localStorage.setItem(<span class="hljs-string">"键"</span>，<span class="hljs-string">"值"</span>)
+    ​读取：   localStorage.getItem(<span class="hljs-string">"键"</span>)
+    ​移除：   localStorage.removeItem(<span class="hljs-string">"键"</span>)
+
+</div></code></pre>
+<h3 id="42--token-%E4%BB%A4%E7%89%8C-%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86">4.2 #### token( 令牌) 设计原理</h3>
+<ul>
+<li>http://www.ruanyifeng.com/blog/2019/04/oauth_design.html</li>
+<li>token产生一个短期有效的令牌（一串类似密码的字符串），用来代替密码实现让用户不需要繁琐的登录操作也可以获取需要权限的数据或接口。</li>
+</ul>
+<h3 id="43-jwt-%E7%9A%84%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84">4.3 jwt 的组成结构</h3>
+<ul>
+<li>https://www.jianshu.com/p/300e6e970e5d</li>
+<li>jwt由三部分组成，header、paylaod、signature三部分组成</li>
+<li>jwt的第三部分（签名signature）由 base64转码后的header 、base64转码后的payload 和 secret ，再使用加密算法加密得到</li>
+<li>jwt字符串由 base64转码的header、base64转码的paylaod、签名部分由圆点连接组成</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-comment">// jwt 头部</span>
+    <span class="hljs-keyword">let</span> header = {<span class="hljs-string">"typ"</span>:<span class="hljs-string">"JWT"</span>,<span class="hljs-string">"alg"</span>:<span class="hljs-string">"HS256"</span>};
+</div></code></pre>
+<pre class="hljs"><code><div>    <span class="hljs-comment">// jwt 载荷部分</span>
+    <span class="hljs-keyword">let</span> payload ={
+        <span class="hljs-attr">iat</span>: <span class="hljs-built_in">Date</span>.now(), <span class="hljs-comment">//jwt签发时间</span>
+        <span class="hljs-attr">exp</span>: <span class="hljs-built_in">Date</span>.now() + <span class="hljs-number">1000</span>*<span class="hljs-number">60</span>*<span class="hljs-number">60</span>*<span class="hljs-number">24</span> <span class="hljs-comment">//jwt的过期时间，这个过期时间必须要大于签发时间</span>
+    }
+</div></code></pre>
+<h3 id="44-jwt%E5%BA%94%E7%94%A8">4.4 jwt应用</h3>
+<h4 id="441-%E7%94%A8%E6%88%B7ajax%E7%99%BB%E5%BD%95%E6%8F%90%E4%BA%A4%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81%E5%88%B0jwt%E5%90%8E%E7%AB%AF%E7%BD%91%E7%AB%99">4.4.1 用户ajax登录，提交账号、密码到jwt后端网站</h4>
+<h4 id="442-jwt%E5%90%8E%E7%AB%AF%E7%BD%91%E7%AB%99%E5%85%81%E8%AE%B8%E8%B7%A8%E5%9F%9F">4.4.2 jwt后端网站允许跨域</h4>
+<pre class="hljs"><code><div>    <span class="hljs-comment">// 允许跨域请求</span>
+    app.use(<span class="hljs-function">(<span class="hljs-params">req,res,next</span>)=&gt;</span>{
+    res.header(<span class="hljs-string">"Access-Control-Allow-Origin"</span>,<span class="hljs-string">"*"</span>);
+    next();
+    })
+
+</div></code></pre>
+<h4 id="443-%E5%93%8D%E5%BA%94%E5%89%8D%E7%AB%AF%E7%9A%84%E7%99%BB%E5%BD%95%E8%AF%B7%E6%B1%82%E8%BF%94%E5%9B%9E%E7%9B%B8%E5%BA%94%E7%9A%84json">4.4.3 响应前端的登录请求，返回相应的json</h4>
+<pre class="hljs"><code><div>
+    <span class="hljs-comment">// 响应前端的登录请求</span>
+    app.post(<span class="hljs-string">"/login"</span>,<span class="hljs-keyword">async</span> (req,res)=&gt;{
+        <span class="hljs-built_in">console</span>.log( req.body );
+        <span class="hljs-keyword">let</span> {account,pwd}= req.body;
+        <span class="hljs-comment">// 把密码再次加密</span>
+        <span class="hljs-keyword">let</span> hash = crypto.createHash(<span class="hljs-string">"md5"</span>);
+        hash.update( pwd );
+        <span class="hljs-keyword">let</span> password = hash.digest(<span class="hljs-string">"hex"</span>);
+        <span class="hljs-comment">// 去数据库验证账号密码是否正确</span>
+        <span class="hljs-keyword">let</span> sql = <span class="hljs-string">"select * from admin where account=? and password=?"</span>;
+        <span class="hljs-keyword">let</span> [err,result] = <span class="hljs-keyword">await</span> to( db.query(sql,[account,password]) );
+        <span class="hljs-keyword">if</span>(!err){
+            <span class="hljs-keyword">if</span>( result.length&gt;<span class="hljs-number">0</span> ){
+            <span class="hljs-comment">// 生成jwt</span>
+            <span class="hljs-keyword">let</span> token = jwt.generatorJWT(jwt.header,jwt.payload,jwt.secret);
+            res.json( {<span class="hljs-attr">code</span>:<span class="hljs-number">200</span>,<span class="hljs-attr">data</span>:{token},<span class="hljs-attr">msg</span>:<span class="hljs-string">"登录成功"</span>});
+            <span class="hljs-keyword">return</span>;
+            }<span class="hljs-keyword">else</span>{
+            res.json( {<span class="hljs-attr">code</span>:<span class="hljs-number">20001</span>,<span class="hljs-attr">data</span>:<span class="hljs-literal">null</span>,<span class="hljs-attr">msg</span>:<span class="hljs-string">"账号或密码错误"</span>} );
+            <span class="hljs-keyword">return</span>;
+            }
+        }<span class="hljs-keyword">else</span>{
+            res.json( {<span class="hljs-attr">code</span>:<span class="hljs-number">500</span>,<span class="hljs-attr">data</span>:err,<span class="hljs-attr">msg</span>:<span class="hljs-string">"服务器错误"</span>});
+            <span class="hljs-keyword">return</span>;
+        }
+    })
+
+</div></code></pre>
+<h4 id="444-%E5%89%8D%E7%AB%AF%E4%BF%9D%E5%AD%98token-%E5%88%B0localstorage%E4%B8%AD%E5%BE%85%E7%94%A8">4.4.4 前端保存token 到localStorage中，待用</h4>
+<pre class="hljs"><code><div>    <span class="hljs-comment">// 登录成功，将jwt串保存到token中</span>
+    <span class="hljs-keyword">if</span>( response.code == <span class="hljs-number">200</span>){
+        <span class="hljs-built_in">window</span>.localStorage.setItem(<span class="hljs-string">"token"</span>, response.data.token );
+    }<span class="hljs-keyword">else</span>{
+        alert( response.msg );
+    }
+
+</div></code></pre>
+<h4 id="445-%E5%BD%93%E7%94%A8%E6%88%B7%E8%AE%BF%E9%97%AE%E5%85%B6%E4%BB%96%E6%9C%89%E9%9C%80%E8%A6%81%E6%9D%83%E9%99%90%E7%9A%84%E6%8E%A5%E5%8F%A3%E6%97%B6%E9%9C%80%E8%A6%81%E6%8A%8Atoken-%E6%B7%BB%E5%8A%A0%E5%9C%A8%E8%AF%B7%E6%B1%82%E5%A4%B4%E4%B8%8A">4.4.5 当用户访问其他有需要权限的接口时，需要把token 添加在请求头上</h4>
+<pre class="hljs"><code><div>    $.ajax({
+        <span class="hljs-attr">type</span>: <span class="hljs-string">"get"</span>,
+        <span class="hljs-comment">// ajax在请求头中添加一个叫token的字段，值为jwt字符串</span>
+        <span class="hljs-attr">headers</span>:{
+            <span class="hljs-attr">token</span>: <span class="hljs-built_in">window</span>.localStorage.getItem(<span class="hljs-string">"token"</span>) || <span class="hljs-string">""</span>
+        },
+        <span class="hljs-attr">url</span>: <span class="hljs-string">"http://127.0.0.1:3000/cart"</span>,
+        <span class="hljs-attr">data</span>: <span class="hljs-literal">null</span>,
+        <span class="hljs-attr">dataType</span>: <span class="hljs-string">"json"</span>,
+        <span class="hljs-attr">success</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">response</span>) </span>{
+            <span class="hljs-built_in">console</span>.log( response );
+        }
+    });
+</div></code></pre>
+<h4 id="446-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%9C%80%E8%A6%81%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E7%99%BB%E5%BD%95%E6%8B%A6%E6%88%AA%E7%9A%84%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%88%A4%E6%96%AD%E7%94%A8%E6%88%B7%E6%8F%90%E4%BA%A4%E7%9A%84token%E6%98%AF%E5%90%A6%E6%9C%89%E6%95%88">4.4.6 服务端需要编写一个登录拦截的中间件，判断用户提交的token是否有效</h4>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">let</span> jwt = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./jwt"</span>);
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">intercept</span>(<span class="hljs-params"></span>)</span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">req,res,next</span>)=&gt;</span>{
+            <span class="hljs-comment">// 从请求头中解析出jwt字符串</span>
+            <span class="hljs-keyword">let</span> {token} = req.headers;
+            <span class="hljs-keyword">if</span>( !token || token==<span class="hljs-string">""</span>){
+            res.json( {<span class="hljs-attr">code</span>:<span class="hljs-number">208</span>,<span class="hljs-attr">data</span>:<span class="hljs-literal">null</span>,<span class="hljs-attr">msg</span>:<span class="hljs-string">"token为空，请检查"</span>} )
+            <span class="hljs-keyword">return</span>;
+            }
+            <span class="hljs-comment">// 验证token的有效性：获取用户提交的token中的header和paylaod部分，利用签名算法再一次进行签名，和用户提交的token的第三部分签名部分进行对比，如果一致，说明token没有被篡改。</span>
+            <span class="hljs-keyword">let</span> [header,payload,signature] = token.split(<span class="hljs-string">"."</span>);
+            <span class="hljs-comment">// 此时header,payload是base64编码后的字符串。</span>
+            <span class="hljs-keyword">let</span> newSigna = jwt.signature( jwt.Base64toJson(header), jwt.Base64toJson(payload),jwt.secret );
+            <span class="hljs-keyword">if</span>( newSigna == signature ){
+            <span class="hljs-comment">// res.json( {code:200,data:null,msg:"token有效"});</span>
+            <span class="hljs-comment">// 继续验证token是否过期，获取payload中的exp值，和当前的时间进行比较</span>
+            <span class="hljs-keyword">let</span> {exp} = jwt.Base64toJson(payload);
+            <span class="hljs-keyword">if</span>( <span class="hljs-built_in">Date</span>.now() &gt; exp ){
+                res.json( {<span class="hljs-attr">code</span>:<span class="hljs-number">207</span>,<span class="hljs-attr">data</span>:<span class="hljs-literal">null</span>,<span class="hljs-attr">msg</span>:<span class="hljs-string">"token已过期"</span>});
+                <span class="hljs-keyword">return</span>;
+            }<span class="hljs-keyword">else</span>{
+                <span class="hljs-comment">// token 没有被篡改，也没有过期，则放行</span>
+                next();
+            }
+            }<span class="hljs-keyword">else</span>{
+            res.json( {<span class="hljs-attr">code</span>:<span class="hljs-number">208</span>,<span class="hljs-attr">data</span>:<span class="hljs-literal">null</span>,<span class="hljs-attr">msg</span>:<span class="hljs-string">"token无效"</span>});
+            <span class="hljs-keyword">return</span>;
+            }
+        }
+    }
+<span class="hljs-built_in">module</span>.exports = intercept;
+
+
+</div></code></pre>
+<h1 id="%E7%AC%AC%E5%8D%81%E4%B8%89%E5%A4%A9">第十三天</h1>
+<h2 id="1-rest%E9%A3%8E%E6%A0%BC%E8%B7%AF%E7%94%B1">1. REST风格路由</h2>
+<ul>
+<li>
+<p>restful其实本身并不是一个新鲜的东西，最早是在2000年由Roy Thomas Fielding博士在他的博士论文中提出。说起这位老兄，来头可不小，他是http 1.0和1.1版本协议的主要设计者，apache基金会的第一任主席，可以说是现代互联网体系的奠基者。Fielding将他对互联网软件的架构原则，定名为REST，即表述层状态转移（Representational State Transfer）</p>
+</li>
+<li>
+<p>当时的互联网其实还是处于刚萌芽的状态，这个设计思想过于超前，所以早些年一直处于不温不火的状态。直到近年来，互联网业务高速发展，系统架构越来越复杂，移动互联网的兴起，前后端分离架构的流行，人们发现原来这套用于超文本传输的协议是如此适合用于设计基于互联网的api接口，基于http动词以及标准的http status返回信息，能够非常好的描述api的特性，并且可读性非常好。</p>
+</li>
+</ul>
+<blockquote>
+<p>普通的路由设计：</p>
+</blockquote>
+<pre class="hljs"><code><div>   /student?id=120&amp;age=19&amp;sex=男
+​	/add_stu?id=120&amp;age=19&amp;sex=男
+​	/edit_studnt?id=120
+​	/update_student?id=120
+
+</div></code></pre>
+<blockquote>
+<p>RESTful路由</p>
+</blockquote>
+<pre class="hljs"><code><div>    GET		/student/12001		查询学号为12001号的学生
+    POST	  /student/12001		修改12001号的学生
+    PUT		/student/12001		新增一个学号为12001的学生
+    propfind	/student/12001	 查看学号12001号的学生是否被占用
+    DELETE	/student/12001	 删除学号为12001号的学生
+
+    总结： url只有名词，表示要操作的资源，具体干啥由请求方法的“动词”决定。
+
+</div></code></pre>
+<ul>
+<li>RESTFul API设计除了HTTP METHOD,rest另外一套重要的规范就是HTTP STATUS，这套状态码规范定义了常规的api操作所可能产生的各种可能结果的描述，遵循这套规范，会使得你的api变得更加可读，同时也便于各种网络、基础设施进行交易状态监控。经常会用到的status code整理如下：</li>
+</ul>
+<pre class="hljs"><code><div>    200 OK - [GET]：服务器成功返回用户请求的数据，该操作是幂等的（Idempotent）。
+    201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。 
+    202 Accepted - [*]：表示一个请求已经进入后台排队（异步任务） 
+    204 NO CONTENT - [DELETE]：用户删除数据成功。 
+    400 INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。 
+    401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）。 
+    403 Forbidden - [*] 表示用户得到授权（与401错误相对），但是访问是被禁止的。 
+    404 NOT FOUND - [*]：用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。
+    406 Not Acceptable - [GET]：用户请求的格式不可得（比如用户请求JSON格式，但是只有XML格式）。 
+    410 Gone -[GET]：用户请求的资源被永久删除，且不会再得到的。 
+    422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。 
+    500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。
+
+</div></code></pre>
+
+</body>
+</html>

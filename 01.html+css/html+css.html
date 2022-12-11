@@ -1,0 +1,4280 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>第一阶段总结.md</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+
+    <style>
+      /* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+      /*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+      html {
+        padding: 0 100px;
+      }
+      body {
+        font-family: var(
+          --vscode-markdown-font-family,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe WPC",
+          "Segoe UI",
+          "Ubuntu",
+          "Droid Sans",
+          sans-serif
+        );
+        font-size: var(--vscode-markdown-font-size, 14px);
+        padding: 0 26px;
+        line-height: var(--vscode-markdown-line-height, 22px);
+        word-wrap: break-word;
+      }
+
+      #code-csp-warning {
+        position: fixed;
+        top: 0;
+        right: 0;
+        color: white;
+        margin: 16px;
+        text-align: center;
+        font-size: 12px;
+        font-family: sans-serif;
+        background-color: #444444;
+        cursor: pointer;
+        padding: 6px;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+      }
+
+      #code-csp-warning:hover {
+        text-decoration: none;
+        background-color: #007acc;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+      }
+
+      body.scrollBeyondLastLine {
+        margin-bottom: calc(100vh - 22px);
+      }
+
+      body.showEditorSelection .code-line {
+        position: relative;
+      }
+
+      body.showEditorSelection .code-active-line:before,
+      body.showEditorSelection .code-line:hover:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: -12px;
+        height: 100%;
+      }
+
+      body.showEditorSelection li.code-active-line:before,
+      body.showEditorSelection li.code-line:hover:before {
+        left: -30px;
+      }
+
+      .vscode-light.showEditorSelection .code-active-line:before {
+        border-left: 3px solid rgba(0, 0, 0, 0.15);
+      }
+
+      .vscode-light.showEditorSelection .code-line:hover:before {
+        border-left: 3px solid rgba(0, 0, 0, 0.4);
+      }
+
+      .vscode-light.showEditorSelection .code-line .code-line:hover:before {
+        border-left: none;
+      }
+
+      .vscode-dark.showEditorSelection .code-active-line:before {
+        border-left: 3px solid rgba(255, 255, 255, 0.4);
+      }
+
+      .vscode-dark.showEditorSelection .code-line:hover:before {
+        border-left: 3px solid rgba(255, 255, 255, 0.6);
+      }
+
+      .vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+        border-left: none;
+      }
+
+      .vscode-high-contrast.showEditorSelection .code-active-line:before {
+        border-left: 3px solid rgba(255, 160, 0, 0.7);
+      }
+
+      .vscode-high-contrast.showEditorSelection .code-line:hover:before {
+        border-left: 3px solid rgba(255, 160, 0, 1);
+      }
+
+      .vscode-high-contrast.showEditorSelection
+        .code-line
+        .code-line:hover:before {
+        border-left: none;
+      }
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      a:focus,
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: 1px solid -webkit-focus-ring-color;
+        outline-offset: -1px;
+      }
+
+      hr {
+        border: 0;
+        height: 2px;
+        border-bottom: 2px solid;
+      }
+
+      h1 {
+        padding-bottom: 0.3em;
+        line-height: 1.2;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-weight: normal;
+      }
+
+      table {
+        border-collapse: collapse;
+      }
+
+      table > thead > tr > th {
+        text-align: left;
+        border-bottom: 1px solid;
+      }
+
+      table > thead > tr > th,
+      table > thead > tr > td,
+      table > tbody > tr > th,
+      table > tbody > tr > td {
+        padding: 5px 10px;
+      }
+
+      table > tbody > tr + tr > td {
+        border-top: 1px solid;
+      }
+
+      blockquote {
+        margin: 0 7px 0 5px;
+        padding: 0 16px 0 10px;
+        border-left-width: 5px;
+        border-left-style: solid;
+      }
+
+      code {
+        font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New",
+          monospace, "Droid Sans Fallback";
+        font-size: 1em;
+        line-height: 1.357em;
+      }
+
+      body.wordWrap pre {
+        white-space: pre-wrap;
+      }
+
+      pre:not(.hljs),
+      pre.hljs code > div {
+        padding: 16px;
+        border-radius: 3px;
+        overflow: auto;
+      }
+
+      pre code {
+        color: var(--vscode-editor-foreground);
+        tab-size: 4;
+      }
+
+      /** Theming */
+
+      .vscode-light pre {
+        background-color: rgba(220, 220, 220, 0.4);
+      }
+
+      .vscode-dark pre {
+        background-color: rgba(10, 10, 10, 0.4);
+      }
+
+      .vscode-high-contrast pre {
+        background-color: rgb(0, 0, 0);
+      }
+
+      .vscode-high-contrast h1 {
+        border-color: rgb(0, 0, 0);
+      }
+
+      .vscode-light table > thead > tr > th {
+        border-color: rgba(0, 0, 0, 0.69);
+      }
+
+      .vscode-dark table > thead > tr > th {
+        border-color: rgba(255, 255, 255, 0.69);
+      }
+
+      .vscode-light h1,
+      .vscode-light hr,
+      .vscode-light table > tbody > tr + tr > td {
+        border-color: rgba(0, 0, 0, 0.18);
+      }
+
+      .vscode-dark h1,
+      .vscode-dark hr,
+      .vscode-dark table > tbody > tr + tr > td {
+        border-color: rgba(255, 255, 255, 0.18);
+      }
+    </style>
+
+    <style>
+      /* Tomorrow Theme */
+      /* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+      /* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+      /* Tomorrow Comment */
+      .hljs-comment,
+      .hljs-quote {
+        color: #8e908c;
+      }
+
+      /* Tomorrow Red */
+      .hljs-variable,
+      .hljs-template-variable,
+      .hljs-tag,
+      .hljs-name,
+      .hljs-selector-id,
+      .hljs-selector-class,
+      .hljs-regexp,
+      .hljs-deletion {
+        color: #c82829;
+      }
+
+      /* Tomorrow Orange */
+      .hljs-number,
+      .hljs-built_in,
+      .hljs-builtin-name,
+      .hljs-literal,
+      .hljs-type,
+      .hljs-params,
+      .hljs-meta,
+      .hljs-link {
+        color: #f5871f;
+      }
+
+      /* Tomorrow Yellow */
+      .hljs-attribute {
+        color: #eab700;
+      }
+
+      /* Tomorrow Green */
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-bullet,
+      .hljs-addition {
+        color: #718c00;
+      }
+
+      /* Tomorrow Blue */
+      .hljs-title,
+      .hljs-section {
+        color: #4271ae;
+      }
+
+      /* Tomorrow Purple */
+      .hljs-keyword,
+      .hljs-selector-tag {
+        color: #8959a8;
+      }
+
+      .hljs {
+        display: block;
+        overflow-x: auto;
+        color: #4d4d4c;
+        padding: 0.5em;
+      }
+
+      .hljs-emphasis {
+        font-style: italic;
+      }
+
+      .hljs-strong {
+        font-weight: bold;
+      }
+    </style>
+
+    <style>
+      /*
+ * Markdown PDF CSS
+ */
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI",
+          "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+        padding: 0 12px;
+      }
+
+      pre {
+        background-color: #f8f8f8;
+        border: 1px solid #cccccc;
+        border-radius: 3px;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+      }
+
+      pre:not(.hljs) {
+        padding: 23px;
+        line-height: 19px;
+      }
+
+      blockquote {
+        background: rgba(127, 127, 127, 0.1);
+        border-color: rgba(0, 122, 204, 0.5);
+      }
+
+      .emoji {
+        height: 1.4em;
+      }
+
+      code {
+        font-size: 14px;
+        line-height: 19px;
+      }
+
+      /* for inline code */
+      :not(pre):not(.hljs) > code {
+        color: #c9ae75; /* Change the old color so it seems less like an error */
+        font-size: inherit;
+      }
+
+      /* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+      .page {
+        page-break-after: always;
+      }
+    </style>
+
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+  </head>
+  <body>
+    <script>
+      mermaid.initialize({
+        startOnLoad: true,
+        theme:
+          document.body.classList.contains("vscode-dark") ||
+          document.body.classList.contains("vscode-high-contrast")
+            ? "dark"
+            : "default",
+      });
+    </script>
+    <h1 id="%E7%AC%AC%E4%B8%80%E5%A4%A9">第一天</h1>
+    <h1
+      id="1%E4%B8%BB%E6%B5%81%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8F%8A%E5%85%B6%E5%86%85%E6%A0%B8%E8%AE%B0%E4%BD%8F"
+    >
+      1.主流浏览器及其内核(记住)
+    </h1>
+    <pre class="hljs"><code><div>    微软       IE： --trident
+    谷歌   google： --webkit --blink
+    火狐  firefox： --gecko
+    苹果   safari： --webkit
+    欧朋    Opera： --presto --webkit
+</div></code></pre>
+    <h2 id="2%E7%BD%91%E9%A1%B5%E6%A6%82%E8%BF%B0">2.网页概述</h2>
+    <ul>
+      <li>网页元素：文本、图片、输入框、按钮、超链接、音频、视频....</li>
+      <li>w3c：万维网联盟，专门制定web标准的机构</li>
+      <li>
+        web标准（w3c标砖）：w3c组织针对网页第三层架构指定的一系列的开发标准
+      </li>
+      <li>网页三层机构：结构层、表现层、行为层</li>
+      <li>网页三门核心技术：html、css、javascript</li>
+    </ul>
+    <h2 id="3html%E7%AE%80%E4%BB%8B">3.html简介</h2>
+    <ul>
+      <li>html：超级文本标记语言（HyperText Markup Language）</li>
+      <li>html是用来描述网页的语言</li>
+      <li>有一套标记标签组成</li>
+      <li>不是编程语言</li>
+    </ul>
+    <h2 id="4html%E6%96%87%E6%A1%A3%E7%BD%91%E9%A1%B5">4.html文档（网页）</h2>
+    <ul>
+      <li>创建 后缀名为 .html的文件</li>
+      <li>生成基本结构代码 (! + Enter)</li>
+    </ul>
+    <h2 id="5%E7%BD%91%E9%A1%B5%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84">
+      5.网页基本结构
+    </h2>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;!-- 文档类型声明 ：告诉浏览器以htm哪个标砖解析网页（html5） --&gt;
+    &lt;!DOCTYPE html&gt;  
+    &lt;!-- 根标签：代表网页的开始和结束  lang=&quot;en/zh-CN&quot; 制定网页语言 --&gt;
+    &lt;html lang=&quot;en&quot;&gt;
+        &lt;!-- 网页头部：一般用来放置网页的源数据（字符设置、标题、样式表、关键字...） --&gt;
+    &lt;head&gt;
+        &lt;!-- 设置网页的字符集（编码方式） 避免网页乱码  --&gt;
+        &lt;!-- utf-8 国际编码 大部分兼容 --&gt;
+        &lt;!-- gb312 中文编码 支持简体 --&gt;
+        &lt;!-- gbk 国际扩 （简体和繁体中文） --&gt;
+        &lt;meta charset=&quot;UTF-8&quot;&gt;
+        &lt;!-- 网页标题 显示在浏览器页卡 和收藏夹得书签 --&gt;
+        &lt;title&gt;我的第一个网页&lt;/title&gt;
+    &lt;/head&gt;
+        &lt;!-- 网页主体，浏览器的所示区域内容都在这里 --&gt;
+    &lt;body&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+</div></code></pre>
+    <h2 id="6html-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95">6.html 基本语法</h2>
+    <h3 id="61-%E6%A0%87%E7%AD%BE%E5%8D%95%E8%AF%8D">6.1 标签&lt;单词&gt;</h3>
+    <ul>
+      <li>单标签（空标签）：只有开始标签没有结束标签</li>
+    </ul>
+    <pre class="hljs"><code><div>    &lt;meta&gt;
+    &lt;br&gt;
+    &lt;img&gt;
+</div></code></pre>
+    <ul>
+      <li>双标签：有一个开始标签和一个结束标签以及之间的内容组成</li>
+    </ul>
+    <pre class="hljs"><code><div>    &lt;html&gt; ... &lt;/html&gt;
+    &lt;head&gt; ... &lt;/head&gt;
+    &lt;body&gt; ... &lt;/body&gt;
+    ...
+</div></code></pre>
+    <h3 id="62-%E5%B1%9E%E6%80%A7">6.2 属性</h3>
+    <ul>
+      <li>属性用来给标签添加附加信息</li>
+      <li>属性必须在开始标签上定义</li>
+      <li>多组属性用空格隔开</li>
+      <li>每一组属性由 属性名 = &quot;值&quot; 组成</li>
+    </ul>
+    <pre class="hljs"><code><div>    &lt;html lang=&quot;en&quot;&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    ....
+</div></code></pre>
+    <h3 id="63-%E6%B3%A8%E9%87%8A">6.3 注释</h3>
+    <pre class="hljs"><code><div>    &lt;!-- html注释 --&gt;
+</div></code></pre>
+    <ul>
+      <li>快捷键：</li>
+    </ul>
+    <pre class="hljs"><code><div>    单行   ： ctrl+/
+    块注释 ：ctrl+shift+/
+</div></code></pre>
+    <h2 id="7%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE">7.常用标签</h2>
+    <h3 id="71-%E6%A0%87%E9%A2%98h1h6">7.1 标题（h1~h6）</h3>
+    <ul>
+      <li>h1标签在一个网页中只能使用一次，一般用来定义网站的主标题或者logo</li>
+    </ul>
+    <pre class="hljs"><code><div>    &lt;h1&gt;标题一&lt;/h1&gt;  
+    &lt;h2&gt;标题二&lt;/h2&gt;
+    &lt;h3&gt;标题三&lt;/h3&gt;
+    &lt;h4&gt;标题四&lt;/h4&gt;
+    &lt;h5&gt;标题五&lt;/h5&gt;
+    &lt;h6&gt;标题六&lt;/h6&gt;
+</div></code></pre>
+    <h3 id="72-%E6%AE%B5%E8%90%BDp">7.2 段落（p）</h3>
+    <ul>
+      <li>
+        段落用来定义普通文字，文章的正文内容每个短多前后默认会添加一些空白间距
+      </li>
+    </ul>
+    <pre class="hljs"><code><div>    &lt;p&gt; ... &lt;/p&gt;
+</div></code></pre>
+    <h3 id="73-%E5%8C%BA%E5%9D%97%E7%9B%92%E5%AD%90-div">
+      7.3 区块（盒子 div ）
+    </h3>
+    <ul>
+      <li>没有具体的语义，一般用来划分页面的模块</li>
+    </ul>
+    <pre class="hljs"><code><div>    &lt;div&gt;
+        &lt;h3&gt; ... &lt;/h3&gt;
+        &lt;p&gt; ... &lt;/p&gt;
+    &lt;/div&gt;
+</div></code></pre>
+    <h3
+      id="74-%E6%B0%B4%E5%B9%B3%E5%88%86%E5%89%B2%E7%BA%BF%E5%8D%95%E6%A0%87%E7%AD%BE-hr"
+    >
+      7.4 水平分割线（单标签 hr）
+    </h3>
+    <ul>
+      <li>代表主体的结束</li>
+    </ul>
+    <pre class="hljs"><code><div>    &lt;div&gt; ... &lt;/div&gt;
+    &lt;hr&gt;
+    &lt;div&gt; ... &lt;/div&gt;
+</div></code></pre>
+    <h3 id="75-%E6%8D%A2%E8%A1%8C%E5%8D%95%E6%A0%87%E7%AD%BE-br">
+      7.5 换行（单标签 br ）
+    </h3>
+    <pre class="hljs"><code><div>    &lt;p&gt;
+        这是一段文字 &lt;br&gt; 换行后的文字
+    &lt;/p&gt;
+</div></code></pre>
+    <h3 id="76-span">7.6 span</h3>
+    <ul>
+      <li>无语义标签，通常用来给一段文字中的制定文字添加特殊样式</li>
+    </ul>
+    <pre class="hljs"><code><div>
+&lt;p&gt;
+    &lt;span&gt;忆江南：&lt;/span&gt;作者题下自注说：“此曲亦名谢秋娘，每首五句。”&lt;br&gt;
+    &lt;span&gt;乐府集：&lt;/span&gt;  “《忆江南》一名《望江南》。“因白氏词，后遂改名《江南好》。
+&lt;/p&gt;
+</div></code></pre>
+    <h3 id="8%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F%E5%8C%96">8.文本格式化</h3>
+    <pre class="hljs"><code><div>
+    b ：样式加粗，没有语义
+    strong ：样式加粗，并且有强调的语义
+    i ：样式斜体，没有语义
+    en ：样式斜体，并且有强调的语义
+    sup ：上标
+    sub ：下标
+    del ：删除线
+    ins ：下划线
+</div></code></pre>
+    <h2 id="9%E7%BD%91%E9%A1%B5%E5%9B%BE%E7%89%87%E6%A0%87%E7%AD%BEimg">
+      9.网页图片标签（img）
+    </h2>
+    <p>
+      <code>&lt;img src=&quot;图片地址&quot; alt=&quot;提示文本&quot;&gt;</code>
+    </p>
+    <pre
+      class="hljs"
+    ><code><div>    src=&quot;图片地址&quot; ：图片文件的路径地址，相对路径或绝对路径
+    alt=&quot;提示文本&quot; ：定义图片无法显示时的提示文
+</div></code></pre>
+    <blockquote>
+      <p>图片的宽高只设置一个时，等比例缩放</p>
+    </blockquote>
+    <pre class="hljs"><code><div>    width=&quot;&quot;   ：定义图片的宽度
+    height=&quot;&quot;  ：定义图片的高度
+    title=&quot;&quot;   ：悬停提示文本，鼠标悬停在图片上时,显示提示文本
+</div></code></pre>
+    <h2
+      id="10%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E5%92%8C%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84"
+    >
+      10.相对路径和绝对路径
+    </h2>
+    <h3 id="%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84">相对路径</h3>
+    <pre class="hljs"><code><div>    ./     ：当前目录下，可以省略
+    ../    ：当前目录上一级目录
+    ../../ ：当前目录上上一级目录
+    /      ：根目录 此条路径的开头
+</div></code></pre>
+    <h3 id="%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84">绝对路径</h3>
+    <pre class="hljs"><code><div>    本地绝对路径
+    &lt;img src=&quot;C:\Users\Public\Pictures\Sample Pictures&quot;&gt;
+    网络地址路径
+    &lt;img src=&quot;https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png&quot;&gt;
+</div></code></pre>
+    <h2 id="11html%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6">11.HTML特殊字符</h2>
+    <pre class="hljs"><code><div>    代码             效果           描述
+    &amp;lt;	         &lt;	       小于号或显示标记
+    &amp;gt; 	         &gt;	       大于号或显示标记
+    &amp;amp;	         &amp;	       可用于显示其它特殊字符
+    &amp;reg;	         ®	       已注册
+    &amp;copy;	         ©	       版权
+    &amp;trade;	         ™	       商标
+    &amp;sp;	 	     不断行的空白
+</div></code></pre>
+    <h2
+      id="12%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"
+    >
+      12.扩展阅读(字符编码)
+    </h2>
+    <pre class="hljs"><code><div>    
+    字符（Character）是各种文字和符号的总称，包括各国家文字、标点符号、图形符号、数字等。字符集（Character set）是多个字符的集合。如需正确地显示 HTML 页面，浏览器必须知道使用何种字符集。字符集种类较多，每个字符集包含的字符个数不同。
+    常见字符集名称：ASCII字符集、GB2312字符集、Unicode字符集等。万维网早期使用的字符集是 ASCII。ASCII 支持 0-9 的数字，大写和小写英文字母表，以及一些特殊字符。
+    GB2312是中国国家标准的简体中文字符集。它所收录的汉字已经覆盖99.75%的使用频率，基本满足了汉字的计算机处理需要。
+    GBK即汉字内码扩展规范，GBK编码标准，包含全部中文字符，兼容GB2312，集简、繁体字融于一库。
+    Unicode字符集为每种语言中的每个字符设定了统一并且唯一的编码，以满足跨语言、跨平台进行文本转换、处理的要求。UTF-8是Unicode的其中一个使用方式,又称万国码，又称万国码。用在网页上可以同一页面显示中文简体繁体及其它 语言（如英文，日文，韩文），通用性比较好。
+
+</div></code></pre>
+    <h1 id="%E7%AC%AC%E4%BA%8C%E5%A4%A9">第二天</h1>
+    <h2 id="1-%E5%88%97%E8%A1%A8">1 列表</h2>
+    <h3 id="11-%E6%9C%89%E5%BA%8F%E5%88%97%E8%A1%A8">1.1 有序列表</h3>
+    <ul>
+      <li>用来规定一些顺序重要，不能随意调整的项，比如排行榜</li>
+    </ul>
+    <pre class="hljs"><code><div>    &lt;ol type=&quot;A&quot;&gt;
+        &lt;li&gt; ... &lt;/li&gt;
+        &lt;li&gt; ... &lt;/li&gt;
+        &lt;li&gt; ... &lt;/li&gt;
+    &lt;/ol&gt;
+</div></code></pre>
+    <ul>
+      <li>属性说明：type 属性用来规定编号类型 1/A/a/I/i</li>
+    </ul>
+    <h3 id="12-%E6%97%A0%E5%BA%8F%E5%88%97%E8%A1%A8">1.2 无序列表</h3>
+    <ul>
+      <li>用来定义一些顺序不重要的项目，比如商品列表，导航</li>
+    </ul>
+    <pre class="hljs"><code><div>    &lt;ul type=&quot;square&quot;&gt;
+        &lt;li&gt; ... &lt;/li&gt;
+        &lt;li&gt; ... &lt;/li&gt;
+        &lt;li&gt; ... &lt;/li&gt;
+    &lt;/ul&gt;
+</div></code></pre>
+    <ul>
+      <li>
+        属性说明：type属性用来规定列表项前边的标记风格 desc(实心圆)
+        circle(空心圆) square(方块)
+      </li>
+    </ul>
+    <h3 id="12-%E5%AE%9A%E4%B9%89%E5%88%97%E8%A1%A8">1.2 定义列表</h3>
+    <ul>
+      <li>用用来解释一些专有名词或者术语的定义</li>
+    </ul>
+    <pre class="hljs"><code><div>    &lt;dl&gt;
+        &lt;dt&gt; 名词1 &lt;/dt&gt;
+        &lt;dd&gt; 解释1 &lt;/dd&gt;
+        &lt;dd&gt; 解释2 &lt;/dd&gt;
+    &lt;/dl&gt;
+</div></code></pre>
+    <h2 id="2-%E8%B6%85%E9%93%BE%E6%8E%A5">2 超链接</h2>
+    <pre class="hljs"><code><div>    文字链接：
+    &lt;a href=&quot;链接目标&quot;&gt;文本&lt;/a&gt;
+    图片链接
+    &lt;a href=&quot;链接目标&quot;&gt; &lt;img src=&quot;...&quot;&gt;&lt;/a&gt;
+</div></code></pre>
+    <blockquote>
+      <p>使用场景：</p>
+    </blockquote>
+    <pre class="hljs"><code><div>    &lt;!-- 1.跳转到当前项目其他页面 --&gt;
+    &lt;a href=&quot;./xxx.html&quot;&gt;跳转页面&lt;/a&gt;
+
+    &lt;!-- 2.跳转到其他网站的页面，比如友情链接 --&gt;
+    &lt;a href=&quot;https://www.baidu.com&quot;&gt;去百度&lt;/a&gt;
+
+    &lt;!-- 3.锚点链接：跳转到当前页面制定位置 --&gt;
+    &lt;div id=&quot;box&quot;&gt;&lt;/div&gt;
+    &lt;a href=&quot;#box&quot;&gt;跳转页面&lt;/a&gt;
+</div></code></pre>
+    <blockquote>
+      <p>属性说明：</p>
+    </blockquote>
+    <pre
+      class="hljs"
+    ><code><div>    href=&quot;#&quot;&quot;:用来规定挑战的目标，如果再试没有就添加“#”占位
+    target=&quot;_blank&quot;：规定目标页面的打开方式， _self 在当前窗口打开， _blank 在新窗口打开
+    title=&quot;文本&quot;：鼠标悬停时的提示文本
+
+</div></code></pre>
+    <h2 id="3-%E8%A1%A8%E6%A0%BC">3 表格</h2>
+    <ul>
+      <li>
+        表格早期用于网页的整体排版布局，但是现在只适用于一些局部报表，数据表格，不适用于整个页面的布局
+      </li>
+    </ul>
+    <h3 id="31-%E5%9F%BA%E6%9C%AC%E7%9A%84%E8%A1%A8%E6%A0%BC%E6%A0%87%E7%AD%BE">
+      3.1 基本的表格标签
+    </h3>
+    <pre class="hljs"><code><div>    &lt;table&gt;
+        &lt;tr&gt;
+            &lt;th&gt;表头1&lt;/th&gt;
+            &lt;th&gt;表头2&lt;/th&gt;
+            &lt;th&gt;表头3&lt;/th&gt;
+
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;1&lt;/td&gt;
+            &lt;td&gt;2&lt;/td&gt;
+            &lt;td&gt;3&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;4&lt;/td&gt;
+            &lt;td&gt;5&lt;/td&gt;
+            &lt;td&gt;6&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/table&gt;
+</div></code></pre>
+    <ul>
+      <li>table ：定义整个表格</li>
+      <li>tr：定义表格的行</li>
+      <li>td：定义表格的普通单元格</li>
+      <li>th：定义表头单元格，文本默认加粗居中</li>
+    </ul>
+    <h3 id="32-%E5%A4%8D%E6%9D%82%E8%A1%A8%E6%A0%BC%E6%A0%87%E7%AD%BE">
+      3.2 复杂表格标签
+    </h3>
+    <ul>
+      <li>caption: 给表格定义标题，紧跟在table 开始标签之后</li>
+      <li>thead： 表格的头部</li>
+      <li>tbody：表格的主体</li>
+      <li>tfoot：表格的底部</li>
+    </ul>
+    <blockquote>
+      <p>
+        这几个标签是为了增强表格的语义化，使表格语义清晰，但是浏览器支持情况不同意，所以一般不用写
+      </p>
+    </blockquote>
+    <h3 id="33-%E8%A1%A8%E6%A0%BC%E5%90%88%E5%B9%B6">3.3 表格合并</h3>
+    <ul>
+      <li>colspan=&quot;x&quot;： 横向合并 x 列</li>
+      <li>rowspan=&quot;y&quot;： 竖向合并 y 行</li>
+    </ul>
+    <h3 id="34-%E8%A1%A8%E6%A0%BC%E5%B1%9E%E6%80%A7">3.4 表格属性</h3>
+    <ul>
+      <li>table标签HTML属性:</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;table border=&quot;&quot; cellspacing=&quot;&quot;&gt;
+
+    border ：给table以及里边的单元格都添加边框
+            border=&quot;0&quot; 没有边框
+            border=&quot;1&quot; 有1px的边框
+    width=&quot;300&quot; ：整个表格的宽度
+    height=&quot;300&quot; ：整个表格的高度
+    cellspacing=&quot;0&quot;：单元格之间的外间距
+    cellpadding=&quot;10&quot;：单元格的内边距
+</div></code></pre>
+    <ul>
+      <li>table的CSS属性：</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>     &lt;table style=&quot;border-collapse:collapse;&quot;&gt;
+
+     border-collapse:
+        - collapse; 去掉单元格之间的间距并且相边框合并
+        - separate; 单元格独立
+    border-spacing: 设置单元格之间的距离
+</div></code></pre>
+    <ul>
+      <li>表格的特点</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    表格设置固定宽度高度时，单元格会按照内容的比例去分配行高和列宽，也可以通过给单元格设置width和height属性去调整
+</div></code></pre>
+    <h2 id="4-%E8%AF%AD%E4%B9%89%E5%8C%96">4 语义化</h2>
+    <blockquote>
+      <p>什么是语义化?</p>
+    </blockquote>
+    <ul>
+      <li>
+        语义化就是用合理的htm标签以及属性去规定网页上的内容，比如标题用h标签，段落用p,给重要的图片添加alt属性。
+      </li>
+    </ul>
+    <blockquote>
+      <p>语义化好处?</p>
+    </blockquote>
+    <ul>
+      <li>当没有css样式时，页面也能呈现出相对良好的结构</li>
+      <li>语义化使代码结构清晰，方便团队开发维护</li>
+      <li>语义化有利于用户体验</li>
+      <li>
+        语义化有利于SEO搜索引擎优化)（语义化有利于网站和搜索引擎建立良好的沟通，爬虫可以抓取到更多的有效信息，
+      </li>
+    </ul>
+    <h2 id="5-css%E6%A0%B7%E5%BC%8F">5 CSS样式</h2>
+    <ul>
+      <li>css 层叠样式表 (Cascading StyleSheet)</li>
+      <li>用来美化网页</li>
+    </ul>
+    <h3 id="51-%E8%A1%8C%E5%86%85%E6%A0%B7%E5%BC%8F">5.1 行内样式</h3>
+    <ul>
+      <li>在开始标签上添加style属性，把样式代码写在style里面</li>
+      <li>
+        作用范围只是当前标签，导致代码不能复用，产生大量冗余代码，也使网页结构不够清晰
+      </li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;div style=&quot;width: 100px; height:100px&quot; &gt;&lt;/div&gt;
+</div></code></pre>
+    <h3 id="52-%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F">5.2 内嵌样式</h3>
+    <ul>
+      <li>在head标签之间添加style标签，在style标签之间写入css样式语法</li>
+      <li>作用范围是当前页面，在项目中也比较少用</li>
+    </ul>
+    <pre class="hljs"><code><div>&lt;head&gt;
+    &lt;style&gt;
+        div{
+            width: 100px;
+            height:100px;
+            ....
+        }
+        ......
+    &lt;/style&gt;
+&lt;/head&gt;
+</div></code></pre>
+    <h3 id="53-%E5%A4%96%E9%93%BE%E5%BC%8F">5.3 外链式</h3>
+    <ul>
+      <li>在head标签之间添加一个link标签，通过link标签的href属性引入CSS文件</li>
+      <li>
+        外链样式可以使结构和表现代码完全分离，并且一个css文件可以作用于多个网页的，所以可以规定一些公共样式，项目中推荐使用外链样式
+      </li>
+    </ul>
+    <pre class="hljs"><code><div>&lt;head&gt;
+    ...
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;./xxx/xx.css&quot;&gt;
+&lt;/head&gt;
+</div></code></pre>
+    <h3 id="54-css%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95">
+      5.4 css的基本语法
+    </h3>
+    <pre class="hljs"><code><div>    选择器{
+        样式声明1: 值 ;
+        样式声明2: 值 ;
+    }
+
+   div{
+        width: 100px;
+        height:100px;
+        ....
+    }
+
+</div></code></pre>
+    <ul>
+      <li>
+        <p>css基本语法由选择器和多组样式声明组成</p>
+      </li>
+      <li>
+        <p>每一组样式声明由 &quot;属性名: 值;&quot; 组成</p>
+      </li>
+    </ul>
+    <blockquote>
+      <p>注释</p>
+    </blockquote>
+    <pre class="hljs"><code><div>   /*  CSS注释  */
+</div></code></pre>
+    <h3 id="55-%E7%B1%BB%E9%80%89%E6%8B%A9%E5%99%A8">5.5 类选择器</h3>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;div class=&quot;box&quot;&gt; ... &lt;/div&gt;
+    &lt;p class=&quot;box&quot;&gt; ... &lt;/p&gt;
+
+    css选择器：
+    .box{ ... }
+</div></code></pre>
+    <h3 id="56-%E7%BB%93%E6%9E%84%E4%BC%AA%E7%B1%BB%E9%80%89%E6%8B%A9%E5%99%A8">
+      5.6 结构伪类选择器
+    </h3>
+    <pre class="hljs"><code><div>    ul li:ntd-chile(even){//所有的偶数孩子
+        .....
+    }
+
+    ul li:ntd-chile(odd){//所有的奇数孩子
+        .....
+    }
+
+</div></code></pre>
+    <blockquote>
+      <p>class属性的命名规则</p>
+    </blockquote>
+    <ul>
+      <li>可以包含数字、字母、下划线 _、连字符 -</li>
+      <li>不能以数字开头</li>
+      <li>
+        建议使用有意义的英文单词,多个单词建议用
+        连字符或者下划线连接，或者用驼峰命名法
+      </li>
+      <li>多个标签可以使用同一个类名</li>
+      <li>
+        一个标签可以定义多个类名 ,多个类名通过词列表的方式定义 class=&quot;box
+        red font&quot;
+      </li>
+    </ul>
+    <h1 id="%E7%AC%AC%E4%B8%89%E5%A4%A9">第三天</h1>
+    <h2 id="1-%E5%9F%BA%E6%9C%AC%E9%80%89%E6%8B%A9%E5%99%A8">1 基本选择器</h2>
+    <blockquote>
+      <p>选择器是用来获取到需要添加样式的标签的一些符号</p>
+    </blockquote>
+    <h3 id="11-%E6%A0%87%E7%AD%BE%E9%80%89%E6%8B%A9%E5%99%A8">
+      1.1 标签选择器
+    </h3>
+    <ul>
+      <li>通过标签名去选择</li>
+    </ul>
+    <pre class="hljs"><code><div>    div{
+        ...
+    }
+    p{
+        ...
+    }
+</div></code></pre>
+    <h3 id="12-%E7%B1%BB%E9%80%89%E6%8B%A9%E5%99%A8">1.2 类选择器</h3>
+    <ul>
+      <li>通过标签的类型(class属性)选择</li>
+    </ul>
+    <pre class="hljs"><code><div>    .class_Name{
+        ...
+    }
+</div></code></pre>
+    <h3 id="13-%E9%80%9A%E9%85%8D%E7%AC%A6%E9%80%89%E6%8B%A9%E5%99%A8">
+      1.3 通配符选择器
+    </h3>
+    <ul>
+      <li>选择所有标签</li>
+      <li>通常用来去除所有标签的默认像是(项目中不建议)</li>
+    </ul>
+    <pre class="hljs"><code><div>    *{
+        ...
+    }
+    *{
+        margin: 0;
+        padding: 0;
+    }
+</div></code></pre>
+    <h3 id="14-id%E9%80%89%E6%8B%A9%E5%99%A8">1.4 id选择器</h3>
+    <ul>
+      <li>通过标签的id属性名选择</li>
+      <li>id的命名规则，同class属性</li>
+      <li>id具有唯一性，同一页面id不允许重复且一个标签只有一个id</li>
+    </ul>
+    <pre class="hljs"><code><div>    #id{
+        ...
+    }
+</div></code></pre>
+    <h2 id="2-%E6%96%87%E6%9C%AC%E5%AD%97%E4%BD%93%E6%A0%B7%E5%BC%8F">
+      2 文本字体样式
+    </h2>
+    <ul>
+      <li>分为font类型和text类型</li>
+    </ul>
+    <h3 id="21-font%E7%B3%BB%E5%88%97">2.1 font系列</h3>
+    <blockquote>
+      <p>设置文字的类型</p>
+    </blockquote>
+    <h4 id="211-font-size-%E6%96%87%E5%AD%97%E5%A4%A7%E5%B0%8F">
+      2.1.1 font-size 文字大小
+    </h4>
+    <pre class="hljs"><code><div>    font-size: 16px;
+</div></code></pre>
+    <h4 id="212-font-weight-%E6%96%87%E5%AD%97%E5%8A%A0%E7%B2%97">
+      2.1.2 font-weight 文字加粗
+    </h4>
+    <pre class="hljs"><code><div>    font-weight: normal;  默认值不加粗
+    font-weight: bold;    加粗
+</div></code></pre>
+    <h4
+      id="213-font-style-%E6%96%87%E5%AD%97%E9%A3%8E%E6%A0%BC%E5%80%BE%E6%96%9C"
+    >
+      2.1.3 font-style 文字风格倾斜
+    </h4>
+    <pre class="hljs"><code><div>    font-style: normal;  正常
+    font-style: italic;  斜体
+</div></code></pre>
+    <h4 id="214-ling-height-%E6%96%87%E5%AD%97%E8%A1%8C%E9%AB%98">
+      2.1.4 ling-height 文字行高
+    </h4>
+    <ul>
+      <li>
+        行高是指的一行字字体高度加上前后多占的一部分空间，行高越大行间距越大
+      </li>
+      <li>单行文本垂直居中，把行高设置为盒子的高度</li>
+    </ul>
+    <pre class="hljs"><code><div>    ling-height: 30px;  
+    ling-height: 2;   表示字体大小的倍数
+</div></code></pre>
+    <h4 id="215-font-family-%E6%96%87%E5%AD%97%E5%AD%97%E4%BD%93">
+      2.1.5 font-family 文字字体
+    </h4>
+    <ul>
+      <li>设置多个字体，浏览器会识别第一个支持的字体</li>
+    </ul>
+    <pre class="hljs"><code><div>    font-family: &quot;微软雅黑&quot;;
+    font-family: &quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,sans-serif;
+
+</div></code></pre>
+    <h4 id="215-font-%E5%B1%9E%E6%80%A7%E8%BF%9E%E5%86%99">
+      2.1.5 font 属性连写
+    </h4>
+    <ul>
+      <li>简写属性顺序不能随意更换</li>
+      <li>可以省略部分属性，至少保留 font-size 和 font-family</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    font: italic bold 20px/2 &quot;微软雅黑&quot;;
+    font: italic bold 20px/20px &quot;微软雅黑&quot;;
+    font: 20px &quot;宋体&quot;;
+</div></code></pre>
+    <h3 id="22-text-%E7%B3%BB%E5%88%97">2.2 text 系列</h3>
+    <blockquote>
+      <p>文本样式设置</p>
+    </blockquote>
+    <h4 id="221-text-align-%E6%96%87%E6%9C%AC%E5%AF%B9%E9%BD%90">
+      2.2.1 text-align 文本对齐
+    </h4>
+    <pre class="hljs"><code><div>    text-align : left;
+    text-align : center;
+    text-align : right;
+</div></code></pre>
+    <h4 id="222-text-indent-%E9%A6%96%E8%A1%8C%E7%BC%A9%E8%BF%9B">
+      2.2.2 text-indent 首行缩进
+    </h4>
+    <pre class="hljs"><code><div>    text-indent : 2em;
+    text-indent : 20px;
+
+</div></code></pre>
+    <h4 id="223-text-decoration-%E6%96%87%E6%9C%AC%E4%BF%AE%E9%A5%B0">
+      2.2.3 text-decoration 文本修饰
+    </h4>
+    <pre
+      class="hljs"
+    ><code><div>    text-decoration : none;           清除文本修饰
+    text-decoration : line-through;   删除线
+    text-decoration : underline;      下划线
+    text-decoration : overline;       上划线
+</div></code></pre>
+    <h4 id="224-color-%E6%96%87%E6%9C%AC%E9%A2%9C%E8%89%B2">
+      2.2.4 color 文本颜色
+    </h4>
+    <pre class="hljs"><code><div>    color : red;
+</div></code></pre>
+    <h4 id="225-letter-spacing-%E5%AD%97%E7%AC%A6%E9%97%B4%E8%B7%9D">
+      2.2.5 letter-spacing 字符间距
+    </h4>
+    <ul>
+      <li>每个字之间的间距</li>
+    </ul>
+    <pre class="hljs"><code><div>    letter-spacing : 16px; 字符之间的横向间距
+</div></code></pre>
+    <h4 id="226-word-spacing-%E5%8D%95%E8%AF%8D%E9%97%B4%E8%B7%9D">
+      2.2.6 word-spacing 单词间距
+    </h4>
+    <ul>
+      <li>有两个空格之间默认为一个单词</li>
+    </ul>
+    <pre class="hljs"><code><div>letter-spacing : 16px; 单词之间的横向间距
+</div></code></pre>
+    <h2 id="3-%E9%A2%9C%E8%89%B2%E5%8F%8A%E5%8D%95%E4%BD%8D">3 颜色及单位</h2>
+    <h3 id="31-%E9%A2%9C%E8%89%B2">3.1 颜色</h3>
+    <ul>
+      <li>英文单词：red green blue pink black white ......</li>
+      <li>
+        十六进制颜色表示法：#RRGGBB RR表示红色，GG表示绿色，BB表示蓝色
+        参考值为：00~ff
+      </li>
+      <li>rgb()颜色：rgb(0~255,0~255,0~255) r: red g:green blue</li>
+      <li>
+        rgba()颜色：rgba(0~255,0~255,0~255,0~1) a: alpha 透明度 0：全透明
+        1：不透明 0.x：半透明
+      </li>
+    </ul>
+    <h3 id="32-%E9%95%BF%E5%BA%A6%E5%8D%95%E4%BD%8D">3.2 长度单位</h3>
+    <ul>
+      <li>px : 像素</li>
+      <li>em : 相对单位，表示当前标签的font-size大小</li>
+      <li>% : 百分比</li>
+      <li>rem : html的font-size值</li>
+    </ul>
+    <h2 id="4-%E7%9B%92%E6%A8%A1%E5%9E%8Bbox-modal">4 盒模型（box modal）</h2>
+    <ul>
+      <li>
+        在CSS当中，可以把标签当做一个盒子，这个盒子可以分为四个部分：内容区、内边距、边框、外边距。
+      </li>
+    </ul>
+    <h3 id="41-%E5%86%85%E5%AE%B9%E5%8C%BA">4.1 内容区</h3>
+    <pre class="hljs"><code><div>    width : 100px;   内容的宽度
+    height: 100px;   内容的高度
+</div></code></pre>
+    <h3 id="42-%E5%86%85%E8%BE%B9%E8%B7%9D">4.2 内边距</h3>
+    <ul>
+      <li>padding 不允许设置负值</li>
+    </ul>
+    <pre class="hljs"><code><div>简写：
+    padding : 10px;                 四个方向统一为 10px 
+    padding : 10px 20px;            上下 左右
+    padding : 10px 20px 30px        上 左右 下
+    padding : 10px 20px 30px 40px   上 右 下 左
+
+四个方向分别设置：
+    padding-top :    10px;  
+    padding-right :  10px;
+    padding-bottom : 10px;  
+    padding-left :   10px; 
+</div></code></pre>
+    <h3 id="43-%E8%BE%B9%E6%A1%86">4.3 边框</h3>
+    <ul>
+      <li>边框指内边距和外边距之间的线条</li>
+    </ul>
+    <pre class="hljs"><code><div>简写：
+    border : width style color;
+    border-width : 2px; 边框宽度
+    border-style : solid; 边框风格
+                   solid  实线
+                   dashed 虚线
+                   dotted 点线
+                   double 双实线
+    border-color : red;  边框颜色
+
+分别设置各个方向边框属性：
+    border-top : width style color;
+    border-top-width : 2px
+    border-top-style : solid;
+    border-top-color : red;
+    以下同理........
+</div></code></pre>
+    <blockquote>
+      <p>去除边框</p>
+    </blockquote>
+    <pre class="hljs"><code><div>    border : none;
+    border-top : 0;
+    border-bottom: none;
+
+</div></code></pre>
+    <h3 id="44-%E5%A4%96%E8%BE%B9%E8%B7%9D">4.4 外边距</h3>
+    <ul>
+      <li>外边距 表示盒子和父元素或者相邻元素之间的间距</li>
+    </ul>
+    <pre class="hljs"><code><div>简写：
+    margin : 10px;                 四个方向统一为 10px 
+    margin : 10px 20px;            上下 左右
+    margin : 10px 20px 30px        上 左右 下
+    margin : 10px 20px 30px 40px   上 右 下 左
+    
+四个方向分别设置：
+    margin-top :    10px;  
+    margin-right :  10px;
+    margin-bottom : 10px;  
+    margin-left :   10px; 
+
+特殊用法：
+    margin-bottom ：-100px; 占位减少100px;
+    margin : 0 auto; 固定盒子水平居中
+</div></code></pre>
+    <h1 id="%E7%AC%AC%E5%9B%9B%E5%A4%A9">第四天</h1>
+    <h2
+      id="1-%E6%A0%87%E7%AD%BE%E7%9A%84%E5%88%86%E7%B1%BB%E5%8F%8A%E7%89%B9%E7%82%B9"
+    >
+      1 标签的分类及特点
+    </h2>
+    <h3 id="11-%E5%9D%97%E7%BA%A7%E6%A0%87%E7%AD%BE">1.1 块级标签</h3>
+    <blockquote>
+      <p>特点：</p>
+    </blockquote>
+    <ul>
+      <li>1.从上到下排列，独占一行</li>
+      <li>
+        2.默认宽度占满父级(width+左右padding+左右border+左右margin = 父级宽度)
+      </li>
+      <li>3.可以设置宽高及所有 盒模型属性(padding border margin)</li>
+    </ul>
+    <pre class="hljs"><code><div>    div h1~h6 p ul 
+    ol dl li dt dd
+</div></code></pre>
+    <h3 id="12-%E8%A1%8C%E5%86%85%E6%A0%87%E7%AD%BE">1.2 行内标签</h3>
+    <blockquote>
+      <p>特点：</p>
+    </blockquote>
+    <ul>
+      <li>1.从左到右在一行排列</li>
+      <li>2.默认宽度由内容撑开</li>
+      <li>3.不可以设置宽高属性、水平方向盒模型属性可以设置、垂直方向无效</li>
+    </ul>
+    <pre class="hljs"><code><div>    span i em b strong 
+    sub sup del a
+</div></code></pre>
+    <h3 id="13-%E8%A1%8C%E5%86%85%E5%9D%97%E6%A0%87%E7%AD%BE">
+      1.3 行内块标签
+    </h3>
+    <blockquote>
+      <p>特点：</p>
+    </blockquote>
+    <ul>
+      <li>1.从左到右在一行排列</li>
+      <li>2.默认宽度由内容撑开</li>
+      <li>3.可以设置宽高以及 盒模型属性</li>
+    </ul>
+    <pre class="hljs"><code><div>    img input
+</div></code></pre>
+    <blockquote>
+      <p>行内块的特殊用法的问题和解决方法</p>
+    </blockquote>
+    <ol>
+      <li>居中 :</li>
+    </ol>
+    <pre class="hljs"><code><div>解决方法：
+    行内块居中需给父元素添加 text-aline: center;
+    margin : 0 auto;无效
+</div></code></pre>
+    <ol start="2">
+      <li>父级没有固定高度，行内块下方多出 4px 像素。</li>
+    </ol>
+    <pre class="hljs"><code><div>解决方法：
+    1.给行内块父级固定高度
+    2.吧图片转换成块元素
+    3.给行内块父级设置 font-size:0; line-height: 0;
+    4.给行内块设置 vertical-align:middle;
+</div></code></pre>
+    <ol start="3">
+      <li>行内块之间的横向空白间距</li>
+    </ol>
+    <pre class="hljs"><code><div>原因：
+    标签之间换行被识别成一个空格
+解决办法：
+    给父元素添加  font-size : 0;
+</div></code></pre>
+    <h3 id="14-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">1.4 类型转换</h3>
+    <pre class="hljs"><code><div>    display : block;           转换成块元素
+              inline           转换成行内元素
+              inline-block     转换成行内块元素           
+</div></code></pre>
+    <h2 id="2-%E8%83%8C%E6%99%AF%E6%A0%B7%E5%BC%8F">2 背景样式</h2>
+    <h3 id="21-background-color-%E8%83%8C%E6%99%AF%E9%A2%9C%E8%89%B2">
+      2.1 background-color 背景颜色
+    </h3>
+    <pre class="hljs"><code><div>    background-color: transparent; 默认颜色透明
+</div></code></pre>
+    <h3 id="22-background-image-%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87">
+      2.2 background-image 背景图片
+    </h3>
+    <pre class="hljs"><code><div>    background-image : url('....');
+</div></code></pre>
+    <h3 id="23-background-repeat-%E8%83%8C%E6%99%AF%E5%B9%B3%E9%93%BA">
+      2.3 background-repeat 背景平铺
+    </h3>
+    <pre class="hljs"><code><div>    background-repeat: repeat;    默认平铺
+                       repeat-x;  水平平铺
+                       repeat-y;  垂直平铺
+                       no-repeat; 不平铺
+</div></code></pre>
+    <h3 id="24-background-position-%E8%83%8C%E6%99%AF%E4%BD%8D%E7%BD%AE">
+      2.4 background-position 背景位置
+    </h3>
+    <pre class="hljs"><code><div>    background-position: right bottom;   右下角
+    background-position: center center;  中间
+    background-position: 0px 100px;      相对于坐标系可以用百分比
+    background-position: top;    若只写一个值，另一个是center
+</div></code></pre>
+    <h3 id="25-background-%E7%AE%80%E5%86%99">2.5 background 简写</h3>
+    <pre
+      class="hljs"
+    ><code><div>    background: red url('...') no-repeat center; 顺序可以交换 可以省略属性
+</div></code></pre>
+    <h2 id="%E5%A4%8D%E5%90%88%E9%80%89%E6%8B%A9%E5%99%A8">复合选择器</h2>
+    <h3 id="51-%E5%90%8E%E4%BB%A3%E9%80%89%E6%8B%A9%E5%99%A8">
+      5.1 后代选择器
+    </h3>
+    <pre class="hljs"><code><div>    .box div{   选中类box的 后代 所有div
+        ....
+    }
+    div p{      选中div的 后代 所有的p
+        ... 
+    }
+    div *{      选中div的 后代 所有的标签
+        ... 
+    }
+    ....
+</div></code></pre>
+    <h3 id="52-%E5%AD%90%E4%BB%A3%E9%80%89%E6%8B%A9%E5%99%A8">
+      5.2 子代选择器
+    </h3>
+    <pre class="hljs"><code><div>    .box&gt;div{   选中类box的 子代 所有div
+        ....
+    }
+    div&gt;p{      选中div的 子代 所有的p
+        ... 
+    }
+    div&gt;*{      选中div的 子代 所有的标签
+        ... 
+    }
+    ....
+</div></code></pre>
+    <h3
+      id="53-%E7%BE%A4%E7%BB%84%E9%80%89%E6%8B%A9%E5%99%A8-%E5%B9%B6%E9%9B%86"
+    >
+      5.3 群组选择器( 并集 )
+    </h3>
+    <pre class="hljs"><code><div>    .box,div,p,#id{    选中所有群组
+        ...
+    }
+
+</div></code></pre>
+    <h3 id="54-%E4%BA%A4%E9%9B%86%E9%80%89%E6%8B%A9%E5%99%A8">
+      5.4 交集选择器
+    </h3>
+    <pre
+      class="hljs"
+    ><code><div>    li.first{       选中 li 中类名是 first 的元素
+        ...
+    }
+</div></code></pre>
+    <h3
+      id="55-%E9%93%BE%E6%8E%A5%E7%8A%B6%E6%80%81%E4%BC%AA%E7%B1%BB%E9%80%89%E6%8B%A9%E5%99%A8"
+    >
+      5.5 链接状态伪类选择器
+    </h3>
+    <pre class="hljs"><code><div>    : link       未访问状态
+    : visited    访问过后
+    : hover      鼠标悬停的状态
+    : active     激活的状态
+</div></code></pre>
+    <h4 id="551%E6%8B%93%E5%B1%95%E7%94%A8%E6%B3%95">5.5.1拓展用法</h4>
+    <pre
+      class="hljs"
+    ><code><div>    .box:hover{         鼠标悬 .box 停改变自己样式
+        ...
+    }
+    .box:hover  div{    鼠标悬停 .box 改变div样式
+
+    }
+</div></code></pre>
+    <h1 id="%E7%AC%AC%E4%BA%94%E5%A4%A9">第五天</h1>
+    <h2 id="1-css%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7">1 CSS三大特性</h2>
+    <h3 id="11-%E5%B1%82%E5%8F%A0%E6%80%A7">1.1 层叠性</h3>
+    <ul>
+      <li>
+        层叠性就是浏览器处理样式冲突的一种能力，当同一个标签设置相同的属性为不同值时，就产生了突变
+      </li>
+      <li>样式冲突，就是就近原则，后面的把前面的层叠掉</li>
+      <li>样式不冲突就不层叠</li>
+    </ul>
+    <h3 id="12-%E7%BB%A7%E6%89%BF%E6%80%A7">1.2 继承性</h3>
+    <ul>
+      <li>子元素可以去使用父元素定义的一些属性值( 子承父业 )</li>
+      <li>默认继承属性有 font-, text-, line-，list-style</li>
+      <li>a 标签的颜色和下划线 不会默认继承</li>
+      <li>input 标签的 font-family 默认不会继承</li>
+    </ul>
+    <pre class="hljs"><code><div>    font-family : inherit;  主动继承
+</div></code></pre>
+    <h3 id="13-%E4%BC%98%E5%85%88%E7%BA%A7">1.3 优先级</h3>
+    <blockquote>
+      <p>基本选择器的优先级</p>
+    </blockquote>
+    <ul>
+      <li>权值越大，优先级越高，相同优先级按顺序后定义的生效</li>
+      <li>
+        符合选择器的权值是组成这个选择器的所有基本选择器的权值相加
+        (特殊：群组选择器按单个选择器的权值计算，没有提升优先级的作用)
+      </li>
+      <li></li>
+    </ul>
+    <pre class="hljs"><code><div>    选择器                 权值
+    通配符（ * ）           0
+    标签选择器(div)         1
+    类选择器(.className)    10
+    伪类选择器(:hover)      10
+    id选择器(#id)           100
+    行内样式                1000
+</div></code></pre>
+    <h2 id="2-%E4%B8%89%E7%A7%8D%E5%B8%83%E5%B1%80">2 三种布局</h2>
+    <ul>
+      <li>文档流布局、浮动布局、层布局(定位)</li>
+    </ul>
+    <h3 id="21-%E6%96%87%E6%A1%A3%E6%B5%81%E5%B8%83%E5%B1%80">
+      2.1 文档流布局
+    </h3>
+    <blockquote>
+      <p>
+        按照标签本身的属性排列，比如块标签，从上到下排列，行内标签从左到右排列。
+      </p>
+    </blockquote>
+    <h3 id="22-%E6%B5%AE%E5%8A%A8%E5%B8%83%E5%B1%80">2.2 浮动布局</h3>
+    <blockquote>
+      <p>可以让标签脱离文档流，向左向右排列。</p>
+    </blockquote>
+    <h4 id="221-float--left-%E5%B7%A6%E6%B5%AE%E5%8A%A8">
+      2.2.1 float : left; 左浮动
+    </h4>
+    <ul>
+      <li>脱离文档流 (在文档流中不占位)</li>
+      <li>尽可能往左走，直到碰到父级的边缘，或者相邻浮动元素的边缘就停止。</li>
+      <li>多个左浮动的元素从左到右排列</li>
+    </ul>
+    <h4 id="222-float--right-%E5%8F%B3%E6%B5%AE%E5%8A%A8">
+      2.2.2 float : right; 右浮动
+    </h4>
+    <ul>
+      <li>脱离文档流 (在文档流中不占位)</li>
+      <li>尽可能往右走，直到碰到父级的边缘，或者相邻浮动元素的边缘就停止。</li>
+      <li>多个右浮动的元素从右到左排列</li>
+    </ul>
+    <h4
+      id="223-float--none-%E9%BB%98%E8%AE%A4%E5%B1%9E%E6%80%A7-%E4%B8%8D%E6%B5%AE%E5%8A%A8"
+    >
+      2.2.3 float : none; 默认属性 不浮动
+    </h4>
+    <ul>
+      <li>取消浮动 回到文档流</li>
+    </ul>
+    <h4
+      id="224-%E6%B5%AE%E5%8A%A8%E4%BA%A7%E7%94%9F%E7%9A%84%E9%97%AE%E9%A2%98"
+    >
+      2.2.4 浮动产生的问题
+    </h4>
+    <ul>
+      <li>
+        浮动的元素脱离文档流之后，无法撑开父级元素的高度，导致后面的模块无法正常布局。
+      </li>
+    </ul>
+    <blockquote>
+      <p>解决方法一：</p>
+    </blockquote>
+    <pre class="hljs"><code><div>    设置固定高度( 不够灵活 )
+</div></code></pre>
+    <blockquote>
+      <p>解决方法二：</p>
+    </blockquote>
+    <pre
+      class="hljs"
+    ><code><div>    给父元素添加 overflow : hidden; ( 不适用于所有情况 )
+</div></code></pre>
+    <blockquote>
+      <p>解决方法三:</p>
+    </blockquote>
+    <pre class="hljs"><code><div>    额外标签法：
+    所有的浮动标签后加一个块元素 不能浮动 style设置clear: both; (产生了冗余的标签)
+
+</div></code></pre>
+    <blockquote>
+      <p>解决方法四 (必要):</p>
+    </blockquote>
+    <pre class="hljs"><code><div>    类似于额外标签法，用伪元素代替额外标签
+     .ClearFix::after{     
+            content: &quot;&quot;;
+            display: block;
+            clear: both;
+            /* 隐藏标签 */
+            visibility: hidden;
+        }
+        .ClearFix {
+            /* 兼容IE */
+            *zoom: 1;
+        }
+
+</div></code></pre>
+    <h2 id="3-%E4%BC%AA%E5%85%83%E7%B4%A0">3 伪元素</h2>
+    <pre
+      class="hljs"
+    ><code><div>    element::after{         在元素的末尾添加内容
+        content=&quot;&quot;;         必须设置content,其他属性才有效
+        display : inline;   默认为行元素
+        ....
+    }
+
+    element::before{         在元素的开始添加内容
+        content=&quot;&quot;;          必须设置content,其他属性才有效
+        display : inline;    默认为行元素
+        ....    
+    }
+
+</div></code></pre>
+    <h1 id="%E7%AC%AC%E5%85%AD%E5%A4%A9">第六天</h1>
+    <h2 id="1-%E5%AE%9A%E4%BD%8D">1 定位</h2>
+    <ul>
+      <li>文档流 浮动 层布局</li>
+    </ul>
+    <h3 id="11-%E7%9B%B8%E5%AF%B9%E5%AE%9A%E4%BD%8D">1.1 相对定位</h3>
+    <ul>
+      <li>位移参考位置是标签本身没有定位之前的位置</li>
+      <li>不会脱离文档流(文档流依然占位，不会影响其他标签的正常排列)</li>
+    </ul>
+    <pre class="hljs"><code><div>    position: relative;
+</div></code></pre>
+    <h3 id="12-%E5%9B%BA%E5%AE%9A%E5%AE%9A%E4%BD%8D">1.2 固定定位</h3>
+    <ul>
+      <li>位移参考位置是浏览器可视窗口</li>
+      <li>会脱离文档流</li>
+    </ul>
+    <pre class="hljs"><code><div>    position: fixed;
+</div></code></pre>
+    <h3 id="13-%E7%BB%9D%E5%AF%B9%E5%AE%9A%E4%BD%8D">1.3 绝对定位</h3>
+    <ul>
+      <li>
+        定位参考父级：距离绝对定位元素最近的一个带有position : ...
+        ;属性的祖先元素，如果没有这个元素就以body定位
+      </li>
+    </ul>
+    <pre class="hljs"><code><div>    position : absolute;
+</div></code></pre>
+    <h3 id="14-%E9%9D%99%E6%80%81%E5%AE%9A%E4%BD%8D">1.4 静态定位</h3>
+    <ul>
+      <li>静态定位就是不定位, left/right/top/bottom等定位后的属性无效</li>
+    </ul>
+    <pre class="hljs"><code><div>    position : static;
+</div></code></pre>
+    <h3 id="15-%E5%81%8F%E7%A7%BB%E5%B1%9E%E6%80%A7">1.5 偏移属性</h3>
+    <pre
+      class="hljs"
+    ><code><div>    left   :   距离参考位置的左边缘位移，正值往右，负值往左。
+    right  :   距离参考位置的右边缘位移，正值往左，负值往右。
+    top    :   距离参考位置的上边缘位移，正值往下，负值往上。
+    bottom :   距离参考位置的下边缘位移，正值往上，负值往往。
+
+    left 和 right 同时设置，left生效。
+    top 和 bottom 同时设置，top生效。
+
+</div></code></pre>
+    <h3 id="16-%E5%B1%82%E7%BA%A7%E5%B1%9E%E6%80%A7">1.6 层级属性</h3>
+    <ul>
+      <li>
+        z-index属性可以控制定位元素的层级关系，默认值都是0，数值越大层级越高，数值相同，按照标签的顺序，排在后面的层级高。
+      </li>
+    </ul>
+    <h2
+      id="2-%E6%B5%AE%E5%8A%A8%E5%92%8C%E5%AE%9A%E4%BD%8D%E7%9A%84%E5%AF%B9%E6%AF%94"
+    >
+      2 浮动和定位的对比
+    </h2>
+    <ul>
+      <li>
+        <p>
+          浮动的元素脱离文档流，但是不会脱离文本流(文字、图片、表单元素不会被浮动元素覆盖，会围绕浮动的元素排列)
+        </p>
+      </li>
+      <li>
+        <p>
+          定位的元素既脱离文档流，又脱离文本流，可以实现元素之间真正的层级关系
+        </p>
+      </li>
+    </ul>
+    <h2
+      id="3-%E8%84%B1%E7%A6%BB%E6%96%87%E6%A1%A3%E6%B5%81%E5%85%83%E7%B4%A0%E7%9A%84%E7%89%B9%E7%82%B9"
+    >
+      3 脱离文档流元素的特点
+    </h2>
+    <pre class="hljs"><code><div>    float : left;
+    float : right;
+    position : absolute;
+    position : fixed;
+</div></code></pre>
+    <ul>
+      <li>
+        脱离文档流的元素不再区分行内或者块级，默认宽度都由内容撑开，都可以设置宽高及所有盒模型属性。
+      </li>
+    </ul>
+    <h2 id="4-%E5%85%B6%E4%BB%96%E5%B1%9E%E6%80%A7">4 其他属性</h2>
+    <h3 id="41-%E5%9E%82%E7%9B%B4%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F">
+      4.1 垂直对齐方式
+    </h3>
+    <pre class="hljs"><code><div>    vertical-align : baseline; 基线对齐
+                     middle;   中线对齐
+                     top;      顶端对齐
+                     bottom;   底部对齐
+                     -0px;
+</div></code></pre>
+    <h4 id="42-%E5%86%85%E5%AE%B9%E6%BA%A2%E5%87%BA%E5%A4%84%E7%90%86">
+      4.2 内容溢出处理
+    </h4>
+    <pre
+      class="hljs"
+    ><code><div>    overflow : visible; 默认值，内容超出，仍然显示
+               hidden;  隐藏，截断 
+               auto;    内容溢出显示滚动条，不溢出不显示滚动条。
+               scroll;  始终显示滚动条
+</div></code></pre>
+    <h4 id="43-%E6%98%BE%E7%A4%BA%E5%92%8C%E9%9A%90%E8%97%8F">
+      4.3 显示和隐藏
+    </h4>
+    <pre class="hljs"><code><div>    display : none; 隐藏 不占位
+    display : block/inline/inline-block;显示 不同方式显示。
+
+    visibility : visible;  可见 占位
+    visibility : hidden;   不可见
+</div></code></pre>
+    <h4 id="44-%E5%A4%9A%E7%A7%8D%E9%80%8F%E6%98%8E">4.4 多种透明</h4>
+    <pre class="hljs"><code><div>    rgba(0,0,0,.5);   全透明
+    transparent;      IE低版本浏览器不支持
+    opacity : .5;     元素整体透明(元素本身的颜色以及所有的内容都透明) IE低版本不支持
+    filter:alpha(opacity=50); IE专属透明滤镜
+</div></code></pre>
+    <h1 id="%E7%AC%AC%E4%B8%83%E5%A4%A9">第七天</h1>
+    <h2 id="1-ps%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">1 ps基本操作</h2>
+    <h3 id="11-ps%E5%9F%BA%E6%9C%AC%E5%B7%A5%E5%85%B7">1.1 ps基本工具</h3>
+    <h4 id="111-%E7%A7%BB%E5%8A%A8%E5%B7%A5%E5%85%B7">1.1.1 移动工具</h4>
+    <ul>
+      <li>用来选择或者移动图层(注意：勾选自动选择，选择图层)</li>
+    </ul>
+    <h4 id="112-%E5%90%B8%E7%AE%A1%E5%B7%A5%E5%85%B7">1.1.2 吸管工具</h4>
+    <ul>
+      <li>用来取色</li>
+    </ul>
+    <h4 id="113-%E6%A0%87%E5%B0%BA%E5%B7%A5%E5%85%B7">1.1.3 标尺工具</h4>
+    <ul>
+      <li>用来量尺寸 (按住shift画直线)</li>
+    </ul>
+    <h4 id="114-%E6%96%87%E5%AD%97%E5%B7%A5%E5%85%B7">1.1.4 文字工具</h4>
+    <ul>
+      <li>用来添加文字图层，也可定位文字图层，并且查看文字样式</li>
+    </ul>
+    <h4 id="115-%E6%8A%93%E6%89%8B%E5%B7%A5%E5%85%B7">1.1.5 抓手工具</h4>
+    <ul>
+      <li>用来移动画布(按住空格+鼠标拖拽)</li>
+    </ul>
+    <h4 id="116-%E6%94%BE%E5%A4%A7%E9%95%9C%E5%B7%A5%E5%85%B7">
+      1.1.6 放大镜工具
+    </h4>
+    <ul>
+      <li>用来缩小或放大画布 (按住alt+鼠标滚轮)</li>
+    </ul>
+    <h4 id="117-%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95">1.1.7 历史记录</h4>
+    <ul>
+      <li>用来返回之前的某一步操作</li>
+    </ul>
+    <h4 id="118-%E5%8D%95%E4%BD%8D%E8%AE%BE%E7%BD%AE">1.1.8 单位设置</h4>
+    <ul>
+      <li>菜单栏 - 编辑 - 首选项 - 单位与标尺 - 像素</li>
+    </ul>
+    <h4 id="119-%E5%8F%82%E8%80%83%E7%BA%BF">1.1.9 参考线</h4>
+    <ul>
+      <li>ctrl + h 切换参考线显示隐藏#### 1.8 单位设置</li>
+    </ul>
+    <h3 id="12-%E5%88%87%E5%9B%BE">1.2 切图</h3>
+    <ul>
+      <li>划切片 (尽量要精准，避免包含一些多余的空白像素)</li>
+      <li>切片命名</li>
+      <li>存储为web所用格式( ctrl+shift+Alt+s )</li>
+      <li>设置切片格式 ( jpeg,gif,png ) -- 保存</li>
+      <li>切片选项 ( 所有用户切片/单个切片 )</li>
+    </ul>
+    <h3
+      id="13-%E9%80%8F%E6%98%8E%E5%9B%BE%E7%89%87%E5%82%A8%E5%AD%98%E6%96%B9%E6%B3%95"
+    >
+      1.3 透明图片储存方法
+    </h3>
+    <blockquote>
+      <p>方法一：</p>
+    </blockquote>
+    <pre
+      class="hljs"
+    ><code><div>    划切片--隐藏所有背景图层-- 存储为web所用--png-24
+</div></code></pre>
+    <blockquote>
+      <p>方法二：</p>
+    </blockquote>
+    <pre class="hljs"><code><div>    定位到需要保存的图层
+    如果有多个图层( ctrl+G 编组 ctrl+E 合并出一个图层  )
+    ctrl + A 全选
+    ctrl + C 复制
+    ctrl + N 新建文件 --背景选为透明色
+    ctrl + V 粘贴
+    存储为web所用格式 -- png-24
+
+</div></code></pre>
+    <h2 id="2-%E7%B2%BE%E7%81%B5%E5%9B%BE-%E9%9B%AA%E7%A2%A7%E5%9B%BE">
+      2 精灵图( 雪碧图 )
+    </h2>
+    <ul>
+      <li>
+        原理：把所感小图片拼到一张大图片上，利用，background-img引入，通过background-position定位到想要显示的那张小图片。
+      </li>
+    </ul>
+    <pre class="hljs"><code><div>    优点：
+    减少http请求，优化网页性能
+    减少图片命名的困扰
+    更换风格比较方便
+
+    缺点：
+    放图片的标签尺寸需要固定
+    图片的坐标精确的量取出来
+</div></code></pre>
+    <h1 id="%E7%AC%AC%E5%85%AB%E5%A4%A9">第八天</h1>
+    <h2 id="1-%E5%B0%8F%E4%B8%89%E8%A7%92%E5%92%8C%E5%B0%8F%E7%AE%AD%E5%A4%B4">
+      1 小三角和小箭头
+    </h2>
+    <h3 id="11-%E5%B0%8F%E4%B8%89%E8%A7%92">1.1 小三角</h3>
+    <ul>
+      <li>
+        标签宽高设置为 0，四个方向边框为透明，把想要方向的颜色设置为想要的颜色
+      </li>
+    </ul>
+    <pre class="hljs"><code><div>    .triangle{
+         width: 0px;
+            height: 0px;
+            border: 50px solid transparent;
+            border-top-color: turquoise;
+            margin-bottom: -50px;
+    }
+
+</div></code></pre>
+    <h3 id="12-%E5%B0%8F%E7%AE%AD%E5%A4%B4">1.2 小箭头</h3>
+    <ul>
+      <li>
+        实现两个相同的小三角，使这两个三角不完全重叠，把上一层的三角颜色设置为背景色
+      </li>
+    </ul>
+    <pre class="hljs"><code><div> .cart{
+            width: 0px;
+            height: 0px;
+            border: 50px solid transparent;
+            border-right-color: turquoise;
+            position: relative;
+        }
+        .cart::after{
+            content: &quot;&quot;;
+            position: absolute;
+            border: 50px solid transparent;
+            border-right-color: white;
+            left: -40px;
+            top: -50px;
+        }
+
+</div></code></pre>
+    <h2 id="2-%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87">2 字体图标</h2>
+    <ul>
+      <li>矢量图标量库： https://www.iconfont.cn/</li>
+    </ul>
+    <pre class="hljs"><code><div>    链接生成的 CS:
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;xxx.css&quot;&gt;
+
+    调用方式：
+    &lt;span class=&quot;iconfont icon-zhuye&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;iconfont icon-jiantou1&quot;&gt;&lt;/span&gt;
+
+</div></code></pre>
+    <h2 id="3-%E7%BD%91%E7%AB%99-tdk-%E8%AE%BE%E7%BD%AE">3 网站 tdk 设置</h2>
+    <ul>
+      <li>标题(title) 描述(description) 关键字(keywords)</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;title&gt;小U商城-送货更准时、价格更超值、上新货更快&lt;/title&gt;
+    &lt;meta name=&quot;description&quot; content=&quot;苏宁易购-综合网上购物平台，商品涵盖家电、手机、电脑、超市、母婴、服装、百货、海外购等品类。送货更准时、价格更超值、上新货更快，正品行货、全国联保、可门店自提，全网更低价，让您放心去喜欢！&quot;&gt;
+    &lt;meta name=&quot;keywords&quot; content=&quot;苏宁易购网上商城,苏宁电器,手机,电脑,冰箱,洗衣机,相机,数码,家居用品,鞋帽,化妆品,母婴用品,图书,食品,正品行货&quot;&gt;
+</div></code></pre>
+    <h2 id="4-%E7%BD%91%E7%AB%99-ico-%E8%AE%BE%E7%BD%AE">4 网站 ico 设置</h2>
+    <ul>
+      <li>http://www.bitbug.net/ 在线ico转换</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>  &lt;link rel=&quot;shortcut icon&quot; href=&quot;./favicon.ico&quot; type=&quot;image/x-icon&quot;&gt;
+</div></code></pre>
+    <h2 id="%E6%A0%87%E7%AD%BE%E5%B5%8C%E5%A5%97%E8%A7%84%E5%88%99">
+      标签嵌套规则
+    </h2>
+    <ul>
+      <li>块级标签链可以嵌套块级、行内标签</li>
+      <li>
+        一些特殊语义的标签里面不能再嵌套块级标签 比如 h1~h6
+        p级标签里边不能嵌套块标签
+      </li>
+      <li>一些固定搭配的标签，不能随意嵌套，比如ul/ol里边只能有子元素li</li>
+      <li>行内标签里面不能放块标签</li>
+      <li>a 标签里边可以放块标签</li>
+      <li>a 标签里面不能再放 a 标签和 input 标签</li>
+    </ul>
+    <h1 id="%E7%AC%AC%E4%B9%9D%E5%A4%A9">第九天</h1>
+    <h2 id="1-%E8%A1%A8%E5%8D%95">1 表单</h2>
+    <h3 id="11-%E8%A1%A8%E5%8D%95%E5%85%83%E7%B4%A0">1.1 表单元素</h3>
+    <pre class="hljs"><code><div>  &lt;!-- 文本输入框 --&gt;
+    &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;张三&quot;&gt;
+    &lt;!-- 密码框 --&gt;
+    &lt;input type=&quot;password&quot; name=&quot;psd&quot; value=&quot;123&quot;&gt;
+    &lt;!-- 单选 --&gt;
+    &lt;input type=&quot;radio&quot; name=&quot;gander&quot; id=&quot;male&quot;&gt;
+    &lt;!-- 复选 --&gt;
+    &lt;input type=&quot;checkbox&quot; name=&quot;&quot; id=&quot;&quot;&gt;
+    &lt;!-- 提交 --&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
+    &lt;!-- 重置 --&gt;
+    &lt;input type=&quot;reset&quot; value=&quot;清空&quot;&gt;
+    &lt;!-- 普通那妞 --&gt;
+    &lt;input type=&quot;button&quot; value=&quot;普通按钮&quot;&gt;
+    &lt;!-- 图片提交按钮 --&gt;
+    &lt;input type=&quot;image&quot; src=&quot;../../Y-Picture/肉串.png&quot;&gt;
+    &lt;!-- 文件上传按钮 --&gt;
+    &lt;input type=&quot;file&quot; name=&quot;file&quot;&gt;
+    &lt;!-- 隐藏域 --&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;&quot;&gt;
+    &lt;!-- 下拉列表 --&gt;
+    &lt;select name=&quot;city&quot;&gt;    
+        &lt;option value=&quot;0&quot;&gt;北京&lt;/option&gt;
+        &lt;option value=&quot;1&quot;&gt;上海&lt;/option&gt;
+        &lt;option value=&quot;2&quot;&gt;广州&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;!-- 多行文本域  resize: none;禁止拖动 --&gt;
+    &lt;textarea name=&quot;des&quot; cols=&quot;30&quot; rows=&quot;10&quot;  style=&quot;resize: none;&quot;&gt;&lt;/textarea&gt;
+</div></code></pre>
+    <h3
+      id="12-%E5%85%B6%E4%BB%96%E8%A1%A8%E5%8D%95%E7%9B%B8%E5%85%B3%E6%A0%87%E7%AD%BE"
+    >
+      1.2 其他表单相关标签
+    </h3>
+    <pre class="hljs"><code><div> &lt;!-- button标签 --&gt;
+    &lt;button&gt;提交&lt;/button&gt;
+    &lt;button type=&quot;submit&quot;&gt;提交&lt;/button&gt;
+    &lt;button type=&quot;reset&quot;&gt;重置&lt;/button&gt;
+    &lt;button type=&quot;button&quot;&gt;普通按钮&lt;/button&gt;
+
+    &lt;!-- label 用来给输入框定义标注 --&gt;
+    &lt;label for=&quot;user&quot;&gt;用户名：&lt;/label&gt;
+    &lt;input type=&quot;text&quot; id=&quot;user&quot;&gt;
+</div></code></pre>
+    <h3 id="13-%E8%A1%A8%E5%8D%95%E7%9B%B8%E5%85%B3%E5%B1%9E%E6%80%A7">
+      1.3 表单相关属性
+    </h3>
+    <pre
+      class="hljs"
+    ><code><div>    name属性：用来标记输入的字段名，如果没有定义name属性，这个输入框的呢日用就不能被提交
+
+    value属性：用来定义表单元素的值
+            - 单选按钮和复选框必须设置value属性指定这个选项多代表的值
+            - 给普通输入框定义初始值
+            - 设置按钮上显示的文字
+
+    type属性：用来定义输入框的类型
+            - text：     普通文本框
+            - password： 密码框
+            - submit：   提交按钮
+            - radio：    单选按钮
+            - checkbox： 复选框
+            - reset：    重置按钮
+            - button：   普通按钮
+            - image：    图片提交按钮
+            - file：     文件提交按钮
+            - hidden：   隐藏域
+
+    checked属性：设置单选按钮和复选按钮为选中状态
+    selected属性：设置下拉列表的默认选中项
+    readonly属性：设置表单元素为禁用状态，不能编辑，可以提交
+    disabled属性：设置表单元素为禁用状态，既不能编辑，也不能提交
+    maxlength属性：设置输入框允许输入的字符个数的最大值
+    size属性：设置下拉列表显示的选项个数，值大于等于2，配合高度属性可以把选项全部显示出来
+</div></code></pre>
+    <h3 id="14-form%E6%A0%87%E7%AD%BE%E5%B1%9E%E6%80%A7">1.4 form标签属性</h3>
+    <pre
+      class="hljs"
+    ><code><div>    action=&quot;地址&quot;：规定表单提交数据的地址
+    method=&quot;GET/POST&quot;：规定表单的提交方式
+            - GET：在地址栏上提交，安全性不好，大小有限制
+            - POST：方式以一种更隐蔽的方式提交，安全性好，大小没有限制
+</div></code></pre>
+    <h2 id="2-%E6%96%87%E6%9C%AC%E6%BA%A2%E5%87%BA%E7%9C%81%E7%95%A5">
+      2 文本溢出省略
+    </h2>
+    <h3
+      id="21-%E5%8D%95%E8%A1%8C%E6%96%87%E6%9C%AC%E6%BA%A2%E5%87%BA%E6%98%BE%E7%A4%BA%E7%9C%81%E7%95%A5%E5%8F%B7"
+    >
+      2.1 单行文本溢出显示省略号
+    </h3>
+    <pre class="hljs"><code><div>   
+    white-space: nowrap; /* 强制在一行显示 */
+    overflow: hidden; /* 盒子溢出不显示 */
+    text-overflow: ellipsis; /* 文字溢出省略 */
+
+</div></code></pre>
+    <h3
+      id="22-%E5%A4%9A%E8%A1%8C%E6%96%87%E6%9C%AC%E6%BA%A2%E5%87%BA%E6%98%BE%E7%A4%BA%E7%9C%81%E7%95%A5%E5%8F%B7"
+    >
+      2.2 多行文本溢出显示省略号
+    </h3>
+    <blockquote>
+      <p>方法一：利用非标准属性，兼容性不好</p>
+    </blockquote>
+    <pre class="hljs"><code><div>            overflow: hidden;
+            text-overflow: ellipsis;
+
+            &lt;!-- 非正式方法 --&gt;
+            display: -webkit-box;
+            &lt;!-- 行数 --&gt;
+            -webkit-line-clamp: 2;
+            &lt;!-- 弹性盒子垂直排列 --&gt;
+            -webkit-box-orient: vertical;
+</div></code></pre>
+    <blockquote>
+      <p>方法二：伪元素 兼容性好，效果一般</p>
+    </blockquote>
+    <pre class="hljs"><code><div>    content : &quot;...&quot;;
+    定位到最后一个字，修改背景颜色遮盖原来的字
+</div></code></pre>
+    <h1 id="%E7%AC%AC%E5%8D%81%E5%A4%A9">第十天</h1>
+    <h2 id="1-%E5%88%A9%E7%94%A8%E5%AE%9A%E4%BD%8D%E5%B1%85%E4%B8%AD">
+      1 利用定位居中
+    </h2>
+    <h3
+      id="11-%E6%96%B9%E6%B3%95%E4%B8%80-%E5%AE%9A%E4%BD%8D--%E5%A4%96%E8%BE%B9%E8%B7%9D"
+    >
+      1.1 方法一 定位 + 外边距
+    </h3>
+    <blockquote>
+      <p>优点：</p>
+    </blockquote>
+    <ul>
+      <li>计算定位的时候只需要知道子元素的宽高，兼容性好。</li>
+    </ul>
+    <pre class="hljs"><code><div>    .parent{
+        position : relative;
+        ....
+    }
+    .child{
+        position : absolute
+        left : 50%;
+        top : 50%;
+        margin-left : - 自身宽度/2; 
+        margin-top : - 自身高度/2; 
+    }
+
+</div></code></pre>
+    <h3 id="12-%E6%96%B9%E6%B3%95%E4%BA%8C-%E5%AE%9A%E4%BD%8D--margin--auto">
+      1.2 方法二 定位 + margin : auto;
+    </h3>
+    <blockquote>
+      <p>优点：</p>
+    </blockquote>
+    <ul>
+      <li>计算位置不需要知道父元素和子元素的尺寸</li>
+    </ul>
+    <blockquote>
+      <p>缺点：</p>
+    </blockquote>
+    <ul>
+      <li>不见用ie8一下的浏览器</li>
+    </ul>
+    <pre class="hljs"><code><div>    
+    .parent{
+        position : relative;
+        ....
+    }
+    .child{
+        position : absolute
+        left : 0;
+        right: 0;
+        top : 0;
+        bottom:0;
+        margin : auto;
+    }
+
+</div></code></pre>
+    <h2 id="2-%E7%AD%89%E9%AB%98%E5%B8%83%E5%B1%80">2 等高布局</h2>
+    <h3
+      id="21-%E6%96%B9%E6%B3%95%E4%B8%80%E4%BC%AA%E7%AD%89%E9%AB%98%E7%BB%99%E6%AF%8F%E4%B8%80%E5%88%97%E6%B7%BB%E5%8A%A0padding-bottom1000px%E6%92%91%E5%BC%80%E8%83%8C%E6%99%AFmargin-bottom-1000px%E6%8A%B5%E6%B6%88%E5%A4%9A%E4%BD%99padding%E7%9A%84%E5%8D%A0%E4%BD%8D"
+    >
+      2.1
+      方法一：伪等高，给每一列添加padding-bottom:1000px撑开背景，margin-bottom:-1000px;抵消多余padding的占位。
+    </h3>
+    <pre class="hljs"><code><div>        .container .left{
+            background-color: red;
+            padding-bottom: 1000px;
+            margin-bottom: -1000px;
+        }
+        .container .center{
+            background-color: lightblue;
+            padding-bottom: 1000px;
+            margin-bottom: -1000px;
+        }
+        .container .right{
+            background-color: pink;
+            padding-bottom: 1000px;
+            margin-bottom: -1000px;
+        }
+
+</div></code></pre>
+    <h3 id="22-%E6%96%B9%E6%B3%95%E4%BA%8C">2.2 方法二：</h3>
+    <ul>
+      <li>
+        有几列就添加几层共同的父级，给父级设置不同的背景颜色，用margin把背景颜色错开
+      </li>
+      <li>把里面的内容通过margin负值移到对应的背景上</li>
+    </ul>
+    <pre class="hljs"><code><div>    &lt;div class=&quot;bg1&quot;&gt;
+            &lt;div class=&quot;bg2&quot;&gt;
+                &lt;div class=&quot;bg3&quot;&gt;
+                    &lt;div class=&quot;left&quot;&gt;
+                       ...
+                    &lt;/div&gt;
+                    &lt;div class=&quot;center&quot;&gt;
+                        ...
+                    &lt;/div&gt;
+                    &lt;div class=&quot;right&quot;&gt;
+                       ...
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    css:
+        .bg1{
+            background-color: red;
+        }
+        .bg2{
+            background-color: green;
+            margin-left: 150px;
+        }
+        .bg3{
+            background-color: blue;
+            margin-left:250px;
+        }
+
+        .left {
+            width: 150px;
+            margin-left: -400px;
+        }
+        .center {
+
+            width: 250px;
+            margin-left: -250px;
+        }
+        .right {
+            width: 200px;
+
+        }
+</div></code></pre>
+    <h3
+      id="23-%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80%E5%92%8C%E5%8F%8C%E9%A3%9E%E7%BF%BC%E5%B8%83%E5%B1%80"
+    >
+      2.3 圣杯布局和双飞翼布局
+    </h3>
+    <ul>
+      <li>
+        <p>
+          圣杯布局和双飞翼布局目的都是用来实现三栏布局，左右两栏固定宽，中间栏自适应的效果
+        </p>
+      </li>
+      <li>
+        <p>实现思路：</p>
+      </li>
+    </ul>
+    <pre class="hljs"><code><div>        设置 .left .center .right 三列 
+        顺序： 为了使主体内容优先加载，需要把.center放在最前面
+        三栏都左浮动
+        .left 宽度固定 150px  , .center 宽度设置100%  .right宽度设置 200px
+
+        .left设置 margin-left:-100%; 移到最左边
+        .right设置margin-left:-200px; 移到右边
+</div></code></pre>
+    <ul>
+      <li>圣杯和双飞翼区别：</li>
+    </ul>
+    <pre class="hljs"><code><div>        产生的问题：中间栏被左右两栏覆盖
+
+        圣杯解决方法：
+            1、给父级.container添加左右padding:0 200px 0 150px;
+            2、.left 设置相对定位 position:relative;left:-150px;
+            3、.right  设置相对定位 position:relative;right:-200px;
+            
+        双飞翼解决方法： 
+            给中间.center添加一层子元素 .inner给其添加外边距 margin:0 200px 0 150px;
+</div></code></pre>
+    <h2
+      id="3-bfc%E5%9D%97%E7%BA%A7%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8A%E4%B8%8B%E6%96%87"
+    >
+      3 BFC(块级格式化上下文)
+    </h2>
+    <h3 id="3-1-%E4%BB%80%E4%B9%88%E6%98%AFbfc--block-formatting-context">
+      3. 1 什么是BFC? ( Block Formatting Context)
+    </h3>
+    <pre
+      class="hljs"
+    ><code><div>    Formatting Context:指页面中的一个渲染区域，并且拥有一套渲染规则，他决定了其子标签如何定位，以及与其他标签的相互关系和作用。
+    BFC:块级格式化上下文，它是指一个独立的块级渲染区域，只有Block-level BOx参与，该区域拥有一套渲染规则来约束块级盒子的布局，且与区域外部无关。
+</div></code></pre>
+    <h3 id="32-%E6%80%8E%E6%A0%B7%E7%94%9F%E6%88%90bfc">3.2 怎样生成BFc</h3>
+    <pre
+      class="hljs"
+    ><code><div>    既然BFc是一块渲染区域，那这块渲染区域到底在哪，它又是有多大，这些由生成BFc的标签决定，cSS2.1中规定满足下列css声明之一的标签便会生成BFC。
+</div></code></pre>
+    <ul>
+      <li>根标签(html)</li>
+      <li>float的值不为none</li>
+      <li>overflow的值不为visible ( hidden/auto/scroll)</li>
+      <li>display的值为inline-block</li>
+      <li>position的值为absolute或fixed</li>
+    </ul>
+    <h3 id="33-bfc%E7%9A%84%E7%89%B9%E6%80%A7">3.3 BFC的特性</h3>
+    <pre
+      class="hljs"
+    ><code><div>    1. 内部的块级盒子会在垂直方向上一个接一个的放置
+    2. 垂直方向上的距离由margin决定，属于同一个BFc的两个相邻标签的margin会发生重叠
+    3. 每个标签的左外边距与包含块(父级的内容区)的左边界相接触（从左向右)，即使浮动标签也是如此。
+    4. 的区域不会与float的标签区域重叠
+    5. 计算BFC的高度时，浮动子标签也参与计算
+    6. BFC就是页面上的一个隔离的独立容器，容器里面的子标签不会影响到外面标签，反之亦然
+</div></code></pre>
+    <h3 id="34-bfc%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%B4%E9%A2%98">
+      3.4 BFC解决的间题
+    </h3>
+    <pre class="hljs"><code><div>    1. 外边距折叠
+    特性的第2条:垂直方向上的距离由margin决定
+    在常规文档流中，两个兄弟盒子之间的垂直距离是由他们的外边距所决定的，但不是他们的两个外边距之和，而是以较大的为准。那么有没有方法让垂直外边距不折叠呢?
+    特性的第6条就说了: bfc就是页面上的一个独立容器，容器里面的子标签不会影响外面标签，同样外面的标签不会影响到BFc内的标签。所以可以让其中的一个标签处于一个BFC中
+
+    2. 自适应两栏或三栏布局。
+    左边固定宽度，右边不设宽，因此右边的宽度自适应，随浏览器窗口大小的变化而变化。
+    左右两边固定宽度，中间不设宽，因此中间的宽度自适应，随浏览器的大小变化而变化。
+    浮动的标签会覆盖正常标签根据第4条规则，BFc的区域不会与float的标签区域重叠，所以我们只需要创建一个BFC，它就会自动缩小，以不被浮动的标签遮盖，就能够实现右侧栏自适应。
+
+    3. 防止字体环绕
+    众所周知，浮动的盒子会遮盖下面的盒子，但是下面盒子里的文字是不会被遮盖的，文字反而还会环绕浮动的盒子。
+
+    4. 清除浮动
+    利用overflow:hidden清除浮动，因为浮动的盒子无法撑出处于标准文档流的父盒子的height。根据特性第5条。计算BFc的高度时，浮动子标签也参与计算。
+
+</div></code></pre>
+    <h1 id="%E7%AC%AC%E5%8D%81%E4%B8%80%E5%A4%A9">第十一天</h1>
+    <h2 id="1-html5">1 HTML5</h2>
+    <ul>
+      <li>html5是html的最新一个版本</li>
+      <li>
+        新增模块：语义化的标签、音视频（多媒体）、智能表单、canvas(画布)、地理定位、web存储...
+      </li>
+      <li>ie9及以上浏览器开始对html5的部分特性进行支持</li>
+      <li>
+        语法兼容： 部分标签可以不闭合 可以省略一些标签（比如：html,body）
+        可以省略属性值的引号 属性名和属性值相同，可以省略属性值
+      </li>
+    </ul>
+    <h2 id="2%E8%AF%AD%E4%B9%89%E5%8C%96%E6%A0%87%E7%AD%BE">2、语义化标签</h2>
+    <h3 id="21-%E7%BB%93%E6%9E%84%E5%8C%96%E6%A0%87%E7%AD%BE">
+      2.1 结构化标签
+    </h3>
+    <ol>
+      <li>
+        <code>&lt;header&gt;</code>标签
+        定义文档或文档中内容块的页眉。通常可以包含整个页面或一个内容区的标题、搜索表单、相关的logo图片等。
+        示例：
+      </li>
+    </ol>
+    <pre class="hljs"><code><div>    &lt;header&gt;这里是头部区&lt;/header&gt;
+</div></code></pre>
+    <ol start="2">
+      <li>
+        <code>&lt;footer&gt;</code> 标签
+        通常用来定义文档或节的页脚，如网页中的版权信息，相关阅读链接等等。
+        示例：
+      </li>
+    </ol>
+    <pre class="hljs"><code><div>    &lt;footer&gt;这里是页脚区&lt;/footer&gt;
+</div></code></pre>
+    <ol start="3">
+      <li>
+        <code>&lt;nav&gt;</code> 标签
+        定义导航链接的部分。一般来说用于页面中主要的导航链接组，如传统的导航条、侧边栏导航、页内导航、翻页操作等。
+        示例：
+      </li>
+    </ol>
+    <pre class="hljs"><code><div>    &lt;nav&gt;
+        &lt;a&gt;首页&lt;/a&gt;
+        &lt;a&gt;关于我们&lt;/a&gt;
+        &lt;a&gt;联系我们&lt;/a&gt;
+    &lt;/nav&gt;
+</div></code></pre>
+    <ol start="4">
+      <li>
+        <code>&lt;article&gt;</code>标签
+        表示文档中独立完整的，可以独自被外部引用的内容。如一篇博文、论坛的帖子、报刊中的文章、一段用户评论或独立的插件。
+        示例：
+      </li>
+    </ol>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;article&gt;这里是一个有完整含义的内容区&lt;/article&gt;
+</div></code></pre>
+    <ol start="5">
+      <li>
+        <code>&lt;section&gt;</code>标签
+        表示页面中内容的分区、文章中的章节。一个section元素通常由内容及标题组成。
+        示例：
+      </li>
+    </ol>
+    <pre class="hljs"><code><div>    &lt;section&gt;
+        &lt;h2&gt;标题一&lt;/h2&gt;
+        &lt;p&gt;内容区域&lt;/p&gt;
+    &lt;/section&gt;
+
+    &lt;section&gt;
+        &lt;h2&gt;标题二&lt;/h2&gt;
+        &lt;p&gt;内容区域&lt;/p&gt;
+    &lt;/section&gt;
+</div></code></pre>
+    <ol start="6">
+      <li>
+        <code>&lt;aside&gt;</code>标签
+        表示当前页面或文章的附属信息部分，如与主要内容相关的引用、侧边栏、广告、链接组等。
+        示例：
+      </li>
+    </ol>
+    <pre class="hljs"><code><div>    &lt;aside&gt;这里是侧边栏&lt;/aside&gt;
+</div></code></pre>
+    <ol start="7">
+      <li>
+        <code>&lt;hgroup&gt;</code>标签
+        可以为标题或者子标题进行分组，通常与h1-h6组合使用。 示例：
+      </li>
+    </ol>
+    <pre class="hljs"><code><div>    &lt;hgroup&gt;
+        &lt;h1&gt;主标题&lt;/h1&gt;
+        &lt;h2&gt;副标题&lt;/h2&gt;
+    &lt;/hgroup&gt;
+</div></code></pre>
+    <h3
+      id="22-html5%E6%96%B0%E5%A2%9E%E8%AF%AD%E4%B9%89%E5%8C%96%E6%A0%87%E7%AD%BE%E5%85%BC%E5%AE%B9%E5%A4%84%E7%90%86"
+    >
+      2.2 html5新增语义化标签兼容处理
+    </h3>
+    <ul>
+      <li>ie8及以下浏览器不识别这些新的标签，所以页面结构渲染错误，样式失效</li>
+    </ul>
+    <p>解决方法一：</p>
+    <pre><code>    1、用js创建这些新的元素
+
+    document.createElement('header');
+    document.createElement('footer');
+    ...
+    2、js创建的元素默认为行内元素，需要转换成块级，正常布局
+    header,footer,...{
+        display:block;
+    }
+</code></pre>
+    <p>解决方法二：引入html5shiv.js插件</p>
+    <pre><code>    &lt;!-- 只在ie9以下引入插件 --&gt;
+    &lt;!--[if lt ie 9]&gt;    
+        &lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/html5shiv/3.6/html5shiv.min.js&quot;&gt;&lt;/script&gt;
+    &lt;![endif]--&gt;
+</code></pre>
+    <h3 id="23-%E6%96%B0%E5%A2%9E%E7%9A%84%E5%85%B6%E4%BB%96%E6%A0%87%E7%AD%BE">
+      2.3 新增的其他标签
+    </h3>
+    <p>除了结构元素外，在HTML5中，还新增了以下标签：</p>
+    <p>1 .<code>&lt;figure&gt;</code>标签</p>
+    <p>
+      规定独立的流内容（图像、图表、照片、代码等等）。 figure
+      元素的内容应该与主内容相关，但如果被删除，则不应对文档产生影响。
+    </p>
+    <p>
+      figcaption表示figure的标题，一个figure内只允许放置一个figcaption。 示例：
+    </p>
+    <pre class="hljs"><code><div>&lt;figure&gt;
+    &lt;img src=&quot;...&quot;&gt;
+    &lt;img src=&quot;...&quot;&gt;
+    ...
+    &lt;figcaption&gt;figure的标题&lt;/figcaption&gt;
+&lt;/figure&gt;
+</div></code></pre>
+    <ol start="2">
+      <li><code>&lt;mark&gt;</code> 标签 (行内) 定义带有记号的文本。 示例：</li>
+    </ol>
+    <pre
+      class="hljs"
+    ><code><div>&lt;p&gt;今天天气&lt;mark&gt;晴朗&lt;/mark&gt;&lt;/p&gt;
+</div></code></pre>
+    <ol start="3">
+      <li>
+        <code>&lt;time&gt; </code>标签 (行内) 定义公历日期或时间，或者两者。
+        示例：
+      </li>
+    </ol>
+    <pre
+      class="hljs"
+    ><code><div>我们在每天早上 &lt;time&gt;9:00&lt;/time&gt; 开始上课。
+我在 &lt;time datetime=&quot;2019-02-19&quot;&gt;元宵节&lt;/time&gt; 有个约会。
+</div></code></pre>
+    <p>
+      datetime属性：定义元素的日期和时间。如果未定义该属性，则必须在元素的内容中规定日期或时间。
+    </p>
+    <h3 id="24-%E5%88%A0%E9%99%A4%E7%9A%84%E6%A0%87%E7%AD%BE">
+      2.4 删除的标签
+    </h3>
+    <pre class="hljs"><code><div>    center
+    font
+    s
+    strike
+    u
+    basefont
+    applet
+</div></code></pre>
+    <h2 id="3%E6%96%B0%E5%A2%9E%E8%A1%A8%E5%8D%95%E7%89%B9%E6%80%A7">
+      3、新增表单特性
+    </h2>
+    <h3 id="31%E6%96%B0%E5%A2%9E%E8%A1%A8%E5%8D%95%E5%85%83%E7%B4%A0">
+      3.1新增表单元素
+    </h3>
+    <ul>
+      <li>input的新增类型</li>
+    </ul>
+    <pre class="hljs"><code><div>    color : 颜色
+    date: 年月日
+    datetime:年月日 时分 （只能输入)
+    datetime-local : 年月日 时分
+    time: 时分
+    month:年月
+    week：某年第X周
+    email:邮箱
+    url:网址
+    tel:电话
+    number:数字
+    range:范围
+    search:搜索
+</div></code></pre>
+    <ul>
+      <li>datalist 给输入框定义选项列表</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;input type=&quot;text&quot; list=&quot;list1&quot;&gt;
+    &lt;datalist id=&quot;list1&quot;&gt;
+        &lt;option&gt;AA&lt;/option&gt;
+        &lt;option&gt;BB&lt;/option&gt;
+        &lt;option&gt;CC&lt;/option&gt;
+    &lt;/datalist&gt;
+</div></code></pre>
+    <h3 id="32-%E6%96%B0%E5%A2%9E%E8%A1%A8%E5%8D%95%E5%B1%9E%E6%80%A7">
+      3.2 新增表单属性
+    </h3>
+    <ol>
+      <li>min、max 和 step 属性</li>
+    </ol>
+    <ul>
+      <li>min:定义可输入的最小值</li>
+      <li>max:定义可输入的最大值</li>
+      <li>step:定义步长</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;input type=&quot;number&quot; value=&quot;0&quot; step=&quot;2&quot; min=&quot;0&quot; max=&quot;10&quot;&gt;
+    &lt;input type=&quot;range&quot; max=&quot;20&quot; min=&quot;10&quot; step=&quot;2&quot; name=&quot;range&quot;&gt;
+</div></code></pre>
+    <ol start="2">
+      <li>placeholder属性</li>
+    </ol>
+    <ul>
+      <li>给输入框定义提示占位符，输入框内容为空时显示</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;input type=&quot;email&quot; placeholder=&quot;请输入电子邮件地址&quot;&gt;
+</div></code></pre>
+    <ol start="3">
+      <li>autofocus属性</li>
+    </ol>
+    <ul>
+      <li>设置输入框自动获得焦点</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;input type=&quot;text&quot; autofocus&gt;
+</div></code></pre>
+    <ol start="4">
+      <li>autocomplete属性</li>
+    </ol>
+    <ul>
+      <li>
+        自动补全: autocomplete=&quot;off&quot; 关闭 autocomplete=&quot;on&quot;
+        开启
+      </li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;input type=&quot;text&quot; name=&quot;username&quot; autocomplete=&quot;off&quot;&gt;
+</div></code></pre>
+    <ol start="5">
+      <li>form 属性</li>
+    </ol>
+    <ul>
+      <li>
+        用来指定表单元素所属的form标签，可以实现把输入框放在form标签之外也能提交的效果
+      </li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;input type=&quot;text&quot; name=&quot;user&quot; form=&quot;loginform&quot;&gt;
+
+    &lt;form id=&quot;loginform&quot;&gt;
+    ...
+    &lt;/form&gt;
+</div></code></pre>
+    <ol start="6">
+      <li>required 属性</li>
+    </ol>
+    <ul>
+      <li>把表单元素指定为必填项</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;input type=&quot;text&quot; name=&quot;user&quot; required&gt;
+</div></code></pre>
+    <ol start="7">
+      <li>pattern 属性</li>
+    </ol>
+    <ul>
+      <li>规定表单元素输入的规则</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;input type=&quot;tel&quot; pattern=&quot;^1[3456789]\d{9}$&quot;&gt;
+</div></code></pre>
+    <ol start="8">
+      <li>multiple 属性</li>
+    </ol>
+    <ul>
+      <li>设置多选</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;input type=&quot;file&quot; name=&quot;file&quot; multiple&gt;
+    &lt;select name=&quot;sel&quot; id=&quot;&quot; multiple&gt;
+        &lt;option value=&quot;AA&quot;&gt;AA&lt;/option&gt;
+        &lt;option value=&quot;BB&quot;&gt;BB&lt;/option&gt;
+        &lt;option value=&quot;CC&quot;&gt;CC&lt;/option&gt;
+    &lt;/select&gt;
+</div></code></pre>
+    <ol start="9">
+      <li>list属性</li>
+    </ol>
+    <ul>
+      <li>给输入框绑定一个数据列表datalist</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;input type=&quot;text&quot; list=&quot;list1&quot;&gt;
+    &lt;datalist id=&quot;list1&quot;&gt;
+        &lt;option&gt;AA&lt;/option&gt;
+        &lt;option&gt;BB&lt;/option&gt;
+        &lt;option&gt;CC&lt;/option&gt;
+    &lt;/datalist&gt;
+</div></code></pre>
+    <h2 id="4%E5%A4%9A%E5%AA%92%E4%BD%93">4、多媒体</h2>
+    <h3 id="41-%E9%9F%B3%E9%A2%91">4.1 音频</h3>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;audio src=&quot;音频地址&quot; controls loop autoplay muted&gt;&lt;/audio&gt;
+</div></code></pre>
+    <ul>
+      <li>属性说明:</li>
+    </ul>
+    <pre class="hljs"><code><div>    src=&quot;音频地址&quot;
+    controls : 调出控制器
+    loop:循环播放
+    autoplay：自动播放
+    muted：默认静音
+</div></code></pre>
+    <h3 id="42-%E8%A7%86%E9%A2%91">4.2 视频</h3>
+    <pre
+      class="hljs"
+    ><code><div>    &lt;video src=&quot;&quot; src=&quot;./videoAudio/movie.mp4&quot; width=&quot;800&quot; controls loop muted autoplay poster=&quot;图片地址&quot;&gt;&lt;/video&gt;
+
+</div></code></pre>
+    <ul>
+      <li>属性说明:</li>
+    </ul>
+    <pre class="hljs"><code><div>    src=&quot;视频地址&quot;
+    controls : 调出控制器
+    loop:循环播放
+    autoplay：自动播放
+    muted：默认静音
+    width:视频宽度
+    height:视频高度
+    poster=&quot;图片地址&quot;: 定义视频的预览海报图
+</div></code></pre>
+    <h3 id="43-source-%E8%B5%84%E6%BA%90">4.3 source 资源</h3>
+    <ul>
+      <li>
+        给音频和视频提供多种格式的资源文件，浏览器会选择第一个能够支持的格式进行播放，如果都不支持，就显示最后的提示文字
+      </li>
+    </ul>
+    <pre class="hljs"><code><div>    &lt;audio controls&gt;
+        &lt;source src=&quot;./videoAudio/butterfly.ogg&quot; type=&quot;audio/ogg&quot;&gt;
+        &lt;source src=&quot;./videoAudio/hanmai.mp3&quot; type=&quot;audio/mp3&quot;&gt;
+            您的浏览器不支持音频
+    &lt;/audio&gt;
+    
+    &lt;video controls&gt;
+        &lt;source src=&quot;./videoAudio/PPAP.webm&quot;&gt;
+        &lt;source src=&quot;./videoAudio/movie.mp4&quot;&gt;
+            您的浏览器不支持视频
+    &lt;/video&gt;
+
+</div></code></pre>
+    <h1 id="%E7%AC%AC%E5%8D%81%E4%BA%8C%E5%A4%A9">第十二天</h1>
+    <h2 id="css3">css3</h2>
+    <p>css3是css的最新的版本</p>
+    <ul>
+      <li>css1 : 文本字体样式、盒模型、背景、基本选择器</li>
+      <li>css2: 浮动、定位、复合选择</li>
+      <li>
+        css3
+        新增模块：新增选择器（属性选择器、结构伪类、状态伪类）、边框属性、背景属性、多列布局、弹性盒布局、2D/3D变形、过渡、动画、用户界面...
+      </li>
+    </ul>
+    <h2 id="1%E6%B5%8F%E8%A7%88%E5%99%A8%E7%A7%81%E6%9C%89%E5%89%8D%E7%BC%80">
+      1、浏览器私有前缀
+    </h2>
+    <ul>
+      <li>
+        浏览器厂商为了表示对css3的新属性进行提前支持，在属性前面添加了各自的前缀，未来这个属性成为标准之后就不需要添加了
+      </li>
+    </ul>
+    <pre class="hljs"><code><div> 苹果、谷歌   -webkit-
+  火狐       -moz-
+  欧朋       -o-
+  IE        -ms-
+</div></code></pre>
+    <pre class="hljs"><code><div>    -webkit-border-radius:50%;
+    -moz-border-radius:50%;
+    -o-border-radius:50%;
+    -ms-border-radius:50%;
+    border-radius:50%;
+
+</div></code></pre>
+    <h2
+      id="2css3%E8%AE%BE%E8%AE%A1%E7%BD%91%E9%A1%B5%E7%9A%84%E6%80%9D%E6%83%B3"
+    >
+      2、css3设计网页的思想
+    </h2>
+    <ul>
+      <li>
+        渐进增强：先构建最基本的功能，保证项目兼容性，再在这个基础上添加css3的高级特性（阴影、动画、过渡。。。）
+      </li>
+      <li>
+        优雅降级：
+        一开始就是用css3高级特性构建完整的页面效果，再针对低版本的浏览器做兼容处理
+      </li>
+    </ul>
+    <h2 id="3%E6%96%B0%E5%A2%9E%E9%80%89%E6%8B%A9%E5%99%A8">3、新增选择器</h2>
+    <h3 id="31%E5%B1%9E%E6%80%A7%E9%80%89%E6%8B%A9%E5%99%A8">
+      3.1、属性选择器
+    </h3>
+    <h4 id="css2%E5%B1%9E%E6%80%A7%E9%80%89%E6%8B%A9%E5%99%A8">
+      CSS2属性选择器
+    </h4>
+    <pre class="hljs"><code><div>    [attr] :选择带有attr属性的标签
+    [attr = &quot;val&quot;]: 选择attr属性值等于val的标签
+    [attr ~= &quot;val&quot;]: 选择attr属性值词列表里面包含val这个单词的标签
+</div></code></pre>
+    <h4 id="css3-%E5%B1%9E%E6%80%A7%E9%80%89%E6%8B%A9%E5%99%A8">
+      css3 属性选择器
+    </h4>
+    <pre
+      class="hljs"
+    ><code><div>    [attr ^= &quot;val&quot;] : 选择attr属性以val开头的标签
+    [attr $= &quot;val&quot;] : 选择attr属性以val结尾的标签
+    [attr *= &quot;val&quot;] : 选择attr属性包含val的标签
+</div></code></pre>
+    <h3 id="32%E7%BB%93%E6%9E%84%E4%BC%AA%E7%B1%BB%E9%80%89%E6%8B%A9%E5%99%A8">
+      3.2、结构伪类选择器
+    </h3>
+    <pre class="hljs"><code><div>    :first-child : 选择同级中的第一个元素
+    :last-child: 选择同级中的最后一个元素
+    :nth-child(n): 选择同级中的第n个元素   :nth-child(2n) 偶数  :nth-child(2n+1) 奇数  
+    :nth-last-child(n): 选择同级中的倒数第n个元素  
+    :only-child : 选择同级中唯一一个元素
+
+    :first-of-type: 选择同级同种类型中的第一个元素
+    :last-of-type: 选择同级同种类型中的最后一个元素
+    :nth-of-type(n):选择同级同种类型中的第n个元素
+    :nth-last-of-type(n):选择同级同种类型中的倒数第n个元素
+    :only-of-type:选择同级同种类型中唯一一个元素
+</div></code></pre>
+    <h3 id="33%E7%8A%B6%E6%80%81%E4%BC%AA%E7%B1%BB%E9%80%89%E6%8B%A9%E5%99%A8">
+      3.3、状态伪类选择器
+    </h3>
+    <pre class="hljs"><code><div>    :focus  选择获得焦点的表单元素
+    :enabled    选择可用的表单元素
+    :disabled     选择禁用的表单元素
+    :checked   选择选中状态的单选和复选按钮
+</div></code></pre>
+    <h2 id="4%E8%BE%B9%E6%A1%86%E5%B1%9E%E6%80%A7">4、边框属性</h2>
+    <ul>
+      <li>圆角:</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    border-radius: 20px;  四个角圆角半径都是20px
+    border-radius: 20px 40px; 左上和右下   右上和左下
+    border-radius: 20px 40px 60px;   左上   右上和左下  右下
+    border-radius: 20px 40px 60px 80px;  左上   右上   右下  左下
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 60px;
+    border-top-right-radius: 50px;
+    border-bottom-left-radius: 80px;
+</div></code></pre>
+    <ul>
+      <li>阴影:</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    box-shadow: h-shadow v-shadow blur spread color  inset;
+        h-shadow : 必要，水平阴影位置， 正数向右，负数向左
+        v-shadow : 必要，垂直阴影位置， 正数向下，负数向上
+        blur :可选， 模糊半径
+        spread : 可选， 阴影扩展半径 正数扩大，负数缩小
+        color:可选，  阴影颜色
+        inset: 可选， 是否为内阴影
+
+    多阴影：box-shadow: h-shadow v-shadow blur spread color inset ,h-shadow v-shadow blur spread color inset ...;
+</div></code></pre>
+    <ul>
+      <li>文字阴影：</li>
+    </ul>
+    <pre class="hljs"><code><div>    text-shadow: h-shadow v-shadow blur color;
+        h-shadow : 必要，水平阴影位置， 正数向右，负数向左
+        v-shadow : 必要，垂直阴影位置， 正数向下，负数向上
+        blur :可选， 模糊半径
+        color:可选，  阴影颜色
+</div></code></pre>
+    <h2 id="5%E6%96%B0%E5%A2%9E%E8%83%8C%E6%99%AF%E5%B1%9E%E6%80%A7">
+      5、新增背景属性
+    </h2>
+    <ul>
+      <li>多背景</li>
+    </ul>
+    <pre class="hljs"><code><div>background-image:url(),url()...;
+background-repeat: no-repeat,repeat...;
+background-position:center,right top;
+background:url() no-repeat center,url() repeat right top...;
+</div></code></pre>
+    <ul>
+      <li>背景位置</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    background-attachment: scroll; 随背景滚动而滚动
+    background-attachment: fixed; 背景固定
+</div></code></pre>
+    <ul>
+      <li>背景尺寸</li>
+    </ul>
+    <pre class="hljs"><code><div>background-size: 100px 200px;
+background-size: 50% 50%;
+background-size: cover;   把图片等比例缩放，直到把盒子完全覆盖，但是图片可能显示不全
+background-size: contain;  把图片等比例缩放，直到图片能够完全被包含进盒子中，但是可能盒子无法完全被覆盖
+</div></code></pre>
+    <ul>
+      <li>背景起始位置</li>
+    </ul>
+    <pre class="hljs"><code><div>background-origin:
+    padding-box: 从内边距开始显示背景图片
+    border-box: 从边框开始显示背景图片
+    content-box: 从内容区开始显示背景图片
+</div></code></pre>
+    <ul>
+      <li>背景裁切</li>
+    </ul>
+    <pre class="hljs"><code><div>background-clip:
+    border-box: 边框以外被裁剪
+    padding-box：内边距以外别裁剪
+    content-box：内容区以外别裁剪
+</div></code></pre>
+    <h2 id="6%E6%B8%90%E5%8F%98%E8%83%8C%E6%99%AF">6、渐变背景</h2>
+    <h3 id="61%E7%BA%BF%E6%80%A7%E6%B8%90%E5%8F%98-linear-gradient">
+      6.1、线性渐变 （linear-gradient()）
+    </h3>
+    <pre
+      class="hljs"
+    ><code><div>    background-image: linear-gradient(to bottom,red 10%,yellow 20%,blue 50%)
+
+    linear-gradient(direction,color1 X%,color2 X%...)
+    direction :渐变方向 （to bottom/to top/to right/ to left/to right bottom/0deg/45deg...）
+    color: 表示颜色节点 X%  表示渐变的范围
+</div></code></pre>
+    <p>
+      重复的线性渐变：
+      如果最后一个颜色节点不到100%，剩余的空间就会重复之前的渐变效果
+    </p>
+    <pre
+      class="hljs"
+    ><code><div>    background-image: repeating-linear-gradient(to bottom,red 0%,yellow 10%);
+</div></code></pre>
+    <h3 id="62%E5%BE%84%E5%90%91%E6%B8%90%E5%8F%98-radial-gradient">
+      6.2、径向渐变 （radial-gradient()）
+    </h3>
+    <pre
+      class="hljs"
+    ><code><div>-webkit-radial-gradient(o-x o-y , r-x r-y , color1 x% ...);
+    o-x o-y : 圆心水平垂直的坐标
+    r-x r-y ：水平和垂直的半径
+    color: 表示颜色节点 X%  表示渐变的范围
+</div></code></pre>
+    <p>
+      重复的径向渐变：
+      如果最后一个颜色节点不到100%，剩余的空间就会重复之前的渐变效果
+    </p>
+    <pre
+      class="hljs"
+    ><code><div>repeating-radial-gradient(o-x o-y , r-x r-y , color1 x% ...);
+</div></code></pre>
+    <h2 id="7%E5%A4%9A%E5%88%97">7、多列</h2>
+    <pre class="hljs"><code><div>column-count: 3; 设置列数
+column-width: 300px; 设置列宽
+column-gap: 20px; 设置列间距
+column-rule: 1px solid black; 设置列之间的分割线
+
+## 8、用户界面
+</div></code></pre>
+    <h3
+      id="81box-sizing%E8%AE%BE%E7%BD%AE%E6%A0%87%E7%AD%BE%E7%9A%84%E6%B8%B2%E6%9F%93%E6%96%B9%E5%BC%8F"
+    >
+      8.1、box-sizing:设置标签的渲染方式
+    </h3>
+    <pre
+      class="hljs"
+    ><code><div>   - content-box 设置为标准盒，元素的尺寸由width和height以及padding和border共同决定 （最终宽度 = width + 左右padding + 左右border）
+   - border-box 设置为怪异盒，元素的最终尺寸由width和height决定，添加padding和border会压缩内容区
+</div></code></pre>
+    <h3 id="82resize">8.2、resize</h3>
+    <pre class="hljs"><code><div>   resize:none; 不允许改变尺寸
+   resize:both; 水平垂直都可改变尺寸
+   resize:vertical; 垂直可改变尺寸
+   resize:horizontal; 水平可改变尺寸
+</div></code></pre>
+    <ul>
+      <li>需要配合overflow:hidden;元素才能改变尺寸</li>
+    </ul>
+    <h1 id="%E7%AC%AC%E5%8D%81%E4%B8%89%E5%A4%A9">第十三天</h1>
+    <h2 id="1%E8%BF%87%E6%B8%A1">1、过渡</h2>
+    <blockquote>
+      <p>transition: property duration timing-function delay;</p>
+    </blockquote>
+    <pre class="hljs"><code><div>transition: margin-left 1s ease-in-out 2s;
+transition: 1s;
+</div></code></pre>
+    <ul>
+      <li>
+        <p>transition-property:可选， 指定过渡的属性名</p>
+      </li>
+      <li>
+        <p>width 只有width属性过渡</p>
+      </li>
+      <li>
+        <p>width,height width和height属性过渡</p>
+      </li>
+      <li>
+        <p>all 所有变化的属性都过渡</p>
+      </li>
+      <li>
+        <p>transition-duration: 必要，过渡时间</p>
+      </li>
+      <li>
+        <p>s 秒</p>
+      </li>
+      <li>
+        <p>ms 毫秒</p>
+      </li>
+      <li>
+        <p>transition-timing-function: 可选，速度曲线</p>
+      </li>
+      <li>
+        <p>ease 慢-快-慢</p>
+      </li>
+      <li>
+        <p>linear 匀速</p>
+      </li>
+      <li>
+        <p>ease-in 慢-快</p>
+      </li>
+      <li>
+        <p>ease-out 快-慢</p>
+      </li>
+      <li>
+        <p>ease-in-out 慢-快-慢</p>
+      </li>
+      <li>
+        <p>贝塞尔曲线 cubic-bezier(.03,.7,.92,.35)</p>
+      </li>
+      <li>
+        <p>transition-delay：可选，延迟时间</p>
+      </li>
+      <li>
+        <p>s 秒</p>
+      </li>
+      <li>
+        <p>ms 毫秒</p>
+      </li>
+    </ul>
+    <h2 id="2-2d%E5%8F%98%E5%BD%A2%E5%8F%98%E6%8D%A2transform">
+      2 2D变形（变换）transform
+    </h2>
+    <h3 id="21-%E4%BD%8D%E7%A7%BB">2.1 位移</h3>
+    <pre class="hljs"><code><div>    translate(x,y); 水平垂直同时卫衣
+    translateX();  水平方向位移 正值向右 负值向左
+    translateY();  垂直方向位移 正值向下 负值向上
+</div></code></pre>
+    <h3 id="22-%E6%97%8B%E8%BD%AC">2.2 旋转</h3>
+    <pre class="hljs"><code><div>    rotate(deg)  正值顺时针，负值逆时针
+</div></code></pre>
+    <h3 id="23-%E7%BC%A9%E6%94%BE">2.3 缩放</h3>
+    <pre class="hljs"><code><div>   scale(x,y)  水平垂直同时缩放
+   scaleX(n)    水平缩放
+   scaleY(n)    垂直缩放
+</div></code></pre>
+    <h3 id="24-%E5%80%BE%E6%96%9C">2.4 倾斜</h3>
+    <pre class="hljs"><code><div>   skew(x-deg,y-deg)  水平垂直同时倾斜
+   skewX(deg)    水平倾斜，横向拉伸
+   skewY(deg)    垂直倾斜，纵向拉伸
+</div></code></pre>
+    <h3 id="25-%E5%8F%98%E5%BD%A2%E5%8E%9F%E7%82%B9%E9%87%8D%E5%BF%83">
+      2.5 变形原点（重心）
+    </h3>
+    <pre class="hljs"><code><div>     transform-origin: 100px 200px;
+     transform-origin: 50% 50%;
+     transform-origin: top/right/.....;
+
+</div></code></pre>
+    <h2 id="3d%E5%8F%98%E5%BD%A2">3D变形</h2>
+    <p>位移：</p>
+    <pre class="hljs"><code><div>    translateZ()  沿Z轴位移，正值靠近，负值远离
+    translate3D(x,y,z)  沿x,y,z轴位移
+</div></code></pre>
+    <p>旋转:</p>
+    <pre class="hljs"><code><div>    rotateX()  绕X轴旋转，正顺时针，负逆时针
+    rotateY()  绕Y轴旋转，正顺时针，负逆时针
+    rotateZ()   绕Z轴旋转，正顺时针，负逆时针
+    rotate3D(x-d,y-d,x-d,deg) d表示三个轴上转动的方向，0表示不转，1表示顺时针，-1表示逆时针，deg共同转动的角度   
+</div></code></pre>
+    <p>缩放</p>
+    <pre class="hljs"><code><div>    scaleZ(n)  Z轴缩放
+    scale3d(x,y,z) x,y,z同时缩放
+</div></code></pre>
+    <h2 id="3d%E7%9B%B8%E5%85%B3%E5%B1%9E%E6%80%A7">3d相关属性</h2>
+    <ul>
+      <li>1、perspective:600px~2000px; 设置视距，让3d变形的元素呈现立体效果</li>
+      <li>
+        2、transform-style: preserve-3d;
+        父元素添加3d变形时，子元素的3d效果会失效，如果想保留子元素的3d效果，需要给父元素设置该属性
+      </li>
+    </ul>
+    <h2 id="%E5%85%B3%E9%94%AE%E5%B8%A7%E5%8A%A8%E7%94%BB">关键帧动画</h2>
+    <h3 id="1%E5%88%9B%E5%BB%BA%E5%85%B3%E9%94%AE%E5%B8%A7">1、创建关键帧</h3>
+    <pre class="hljs"><code><div>    @keyframes 动画名称{
+        0%{
+            left:100px;
+            top:100px;
+            ...
+        }
+        ...
+        50%{
+            left:200px;
+            top:200px;
+            ...
+        }
+        ...
+        100%{
+            left:200px;
+            top:200px;
+            ...
+        }
+    }
+
+</div></code></pre>
+    <h3 id="2%E8%B0%83%E7%94%A8%E5%8A%A8%E7%94%BB">2、调用动画</h3>
+    <blockquote>
+      <p>
+        animation: name duration timing-funtion delay iteration-count direction
+        fill-mode;
+      </p>
+    </blockquote>
+    <pre class="hljs"><code><div>
+    - animation-name : 必要，调用的动画名称
+    - animation-duration:必要， 动画时间 s/ms
+    - animation-timing-funciton : 动画的速度曲线 取值同transition-timing-funciton
+    - animtaion-delay : 延迟时间 s/ms
+    - animation-iteration-count:动画运行的次数 n / infinite(无限次)
+    - animation-direction: alternate(轮流反向)
+    - animation-fill-mode:forwards(停在终点)
+</div></code></pre>
+    <pre class="hljs"><code><div>        /* 无限次轮流返向运行的动画 */
+            animation: move 3s linear 2s infinite alternate;
+        /* 停在终点动画 */
+            animation: move-w 2s linear forwards;
+</div></code></pre>
+    <h1 id="%E7%AC%AC%E5%8D%81%E5%9B%9B%E5%A4%A9">第十四天</h1>
+    <h2
+      id="1-animate%E5%8A%A8%E7%94%BB%E5%BA%93%E4%BD%BF%E7%94%A8-%22httpsanimatestyle%22"
+    >
+      1 animate动画库使用 &quot;https://animate.style/&quot;
+    </h2>
+    <p>1、引入库文件：</p>
+    <pre
+      class="hljs"
+    ><code><div> &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.css&quot;&gt;
+</div></code></pre>
+    <p>2、使用：</p>
+    <pre
+      class="hljs"
+    ><code><div>     &lt;h1 class=&quot;animate__animated animate__fadeInLeft&quot;&gt;闪烁&lt;/h1&gt;
+</div></code></pre>
+    <h2 id="2-%E5%BC%B9%E6%80%A7%E7%9B%92%E5%AD%90">2 弹性盒子</h2>
+    <ul>
+      <li>
+        CSS3中的一种新的布局方式，弹性盒布局提供一种更加有效地方式规定盒子中的元素的排列方式，对其方式以及空白空间的分配。
+      </li>
+    </ul>
+    <h3 id="21-%E5%AE%B9%E5%99%A8%E5%B1%9E%E6%80%A7">2.1 容器属性</h3>
+    <ol>
+      <li>设置为弹性盒容器</li>
+    </ol>
+    <pre
+      class="hljs"
+    ><code><div>    display : flex; 设置为弹性盒，元素本身保持块级特点
+    display : inline-flex; 设置为弹性盒，元素保持行内特点
+</div></code></pre>
+    <ol start="2">
+      <li>设置主轴方向</li>
+    </ol>
+    <ul>
+      <li>主轴方向决定了项目的排列方向</li>
+    </ul>
+    <pre class="hljs"><code><div>    flex-direction：row             从左到右
+                    row-reverse     从右到左
+                    column          从上到下
+                    column-reverse  从下到上
+
+</div></code></pre>
+    <ol start="3">
+      <li>设置项目在主轴的对其方式，</li>
+    </ol>
+    <ul>
+      <li>对齐方式跟主轴方向有关</li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>    justify-content： flex-start    主轴开始(左对齐)
+                      flex-end      主轴结束(右对齐)
+                      center        居中
+                      space-around  每个项目平分空白区
+                      space-between 两端对齐，剩余空白平分 
+                      space-evenly  主轴开始和结束，以及每个项目之间的空白都相同
+
+</div></code></pre>
+    <ol start="4">
+      <li>设置项目在交叉轴上的对其方式</li>
+    </ol>
+    <pre
+      class="hljs"
+    ><code><div>    align-items: stretch;    拉伸，如果没有固定高，被拉伸占满交叉轴
+                 flex-start  交叉轴顶部对齐
+                 flex-end    交叉轴底部对齐
+                 center      交叉轴中间对齐
+                 baseline    第一行字的基线对齐
+</div></code></pre>
+    <ol start="5">
+      <li>设置项目换行</li>
+    </ol>
+    <pre class="hljs"><code><div>    flex-wrap : nowrap          不换行
+                wrap            换行
+                wrap-reverse    换行并且 &quot;行&quot; 倒叙
+</div></code></pre>
+    <ol start="6">
+      <li>设置多行在交叉轴上的对齐方式</li>
+    </ol>
+    <pre class="hljs"><code><div>    align-content: stretch          拉伸
+                   flex-start       顶部对齐
+                   flex-end         底部对齐
+                   space-around     每一行的前后空白相同，两行中间有双倍空白
+                   space-between    每两行之间的空白相同，交叉轴的开始和奇数位置没有空白
+                   space-evenly     交叉轴的开始和结束以及两行之间的空白都相同
+</div></code></pre>
+    <h3 id="22-%E9%A1%B9%E7%9B%AE%E5%B1%9E%E6%80%A7">2.2 项目属性</h3>
+    <ol>
+      <li>设置项目排序</li>
+    </ol>
+    <pre class="hljs"><code><div>    order : n;  默认为0，数值越大排序越靠后
+</div></code></pre>
+    <ol start="2">
+      <li>设置项目的放大比例</li>
+    </ol>
+    <pre
+      class="hljs"
+    ><code><div>    flex-grow : n;默认值为0表示不放大，数值越大，放大的越多
+</div></code></pre>
+    <ol start="3">
+      <li>设置项目的缩小比例</li>
+    </ol>
+    <pre
+      class="hljs"
+    ><code><div>    flex-shrink : n; 默认值为1，0不缩小，数值越大，缩小越多。
+</div></code></pre>
+    <ol start="4">
+      <li>设置单个项目交叉轴上的对齐</li>
+    </ol>
+    <pre
+      class="hljs"
+    ><code><div>    algin-self : stretch;    拉伸，如果没有固定高，被拉伸占满交叉轴
+                 flex-start  交叉轴顶部对齐
+                 flex-end    交叉轴底部对齐
+                 center      交叉轴中间对齐
+                 baseline    第一行字的基线对齐
+</div></code></pre>
+    <h2 id="3-%E8%AE%A1%E7%AE%97%E5%87%BD%E6%95%B0">3 计算函数</h2>
+    <ul>
+      <li>支持 加减乘除运算</li>
+      <li>运算符前后保留空格</li>
+      <li>可以()提升运算优先级</li>
+    </ul>
+    <pre class="hljs"><code><div>    width : calc(100 + 200*2 /10);
+</div></code></pre>
+    <h2 id="4-less">4 less</h2>
+    <ul>
+      <li>less是CSS的一种预处理语言</li>
+      <li>
+        less提供一套特殊的语法，按照特定的语法编写样式代码，再用less提供的编译器，编译成css文件供项目使用
+      </li>
+    </ul>
+    <h3 id="41-less%E7%9A%84%E7%BC%96%E8%AF%91">4.1 less的编译</h3>
+    <ul>
+      <li>安装 Easy LESS</li>
+      <li>编写less文件 -- 保存 -- 生成 css 文件</li>
+    </ul>
+    <h3 id="42-%E5%8F%98%E9%87%8F">4.2 变量</h3>
+    <pre class="hljs"><code><div>    @color : black;
+    .box{
+        ....
+        background-color: @color;
+    }
+
+</div></code></pre>
+    <h3 id="43-%E6%B3%A8%E9%87%8A">4.3 注释</h3>
+    <ul>
+      <li>css的注释，编译后会保留在css文件中</li>
+      <li>less的注释变异后不会存在css文件中</li>
+    </ul>
+    <h3 id="44-%E5%AF%BC%E5%85%A5%E6%A0%B7%E5%BC%8F">4.4 导入样式</h3>
+    <pre
+      class="hljs"
+    ><code><div>    @import &quot;reset.css&quot;;    导入css文件变异后保存的语法本身
+    @import &quot;reset.less&quot;    导入后是把less的文件编译后并复制到目标文件中
+
+</div></code></pre>
+    <h3 id="45-%E9%80%89%E6%8B%A9%E5%99%A8%E5%B5%8C%E5%A5%97">
+      4.5 选择器嵌套
+    </h3>
+    <pre class="hljs"><code><div>header{
+        line-height : 50px;
+        .left{
+            float : left;
+            li{
+                float : left;  
+                margin-left : 10px;
+                a{
+                    color : #333;
+                    &amp;:hover{   //&amp;取消空白间隔
+                        content : &quot;&quot;;
+                        color : orange;
+                    }
+                }
+
+            }
+        }
+        .right{
+            ....
+            li{
+                ....
+            }
+        }
+
+}
+</div></code></pre>
+    <h3 id="46-%E6%B7%B7%E5%85%A5">4.6 混入</h3>
+    <ul>
+      <li>无参数调用</li>
+    </ul>
+    <pre class="hljs"><code><div>    .size{
+        width : 100px;
+        height : 100px;
+    }
+    .box1{
+        .size
+    }
+
+</div></code></pre>
+    <ul>
+      <li>有参数的调用</li>
+    </ul>
+    <pre class="hljs"><code><div>    .size(@w,@h){
+        width : @w;
+        height : @h;
+    }
+
+    .box3{
+        .size(100px,250px);
+    }
+
+</div></code></pre>
+    <ul>
+      <li>带默认值参数的调用</li>
+    </ul>
+    <pre class="hljs"><code><div> .size(@w:100px,@h:200px){
+        width : @w;
+        height : @h;
+    }
+    .box3{
+        .size(100px,250px);
+    }
+
+</div></code></pre>
+    <ul>
+      <li>所有参数</li>
+    </ul>
+    <pre class="hljs"><code><div>.box-shadow(@h,@v,@blur,@color){
+    -webkit-box-shadow:@arguments;
+    -moz-box-shadow:@arguments;
+    -o-box-shadow:@arguments;
+    -ms-box-shadow:@arguments;
+    box-shadow:@arguments;
+}
+.box8{
+    .box-shadow(1px, 1px, 10px, red);
+}
+</div></code></pre>
+    <p>编译后：</p>
+    <pre class="hljs"><code><div>.box8 {
+  -webkit-box-shadow: 1px 1px 10px red;
+  -moz-box-shadow: 1px 1px 10px red;
+  -o-box-shadow: 1px 1px 10px red;
+  -ms-box-shadow: 1px 1px 10px red;
+  box-shadow: 1px 1px 10px red;
+}
+
+</div></code></pre>
+    <ul>
+      <li>继承</li>
+    </ul>
+    <pre class="hljs"><code><div>.list{
+    list-style: none;
+}
+.list1{
+    &amp;:extend(.list);
+    background-color: yellow;
+}
+</div></code></pre>
+    <p>编译后：</p>
+    <pre class="hljs"><code><div>.list,
+.list1 {
+  list-style: none;
+}
+.list1 {
+  background-color: yellow;
+}
+
+</div></code></pre>
+    <ul>
+      <li>计算</li>
+    </ul>
+    <pre class="hljs"><code><div>.box9{
+    width: 100% - 200px;
+    height:1000px / 5;
+}
+</div></code></pre>
+    <p>编译后：</p>
+    <pre class="hljs"><code><div>.box9 {
+  width: -100%;
+  height: 200px;
+}
+
+</div></code></pre>
+    <h1 id="%E7%AC%AC%E5%8D%81%E4%BA%94%E5%A4%A9">第十五天</h1>
+    <h2
+      id="1-%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8F%8A%E5%86%85%E6%A0%B8"
+    >
+      1 移动端浏览器及内核
+    </h2>
+    <ul>
+      <li>
+        移动端浏览器内容基本都是webkit，并且不存在老版本的兼容问题，所以移动端可以使用htmls和css3
+        的新特性
+      </li>
+    </ul>
+    <pre class="hljs"><code><div>    uc 浏览器 360浏览器 ... 内核核心都是 webkit
+    苹果浏览器 -- webkit
+</div></code></pre>
+    <h2 id="2-viewport%E8%AE%BE%E7%BD%AE">2 viewport设置</h2>
+    <ul>
+      <li>
+        pc端浏览器视默认会随着设备尺寸变化，但是移动端的浏览器视口被设置成了一些固定值，不会随设备的尺寸变化
+      </li>
+      <li>
+        在移动端解决方案中，与要让视口随着设备的尺寸发生变化，因此需要设置viewport
+      </li>
+    </ul>
+    <pre
+      class="hljs"
+    ><code><div>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no&quot;&gt;
+
+</div></code></pre>
+    <blockquote>
+      <p>参数说明：</p>
+    </blockquote>
+    <pre
+      class="hljs"
+    ><code><div>    width=device-width;     设置视口的宽度等于设备宽度
+    initial-scale=1.0;      设置初始缩放比例为1.0
+    maximum-scale=1.0;      设置最大缩放比例为1.0
+    minimum-scale=1.0;      设置最小缩放比例为1.0
+    user-scalable=no;       不允许用户缩放网页
+</div></code></pre>
+    <h2 id="3-rem%E5%B8%83%E5%B1%80">3 rem布局</h2>
+    <ul>
+      <li>rem (root em) html的字体大小</li>
+      <li>
+        rem布局，利用rem作为布局单位，所有尺寸都用rem代替以前的px，然后通过js代码动态改变rem的基准值，从而达到页面上所有元素等比例缩放的效果。
+      </li>
+    </ul>
+    <blockquote>
+      <p>js核心代码:</p>
+    </blockquote>
+    <pre class="hljs"><code><div>   /* 获取设备尺寸 */
+    var deviceWidth = document.documentElement.clientWidth;
+    /* 根据设备宽度和设计高宽度比例计算最新的rem值 */
+    var rem = deviceWidth * 100 / 750;
+    /* 设置html标签的font-size */
+    document.documentElement.style.fontSize = rem + 'px';
+</div></code></pre>
+    <blockquote>
+      <p>项目中引用remScale.js</p>
+    </blockquote>
+    <pre
+      class="hljs"
+    ><code><div>  &lt;script src=&quot;./js/remScale.js&quot;&gt;&lt;/script&gt;
+
+</div></code></pre>
+    <h1 id="%E7%AC%AC%E5%8D%81%E5%85%AD%E5%A4%A9">第十六天</h1>
+    <h2 id="rem%E5%B8%83%E5%B1%80">rem布局</h2>
+    <h2 id="1-remjs-%E7%AC%AC%E5%8D%81%E4%BA%94%E5%A4%A9">
+      1. rem+js (第十五天)
+    </h2>
+    <h2 id="2-remvw">2. rem+vw</h2>
+    <pre
+      class="hljs"
+    ><code><div>    vw: 相对单位 设备的宽度=100vw,设备的高度=100vh
+    750px=100vw; 1vw=7.5px; apx=0.133333333vw;\
+
+    html{
+        font-size : 13.33333333vw
+    }
+    .box{
+        width : 1rem;
+        height : 1rem;
+        ...
+    }
+</div></code></pre>
+    <h2 id="3-rem%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2">3. rem+媒体查询</h2>
+    <pre class="hljs"><code><div>    html {
+            font-size: 50px;
+        }
+        @media screen  and (min-width:320px){
+            html{
+                font-size: 42.666667px;
+            }
+        }
+        @media screen  and (min-width:375px){
+            html{
+                font-size: 50px;
+            }
+        }
+        @media screen  and (min-width:720px){
+            html{
+                font-size: 96px;
+            }
+        }
+        @media screen  and (min-width:750px){
+            html{
+                font-size: 100px;
+            }
+        }
+
+</div></code></pre>
+    <h1 id="%E7%AC%AC%E5%8D%81%E4%B8%83%E5%A4%A9">第十七天</h1>
+    <h2 id="1-%E7%89%B9%E6%AE%8A%E9%97%AE%E9%A2%98">1 特殊问题</h2>
+    <ol>
+      <li>小字体处理</li>
+    </ol>
+    <pre
+      class="hljs"
+    ><code><div>不同浏览器的最小字体不同，有的是10px，有的是12px。
+解决办法：设置字体时，不要小于12px,如果一定要小于12px，使用transform:sacle()进行缩放。
+</div></code></pre>
+    <ol start="2">
+      <li>动画定义3D启用硬件加速</li>
+    </ol>
+    <pre class="hljs"><code><div>element {
+      -webkit-transform:translate3d(0,0,0)
+      transform: translate3d(0,0,0);
+}
+
+注意：3D变形会消耗更多的内存与功耗。
+</div></code></pre>
+    <ol start="3">
+      <li>圆角bug：部分Android手机圆角失效</li>
+    </ol>
+    <pre class="hljs"><code><div>element{
+      background-clip: padding-box;
+}
+</div></code></pre>
+    <ol start="4">
+      <li>Input 的placeholder会出现文本位置偏上的情况</li>
+    </ol>
+    <pre
+      class="hljs"
+    ><code><div>在IOS和Android中显示不同。解决方法是：在保证input输入文本垂直居中的条件下，给placehoder设置padding-top，不要设置行高。
+</div></code></pre>
+    <h2 id="2-%E9%87%8D%E7%BD%AE%E6%A0%B7%E5%BC%8F">2 重置样式</h2>
+    <ol>
+      <li>
+        禁止用户选中文字，安卓无效（在事件那章解决，包括长按的时候会出菜单，用阻止touchstart后的默认行为搞定）。
+      </li>
+    </ol>
+    <pre class="hljs"><code><div>-webkit-user-select: none;
+</div></code></pre>
+    <ol start="2">
+      <li>禁止长按弹出系统菜单。</li>
+    </ol>
+    <pre class="hljs"><code><div>-webkit-touch-callout: none;
+</div></code></pre>
+    <ol start="3">
+      <li>
+        去除android下a/button/input标签被点击时产生的边框 &amp;
+        去除ios下a标签被点击时产生的半透明灰色背景。
+      </li>
+    </ol>
+    <pre class="hljs"><code><div>-webkit-tap-highlight-color: rgba(0,0,0,0);
+</div></code></pre>
+    <ol start="4">
+      <li>
+        (不支持)切换横竖屏或者用户自己通过浏览器设置的话，可以改变字体的大小(需要给body下的所有元素)。
+      </li>
+    </ol>
+    <pre class="hljs"><code><div>-webkit-text-size-adjust: 100%;
+</div></code></pre>
+    <ol start="5">
+      <li>按钮在ios下都是圆角。</li>
+    </ol>
+    <pre
+      class="hljs"
+    ><code><div>-webkit-appearance: none;    //button与input都会有个默认背景  ,去掉输入框的默认样式
+border-radius: 0;    //input有个默认圆角
+</div></code></pre>
+    <ol start="6">
+      <li>修改placeholder的样式。</li>
+    </ol>
+    <pre class="hljs"><code><div>input::-webkit-input-placeholder{
+      color:#000;    //默认的样式
+}
+input:focus::-webkit-input-placeholder{
+      color:#f00;    //点击后的样式
+}
+</div></code></pre>
+    <h2 id="3-retina%E5%B1%8F">3 Retina屏</h2>
+    <p>
+      视网膜屏（高清屏），是一种屏幕显示标准，屏幕密度（设备像素比）&gt; 2
+      就是高清屏
+    </p>
+    <p>
+      物理像素（设备实际的像素个数） 逻辑像素（等同于css像素）实际显示出来的像素
+    </p>
+    <p>像素比 = 物理像素 / 逻辑像素</p>
+    <pre
+      class="hljs"
+    ><code><div>    设备             物理像素       逻辑像素    设备像素比
+    iphone5/6s      640             320            2
+    iphone6/7/8     750             375            2
+    iphone X        1125            375            3
+    iphone678 plus  1242            414            3
+
+</div></code></pre>
+    <h1 id="%E7%AC%AC%E5%8D%81%E5%85%AB%E5%A4%A9">第十八天</h1>
+    <h2 id="1-%E5%93%8D%E5%BA%94%E5%BC%8F">1 响应式</h2>
+    <p>
+      响应式就是网站可以根据用户的设备环境（设备尺寸）不同，显示出不同的样式排布。
+    </p>
+    <blockquote>
+      <p>适用场景</p>
+    </blockquote>
+    <ul>
+      <li>简单的展示型网站：企业官网，后台管理系统等。</li>
+    </ul>
+    <blockquote>
+      <p>响应式相关技术</p>
+    </blockquote>
+    <ul>
+      <li>
+        媒体查询、弹性盒布局、百分比布局、百分比布局、响应式图片、响应式字体.
+      </li>
+    </ul>
+    <h3
+      id="11-%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2%E5%81%9A%E5%AA%92%E4%BD%93%E5%88%86%E7%B1%BB"
+    >
+      1.1 媒体查询做媒体分类
+    </h3>
+    <ol>
+      <li>大屏幕 (大于 1200px)</li>
+      <li>中等屏幕 (992px~1200px)</li>
+      <li>小屏幕 (768px~992px)</li>
+      <li>超小屏幕 (小于 768px)</li>
+    </ol>
+    <pre class="hljs"><code><div>    大于320px
+    @media screen and (min-width:320px){
+        ......
+    } 
+
+    小于1200px
+    @media screen and (max-width:1200px){
+        ......
+    } 
+
+</div></code></pre>
+    <h4 id="111%E5%A4%A7%E5%B1%8F%E4%BC%98%E5%85%88">1.1.1大屏优先</h4>
+    <pre class="hljs"><code><div>    // 小于1200px时
+    @media screen and (max-width:1200px){
+        ......
+    } 
+    // 小于992px时
+    @media screen and (max-width:992px){
+        ......
+    } 
+    // 小于768px时
+    @media screen and (max-width:768px){
+        ......
+    } 
+
+</div></code></pre>
+    <h4 id="112-%E5%B0%8F%E5%B1%8F%E4%BC%98%E5%85%88">1.1.2 小屏优先</h4>
+    <pre class="hljs"><code><div>    // 大于178px时
+    @media screen and (min-width:768px){
+        ......
+    } 
+    // 大于992px时
+    @media screen and (min-width:992px){
+        ......
+    } 
+    // 大于1200px时
+    @media screen and (min-width:1200px){
+        ......
+    } 
+
+</div></code></pre>
+    <h3 id="12-%E7%99%BE%E5%88%86%E6%AF%94%E5%B8%83%E5%B1%80">
+      1.2 百分比布局
+    </h3>
+    <pre class="hljs"><code><div>    ul li{
+        float : left;
+        width : 23%;
+        height : 100px;
+        background-color : red;
+    }
+    @media screen and (max-width : 992px){
+        ul li{
+            width : 48%;
+        }
+    }
+</div></code></pre>
+    <h3 id="13-%E5%93%8D%E5%BA%94%E5%BC%8F%E5%9B%BE%E7%89%87">
+      1.3 响应式图片
+    </h3>
+    <ol>
+      <li>内容图片</li>
+    </ol>
+    <pre class="hljs"><code><div>    图片自适应容器大小
+    img{
+        width : 100%;
+    }
+
+    图片自适应容器大小，只缩小不放大，当图片到达原尺寸就不再变化
+    img{
+        max-width : 100%;
+    }
+</div></code></pre>
+    <ol start="2">
+      <li>背景图片</li>
+    </ol>
+    <pre class="hljs"><code><div>    background-size : 100% 100%;
+    background-size : cover;
+    background-size : contain;
+</div></code></pre>
+    <h3 id="14-%E5%93%8D%E5%BA%94%E5%BC%8F%E5%AD%97%E4%BD%93">
+      1.4 响应式字体
+    </h3>
+    <pre class="hljs"><code><div>    html{
+        font-size : 12px;
+    }
+    body{
+        font-size : 2rem;
+    }
+
+    中等屏幕 992px~1200px
+    @media screen and(max-width : 1200px){
+        body{
+            font-size : 1.5rem;
+        }
+    }
+    小屏幕 768px~992px
+    @media screen and(max-width : 992px){
+        body{
+            font-size : 1.2rem;
+        }
+    }
+    超小屏幕 &lt; 768px
+    @media screen and(max-width : 768px){
+        body{
+            font-size : 1rem;
+        }
+    }
+
+</div></code></pre>
+    <h3
+      id="15-%E9%A2%84%E5%AE%9A%E4%B9%89%E5%93%8D%E5%BA%94%E5%BC%8F%E7%B1%BB%E5%90%8D"
+    >
+      1.5 预定义响应式类名
+    </h3>
+    <pre class="hljs"><code><div>
+    @media screen and(max-width : 768px){
+        .hidden-xs{
+            display : none;
+        }
+    }
+    &lt;h2 class=&quot;hidden-xs&quot;&gt;在超小屏幕隐藏&lt;/h2&gt;
+
+</div></code></pre>
+    <h1 id="%E7%AC%AC%E5%8D%81%E4%B9%9D%E5%A4%A9">第十九天</h1>
+    <h2 id="1-%E5%93%8D%E5%BA%94%E5%BC%8F%E4%BC%98%E7%BC%BA%E7%82%B9">
+      1 响应式优缺点
+    </h2>
+    <p>
+      响应式布局可以根据屏幕的大小自动的调整页面的展现方式，以及布局。响应式布局是根据设备屏幕宽度不同适当调整标签显示布局，在每种设备屏幕宽度的设备下呈现的界面是不同的。
+    </p>
+    <h3
+      id="11-%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BD%91%E7%AB%99%E7%9A%84%E4%BC%98%E7%82%B9"
+    >
+      1.1 响应式网站的优点
+    </h3>
+    <ol>
+      <li>
+        减少工作量：网站、设计、代码、内容都只需要一份，多出来的工作量只是JS脚本、CSS样式做一些改变。
+      </li>
+      <li>节省时间。</li>
+      <li>每个设备都能得到正确的设计。</li>
+    </ol>
+    <h3
+      id="12-%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BD%91%E7%AB%99%E7%9A%84%E7%BC%BA%E7%82%B9"
+    >
+      1.2 响应式网站的缺点：
+    </h3>
+    <ol>
+      <li>会加载更多的样式和脚本资源。</li>
+      <li>设计比较难精确定位和控制。</li>
+      <li>老版本浏览器兼容不好。</li>
+    </ol>
+    <h2 id="2-grid%E7%BD%91%E6%A0%BC%E5%B8%83%E5%B1%80">2 Grid网格布局</h2>
+    <h3 id="21-%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D">2.1 基本介绍</h3>
+    <p>
+      网格布局（Grid）是最强大的 CSS
+      布局方案。它将网页划分成一个个网格，可以任意组合不同的网格，做出各种各样的布局。以前，只能通过复杂的
+      CSS 框架达到的效果，现在浏览器内置了。
+    </p>
+    <pre
+      class="hljs"
+    ><code><div>    Flex 布局是轴线布局，只能指定&quot;项目&quot;针对轴线的位置，可以看作是一维布局。Grid 布局则是将容器划分成&quot;行&quot;和&quot;列&quot;，产生单元格，然后指定&quot;项目所在&quot;的单元格，可以看作是二维布局。Grid 布局远比 Flex 布局强大。
+</div></code></pre>
+    <h3 id="22-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5">2.2 基本概念</h3>
+    <h4 id="221-%E5%AE%B9%E5%99%A8%E5%92%8C%E9%A1%B9%E7%9B%AE">
+      2.2.1 容器和项目
+    </h4>
+    <ul>
+      <li>
+        采用网格布局的区域，称为&quot;容器&quot;（container）。容器内部采用网格定位的子元素，称为&quot;项目&quot;（item）。
+      </li>
+    </ul>
+    <pre class="hljs"><code><div>    &lt;div&gt;
+        &lt;div&gt;&lt;p&gt;1&lt;/p&gt;&lt;/div&gt;
+        &lt;div&gt;&lt;p&gt;2&lt;/p&gt;&lt;/div&gt;
+        &lt;div&gt;&lt;p&gt;3&lt;/p&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    上面代码中，最外层的&lt;div&gt;元素就是容器，内层的三个&lt;div&gt;元素就是项目。
+    注意：项目只能是容器的顶层子元素，不包含项目的子元素，比如上面代码的&lt;p&gt;元素就不是项目。Grid 布局只对项目生效。
+</div></code></pre>
+    <h4 id="222-%E8%A1%8C%E5%92%8C%E5%88%97">2.2.2 行和列</h4>
+    <ul>
+      <li>
+        容器里面的水平区域称为&quot;行&quot;（row），垂直区域称为&quot;列&quot;（column）。
+      </li>
+    </ul>
+    <h4 id="223-%E5%8D%95%E5%85%83%E6%A0%BC">2.2.3 单元格</h4>
+    <ul>
+      <li>行和列的交叉区域，称为&quot;单元格&quot;（cell）。</li>
+      <li>
+        正常情况下，n行和m列会产生n x m个单元格。比如，3行3列会产生9个单元格。
+      </li>
+    </ul>
+    <h4 id="224-%E7%BD%91%E6%A0%BC%E7%BA%BF">2.2.4 网格线</h4>
+    <ul>
+      <li>
+        划分网格的线，称为&quot;网格线&quot;（grid
+        line）。水平网格线划分出行，垂直网格线划分出列。
+      </li>
+      <li>
+        正常情况下，n行有n + 1根水平网格线，m列有m +
+        1根垂直网格线，比如三行就有四根水平网格线。
+      </li>
+    </ul>
+    <h3 id="23-%E5%AE%B9%E5%99%A8%E5%B1%9E%E6%80%A7">2.3 容器属性</h3>
+    <ul>
+      <li>
+        Grid
+        布局的属性分成两类。一类定义在容器上面，称为容器属性；另一类定义在项目上面，称为项目属性。这部分先介绍容器属性。
+      </li>
+    </ul>
+    <h4 id="231-display-%E5%B1%9E%E6%80%A7">2.3.1 display 属性</h4>
+    <pre class="hljs"><code><div>    display: grid 指定一个容器采用网格布局。
+    div {
+        display: grid;
+    }
+
+    默认情况下，容器元素是块级元素，但也可以设置成行内元素。
+    div{
+        display:inline-grid;
+    }
+</div></code></pre>
+    <h4
+      id="232-grid-template-columns-%E5%B1%9E%E6%80%A7grid-template-rows-%E5%B1%9E%E6%80%A7"
+    >
+      2.3.2 grid-template-columns 属性，grid-template-rows 属性
+    </h4>
+    <blockquote>
+      <p>容器指定了网格布局以后，接着就要划分行和列。</p>
+    </blockquote>
+    <ul>
+      <li>grid-template-columns属性定义每一列的列宽</li>
+      <li>grid-template-rows属性定义每一行的行高。接下来做个3行3列的网格。</li>
+    </ul>
+    <pre class="hljs"><code><div>     &lt;div class=&quot;box&quot;&gt;
+            &lt;div class=&quot;item1&quot;&gt;1&lt;/div&gt;
+            &lt;div class=&quot;item2&quot;&gt;2&lt;/div&gt;
+            &lt;div class=&quot;item3&quot;&gt;3&lt;/div&gt;
+            &lt;div class=&quot;item4&quot;&gt;4&lt;/div&gt;
+            &lt;div class=&quot;item5&quot;&gt;5&lt;/div&gt;
+            &lt;div class=&quot;item6&quot;&gt;6&lt;/div&gt;
+            &lt;div class=&quot;item7&quot;&gt;7&lt;/div&gt;
+            &lt;div class=&quot;item8&quot;&gt;8&lt;/div&gt;
+            &lt;div class=&quot;item9&quot;&gt;9&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;style&gt;
+    .box{
+            height: 650px;
+            display: grid;
+            grid-template-columns: 100px 100px 100px;
+            grid-template-rows: 100px 100px 100px;
+    }
+     .item1{
+                background-color: red;          
+            }
+
+            .item2{
+                background-color: orange;
+            }
+
+            .item3{
+                background-color: green;
+            }
+
+            .item4{
+                background-color: blue;
+            }
+
+            .item5{
+                background-color: purple;
+            }
+
+            .item6{
+                background-color: salmon;
+            }
+
+            .item7{
+                background-color: skyblue;
+            }
+
+            .item8{
+                background-color: teal;
+            }
+
+            .item9{
+                background-color: yellow;
+            }
+
+    &lt;/style&gt;
+</div></code></pre>
+    <h4
+      id="233-%E9%99%A4%E4%BA%86%E4%BD%BF%E7%94%A8%E7%BB%9D%E5%AF%B9%E5%8D%95%E4%BD%8D%E4%B9%9F%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E7%99%BE%E5%88%86%E6%AF%94"
+    >
+      2.3.3 除了使用绝对单位，也可以使用百分比
+    </h4>
+    <pre class="hljs"><code><div>    .box{
+        height: 650px;
+        display: grid;
+        grid-template-columns: 33.33%  33.33%  33.33% ;
+        grid-template-rows:  33.33%  33.33%  33.33% ;
+    }
+</div></code></pre>
+    <blockquote>
+      <p>值可以是以下几种情况：</p>
+    </blockquote>
+    <ol>
+      <li>
+        repeat()
+        有时候，重复写同样的值非常麻烦，尤其网格很多时。这时，可以使用repeat()函数，简化重复的值。接受两个参数，第一个参数是重复的次数，第二个参数是所要重复的值。
+      </li>
+    </ol>
+    <pre class="hljs"><code><div>    上面的代码用repeat(),改写如下：
+    .box{
+        height: 650px;
+        display: grid;
+        grid-template-columns: repeat(3,33.33%) ;
+        grid-template-rows: repeat(3,33.33%);
+    }
+</div></code></pre>
+    <ol start="2">
+      <li>
+        fr 为了方便表示比例关系，网格布局提供了fr关键字（fraction
+        的缩写，意为&quot;片段&quot;）。如果两列的宽度分别为1fr和2fr，就表示后者是前者的两倍。
+      </li>
+    </ol>
+    <pre class="hljs"><code><div>    .box{
+        height: 650px;
+        display: grid;
+        grid-template-columns:1fr 1fr 2fr ;
+        grid-template-rows: 1fr 1fr 1fr;
+    }
+</div></code></pre>
+    <ol start="3">
+      <li>
+        minmax()
+        minmax()函数产生一个长度范围，表示长度就在这个范围之中。它接受两个参数，分别为最小值和最大值。minmax(100px,
+        1fr)表示列宽不小于100px，不大于1fr。
+      </li>
+    </ol>
+    <pre class="hljs"><code><div>    .box{
+        height: 650px;
+        display: grid;
+        grid-template-columns: 1fr 1fr minmax(100px,1fr) ;
+        grid-template-rows:1fr 1fr 1fr;
+    }
+</div></code></pre>
+    <ol start="4">
+      <li>auto关键字 auto关键字表示由浏览器自己决定长度。</li>
+    </ol>
+    <pre class="hljs"><code><div>    .box{
+        height: 650px;
+        display: grid;
+        grid-template-columns:100px auto 100px ;
+        grid-template-rows:1fr 1fr 1fr;
+    }
+</div></code></pre>
+    <ol start="5">
+      <li>网格线的名称</li>
+    </ol>
+    <pre class="hljs"><code><div>    .box{	
+        height: 650px;
+        display: grid;	
+        grid-template-columns:[c1] 100px [c2] auto [c3] 100px [c4] ;
+        grid-template-rows:[r1] 100px [r2] auto [r3] 100px [r4] ;
+    }
+</div></code></pre>
+    <h4
+      id="234-grid-row-gap-%E5%B1%9E%E6%80%A7grid-column-gap-%E5%B1%9E%E6%80%A7grid-gap-%E5%B1%9E%E6%80%A7"
+    >
+      2.3.4 grid-row-gap 属性，grid-column-gap 属性，grid-gap 属性
+    </h4>
+    <ul>
+      <li>
+        grid-row-gap属性设置行与行的间隔（行间距），grid-column-gap属性设置列与列的间隔（列间距）
+      </li>
+      <li>grid-gap属性是grid-column-gap和grid-row-gap的合并简写形式</li>
+    </ul>
+    <pre class="hljs"><code><div>    语法：
+    .box{
+        grid-gap: grid-row-gap  grid-column-gap;
+    }
+</div></code></pre>
+    <h4 id="235-grid-template-areas-%E5%B1%9E%E6%80%A7">
+      2.3.5 grid-template-areas 属性
+    </h4>
+    <ul>
+      <li>
+        网格布局允许指定&quot;区域&quot;（area），一个区域由单个或多个单元格组成。grid-template-areas属性用于定义区域。
+      </li>
+    </ul>
+    <pre class="hljs"><code><div>    .box{
+        Height:650px;
+        display: grid;
+        grid-template-columns: 100px 100px 100px;
+        grid-template-rows: 100px 100px 100px;
+        grid-template-areas: 'a b c'
+                            'd e f'
+                            'g h i';
+    }
+    上面代码先划分出9个单元格，然后将其定名为a到i的九个区域，分别对应这九个单元格。多个单元格合并成一个区域的写法如下。
+    .box{
+        Height:650px;
+        display: grid;
+        grid-template-columns: 100px 100px 100px;
+        grid-template-rows: 100px 100px 100px;
+        grid-template-areas: 'a a a'
+                             'b b b'
+                             'c c c';
+    }
+    上面代码将9个单元格分成a、b、c三个区域。
+
+    下面是一个布局实例。
+    &lt;div class=&quot;box&quot;&gt;
+            &lt;div class=&quot;part1&quot;&gt;header&lt;/div&gt;
+            &lt;div class=&quot;part2&quot;&gt;nav&lt;/div&gt;
+            &lt;div class=&quot;part3&quot;&gt;main&lt;/div&gt;
+            &lt;div class=&quot;part4&quot;&gt;aside&lt;/div&gt;
+            &lt;div class=&quot;part5&quot;&gt;footer&lt;/div&gt;
+        &lt;/div&gt;
+        
+    &lt;style&gt;
+            .box{
+                 width:400px;
+                height: 650px;
+                display: grid;
+                grid-template-columns: 2fr 1fr 1fr;
+                grid-template-rows: 100px 100px 300px 100px;
+                grid-template-areas: 
+                &quot;header header header&quot;
+                &quot;nav nav nav&quot;
+                &quot;main main aside&quot;
+                &quot;footer footer footer&quot;;
+            }
+
+            .part1{
+                background-color: red;
+                grid-area: header;        /*grid-area指明区域对应的名字*/  
+            }
+
+            .part2{
+                background-color: orange;
+                grid-area: nav;
+            }
+
+            .part3{
+                background-color: green;
+                grid-area: main;
+            }
+
+            .part4{
+                background-color: blanchedalmond;
+                grid-area: aside;
+            }
+
+            .part5{
+                background-color:purple;
+                grid-area: footer;
+            }
+        &lt;/style&gt;
+
+</div></code></pre>
+    <h4 id="236-grid-auto-flow%E5%B1%9E%E6%80%A7">2.3.6 grid-auto-flow属性</h4>
+    <ul>
+      <li>划分网格以后，容器的子元素会按照顺序，自动放置在每一个网格</li>
+    </ul>
+    <pre class="hljs"><code><div>    语法:
+    .box{
+        grid-auto-flow: row | column | row dense | column dense;
+    }
+</div></code></pre>
+    <blockquote>
+      <p>可能出现的值：</p>
+    </blockquote>
+    <ul>
+      <li>
+        row：默认值，&quot;先行后列&quot;，即先放满第一行，再开始放入第二行。
+      </li>
+      <li>column：&quot;先列后行&quot;。</li>
+      <li>
+        row
+        dense：表示&quot;先行后列&quot;，并且尽可能紧密放满，尽量不出现空格。
+      </li>
+      <li>column dense：&quot;先列后行&quot;，尽量不出现空格。</li>
+    </ul>
+    <h4
+      id="237-justify-items-%E5%B1%9E%E6%80%A7align-items-%E5%B1%9E%E6%80%A7place-items-%E5%B1%9E%E6%80%A7"
+    >
+      2.3.7 justify-items 属性，align-items 属性，place-items 属性
+    </h4>
+    <ul>
+      <li>
+        justify-items属性设置单元格内容的水平位置（左中右），align-items属性设置单元格内容的垂直位置（上中下）
+      </li>
+    </ul>
+    <pre class="hljs"><code><div>    语法：
+    .box{
+    justify-items: start | end | center | stretch;
+    align-items: start | end | center | stretch;
+    }
+</div></code></pre>
+    <blockquote>
+      <p>这两个属性的写法完全相同，可以取下面这些值都。</p>
+    </blockquote>
+    <ul>
+      <li>start：对齐单元格的起始边缘。</li>
+      <li>end：对齐单元格的结束边缘。</li>
+      <li>center：单元格内部居中。</li>
+      <li>stretch：拉伸，占满单元格的整个宽度（默认值）。</li>
+      <li>
+        place-items属性是align-items属性和justify-items属性的合并简写形式。
+      </li>
+    </ul>
+    <pre class="hljs"><code><div>    语法：
+    .box{
+        place-items: align-items  justify-items;
+    }
+    代码实现：
+    .box{
+        /* justify-items: center;
+        align-items: center; */
+        place-items: center center;
+    }           
+</div></code></pre>
+    <h4
+      id="238-justify-content-%E5%B1%9E%E6%80%A7align-content-%E5%B1%9E%E6%80%A7place-content-%E5%B1%9E%E6%80%A7"
+    >
+      2.3.8 justify-content 属性，align-content 属性，place-content 属性
+    </h4>
+    <p>内容区域在容器里面的水平和垂直位置，简写形式 place-content</p>
+    <pre class="hljs"><code><div>    语法：
+    .box{
+    justify-content: start | end | center | space-around | space-between | space-evenly;
+    align-content: start | end | center | space-around | space-between | space-evenly;  
+    }
+</div></code></pre>
+    <blockquote>
+      <p>有可能出现的值</p>
+    </blockquote>
+    <ul>
+      <li>start：对齐容器的起始边框。</li>
+      <li>end：对齐容器的结束边框。</li>
+      <li>center：容器内部居中。</li>
+      <li>
+        space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与容器边框的间隔大一倍。
+      </li>
+      <li>space-between：项目与项目的间隔相等，项目与容器边框之间没有间隔。</li>
+      <li>
+        space-evenly：项目与项目的间隔相等，项目与容器边框之间也是同样长度的间隔。
+      </li>
+      <li>
+        place-content属性是align-content属性和justify-content属性的合并简写形式。
+      </li>
+    </ul>
+    <pre class="hljs"><code><div>    语法：
+    .box{ 
+        place-content: align-content  justify-content 
+    }
+    代码实现：
+    .box{
+        /* 
+        align-content: center; 
+        justify-content: center;
+        */
+        place-content: center center;
+    }
+</div></code></pre>
+    <h3 id="24-%E9%A1%B9%E7%9B%AE%E5%B1%9E%E6%80%A7">2.4 项目属性</h3>
+    <h4
+      id="241-grid-column-start-%E5%B1%9E%E6%80%A7grid-column-end-%E5%B1%9E%E6%80%A7grid-row-start-%E5%B1%9E%E6%80%A7grid-row-end-%E5%B1%9E%E6%80%A7"
+    >
+      2.4.1 grid-column-start 属性，grid-column-end 属性，grid-row-start
+      属性，grid-row-end 属性
+    </h4>
+    <p>
+      项目的位置是可以指定的，具体方法就是指定项目的四个边框，分别定位在哪根网格线。
+    </p>
+    <ul>
+      <li>grid-column-start属性：左边框所在的垂直网格线。</li>
+      <li>grid-column-end属性：右边框所在的垂直网格线。</li>
+      <li>grid-row-start属性：上边框所在的水平网格线。</li>
+      <li>grid-row-end属性：下边框所在的水平网格线。</li>
+    </ul>
+    <pre class="hljs"><code><div>    比如将第一个项目指定四个边框位置。
+    代码实现：
+
+    .item1{
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 2;
+        grid-row-end: 4;
+    }
+
+    除了1号项目以外，其他项目都没有指定位置，由浏览器自动布局，这时它们的位置由容器的grid-auto-flow属性决定，这个属性的默认值是row，因此会&quot;先行后列&quot;进行排列。读者可以把这个属性的值分别改成column、row dense和column dense，看看其他项目的位置发生了怎样的变化。
+</div></code></pre>
+    <h4 id="242-grid-column-%E5%B1%9E%E6%80%A7grid-row-%E5%B1%9E%E6%80%A7">
+      2.4.2 grid-column 属性grid-row 属性
+    </h4>
+    <p>
+      grid-column属性是grid-column-start和grid-column-end的合并简写形式，grid-row属性是grid-row-start属性和grid-row-end的合并简写形式。
+    </p>
+    <pre class="hljs"><code><div>    语法：
+    .item{
+        grid-column:  / ;
+        grid-row:  / ;
+    }
+
+如果想实现项目part1占据第一行，从第一根列线到第三根列线。
+代码实现：
+    .item1 {
+        grid-column: 1 / 3;
+        grid-row: 1 / 2;
+    }
+    /* 等同于 */
+    .item1 {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 2;
+    }
+</div></code></pre>
+    <h4 id="243-grid-area-%E5%B1%9E%E6%80%A7">2.4.3 grid-area 属性</h4>
+    <p>grid-area属性指定项目放在哪一个区域</p>
+    <pre class="hljs"><code><div>    代码实现：
+    .item1 {
+         grid-area: e;
+    }
+</div></code></pre>
+    <h4
+      id="244-justify-self-%E5%B1%9E%E6%80%A7align-self-%E5%B1%9E%E6%80%A7place-self-%E5%B1%9E%E6%80%A7"
+    >
+      2.4.4 justify-self 属性，align-self 属性，place-self 属性
+    </h4>
+    <ul>
+      <li>
+        justify-self属性设置单元格内容的水平位置（左中右），跟justify-items属性的用法完全一致，但只作用于单个项目。
+      </li>
+      <li>
+        align-self属性设置单元格内容的垂直位置（上中下），跟align-items属性的用法完全一致，也是只作用于单个项目。
+      </li>
+    </ul>
+    <pre class="hljs"><code><div>
+    语法：
+    .item{
+        justify-self: start | end | center | stretch;
+        align-self: start | end | center | stretch;
+    }
+</div></code></pre>
+    <blockquote>
+      <p>这两个属性都可以取下面四个值。</p>
+    </blockquote>
+    <ul>
+      <li>start：对齐单元格的起始边缘。</li>
+      <li>end：对齐单元格的结束边缘。</li>
+      <li>center：单元格内部居中。</li>
+      <li>stretch：拉伸，占满单元格的整个宽度（默认值）。</li>
+      <li>place-self属性是align-self属性和justify-self属性的合并简写形式。</li>
+    </ul>
+    <pre class="hljs"><code><div>    语法：
+    .item{
+        place-self: align-self   justify-self;
+    }
+    代码实现：
+    .item1 {
+        align-self: end;/* 列对齐 */
+    }
+    .item2{
+        justify-self: end;	/* 行对齐 */
+    }
+    .item3 {
+        place-self: center center;/* 采用缩写形式 */
+    } 
+</div></code></pre>
+    <h1 id="%E7%BB%93%E5%B0%BE%E8%A1%A5%E5%85%85">结尾补充</h1>
+    <h2
+      id="1-ie%E6%B5%8F%E8%A7%88%E5%99%A8%E5%B8%B8%E8%A7%81%E5%85%BC%E5%AE%B9%E9%97%AE%E9%A2%98"
+    >
+      1 IE浏览器常见兼容问题
+    </h2>
+    <h3 id="11-%E9%80%8F%E6%98%8E%E5%BA%A6%E5%85%BC%E5%AE%B9">
+      1.1 透明度兼容
+    </h3>
+    <pre class="hljs"><code><div>    filter:alpha(opacity:50)
+</div></code></pre>
+    <h3
+      id="12-ie%E4%B8%AD%E5%9B%BE%E7%89%87%E8%BE%B9%E6%A1%86%E9%97%AE%E9%A2%98"
+    >
+      1.2 ie中图片边框问题
+    </h3>
+    <blockquote>
+      <p>Ie 中图片放在a标签中显示边框。</p>
+    </blockquote>
+    <pre class="hljs"><code><div>    解决方案:
+    img{
+    border:none;
+    }
+</div></code></pre>
+    <h3
+      id="13-ie8%E4%B8%AD%E8%83%8C%E6%99%AF%E5%A4%8D%E5%90%88%E5%B1%9E%E6%80%A7%E5%86%99%E6%B3%95%E9%97%AE%E9%A2%98"
+    >
+      1.3 ie8中背景复合属性写法问题
+    </h3>
+    <blockquote>
+      <p>
+        如下代码，在标准浏览器中均能正常显示背景图片，但是在ie8中图片显示异常。
+      </p>
+    </blockquote>
+    <pre class="hljs"><code><div>    .bg{ 
+        background:url(“images/bg.jpg”)no-repeat center;
+    }
+
+    解决方案：在url和no-repeat之间加上空格。
+    .bg{ 
+        background:url(“images/bg.jpg”) no-repeat center;
+    }
+
+</div></code></pre>
+    <h3
+      id="14-%E5%85%B6%E4%BB%96ie%E4%BD%8E%E7%89%88%E6%9C%AC%E5%85%BC%E5%AE%B9%E6%80%A7%E9%97%AE%E9%A2%98%E4%BA%86%E8%A7%A3"
+    >
+      1.4 其他ie低版本兼容性问题了解
+    </h3>
+    <h4
+      id="141-%E5%9C%A8-ie6-%E5%8F%8A%E6%9B%B4%E6%97%A9%E7%89%88%E6%9C%AC%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%AE%9A%E4%B9%89%E5%B0%8F%E9%AB%98%E5%BA%A6%E7%9A%84%E5%AE%B9%E5%99%A8"
+    >
+      1.4.1 在 IE6 及更早版本浏览器中，定义小高度的容器
+    </h4>
+    <pre class="hljs"><code><div>    解决方案：
+    #test{
+        overflow:hidden;
+        height:1px;
+        font-size:0;
+        line-height:0;
+    }
+</div></code></pre>
+    <h4
+      id="142-ie6-%E5%8F%8A%E6%9B%B4%E6%97%A9%E7%89%88%E6%9C%AC%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8B%E6%B5%AE%E5%8A%A8%E6%97%B6%E4%BA%A7%E7%94%9F%E5%8F%8C%E5%80%8D%E8%BE%B9%E8%B7%9D%E7%9A%84-bug"
+    >
+      1.4.2 IE6 及更早版本浏览器下，浮动时产生双倍边距的 BUG
+    </h4>
+    <pre
+      class="hljs"
+    ><code><div>    解决方案：针对 ie6 设置该标签的 display 属性为 inline 即可
+    #test{
+        float:left;
+        _display:inline;
+    }  
+</div></code></pre>
+    <h4
+      id="143-ie7-%E5%8F%8A%E6%9B%B4%E6%97%A9%E7%89%88%E6%9C%AC%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8B%E5%AD%90%E6%A0%87%E7%AD%BE%E7%9B%B8%E5%AF%B9%E5%AE%9A%E4%BD%8D%E6%97%B6%E7%88%B6%E6%A0%87%E7%AD%BE-overflow-%E5%B1%9E%E6%80%A7%E7%9A%84-autohidden-%E5%A4%B1%E6%95%88%E7%9A%84%E9%97%AE%E9%A2%98"
+    >
+      1.4.3 IE7 及更早版本浏览器下，子标签相对定位时父标签 overflow 属性的
+      auto|hidden 失效的问题
+    </h4>
+    <pre class="hljs"><code><div>    解决方案：给父标签也设置相对定位 
+    
+    position:relative;
+
+</div></code></pre>
+    <h4
+      id="144-%E5%9D%97%E8%BD%AC%E5%86%85%E8%81%94%E5%9D%97-ie7--%E4%B8%8D%E5%9C%A8%E4%B8%80%E8%A1%8C%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98"
+    >
+      1.4.4 块转内联块 ie7- 不在一行显示问题
+    </h4>
+    <pre class="hljs"><code><div>    解决方案：
+    div {
+        display:inline-block;
+        *display:inline;
+        *zoom:1;
+    }
+</div></code></pre>
+    <h4
+      id="145-ie7-%E5%8F%8A%E6%9B%B4%E6%97%A9%E7%89%88%E6%9C%AC%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8B%E5%BD%93-li-%E4%B8%AD%E5%AD%90%E5%85%83%E7%B4%A0%E5%87%BA%E7%8E%B0-2-%E4%B8%AA%E6%88%96%E4%BB%A5%E4%B8%8A%E7%9A%84%E6%B5%AE%E5%8A%A8%E6%97%B6li%E4%B9%8B%E9%97%B4%E4%BA%A7%E7%94%9F%E7%9A%84%E7%A9%BA%E7%99%BD%E9%97%B4%E9%9A%99"
+    >
+      1.4.5 IE7 及更早版本浏览器下，当 li 中子元素出现 2
+      个或以上的浮动时，li之间产生的空白间隙。
+    </h4>
+    <pre
+      class="hljs"
+    ><code><div>    解决方案：将垂直对齐方式设置为除了 top 值，还可以设置其它值如 middle | bottom 等
+    li{
+        vertical-align:top;
+    }
+</div></code></pre>
+    <h2 id="2-css-hack">2 CSS Hack</h2>
+    <ul>
+      <li>
+        使用 CSS Hack
+        可以控制不同浏览器及版本之间的显示差异，某些情况下处理兼容问题可以事半功倍，但滥用会影响页面性能，也会导致后期维护困难，因此尽可能减少对CSS
+        Hack 的使用
+      </li>
+    </ul>
+    <h3 id="21-%E6%9D%A1%E4%BB%B6-hack">2.1 条件 Hack</h3>
+    <h4
+      id="211-%E7%94%A8%E4%BA%8E%E9%80%89%E6%8B%A9-ie-%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8F%8A-ie-%E7%9A%84%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC"
+    >
+      2.1.1 用于选择 IE 浏览器及 IE 的不同版本。
+    </h4>
+    <blockquote>
+      <p>
+        if 条件 Hack 是 HTML 级别的（包含但不仅是 CSS 的 Hack，可以选择任何 HTML
+        代码块）。 if 条件共包含 6
+        种选择方式：是否、大于、大于或等于、小于、小于或等于、非指定版本。
+      </p>
+    </blockquote>
+    <ul>
+      <li>大于：选择大于指定版本的 IE 版本。关键字：gt（greater than）。</li>
+      <li>
+        大于或等于：选择大于或等于指定版本的 IE 版本。关键字：gte（greater than
+        or equal）。
+      </li>
+      <li>小于：选择小于指定版本的 IE 版本。关键字：lt（less than）。</li>
+      <li>
+        小于或等于：选择小于或等于指定版本的 IE 版本。关键字：lte（less than or
+        equal）。
+      </li>
+      <li>非指定版本：选择除指定版本外的所有 IE 版本。关键字：!。</li>
+    </ul>
+    <pre class="hljs"><code><div>    示例：
+    只在 IE 中可见：
+    &lt;!--[if IE]&gt;
+        &lt;p&gt; 只在 IE 中能看到这个段落 &lt;/p&gt;
+    &lt;![endif]--&gt;
+    只有 IE6 以上，才能看到应用了 test 类的标签是红色文本：
+    &lt;!--[if gt IE 6]&gt;
+        &lt;style&gt;
+            .test{color:red;}
+        &lt;/style&gt;
+    &lt;![endif]--&gt;
+    IE10 及以上版本已将条件注释特性移除，使用时需注意。
+</div></code></pre>
+    <h4 id="212%E5%B1%9E%E6%80%A7%E7%BA%A7-hack">2.1.2、属性级 Hack</h4>
+    <blockquote>
+      <p>
+        在CSS样式属性名前或值后面加上一些只有特定浏览器才能识别的hack前缀或后缀，以达到预期的页面展现效果。
+      </p>
+    </blockquote>
+    <ul>
+      <li>_ 下划线：选择 IE6 及以下</li>
+      <li>*：选择 IE7 及以下</li>
+      <li>\0：选择 Ie8-9</li>
+    </ul>
+    <pre class="hljs"><code><div>    示例：
+    color:red; /* 所有浏览器可识别*/
+     _color:red; /* 仅IE6 识别 */
+     *color:red; /* IE6、IE7 识别 */
+     color:red\0; /* IE8、IE9 识别*/
+</div></code></pre>
+    <h4 id="213-%E9%80%89%E6%8B%A9%E7%AC%A6%E7%BA%A7-hack">
+      2.1.3 选择符级 Hack
+    </h4>
+    <blockquote>
+      <p>*html IE6 及更早浏览器</p>
+    </blockquote>
+    <pre class="hljs"><code><div>    示例：
+    *html .box{
+    background:red;
+    } // 在 IE6及以下 显示红色
+</div></code></pre>
+    <blockquote>
+      <ul>
+        <li>
+          <ul>
+            <li>html IE7</li>
+          </ul>
+        </li>
+      </ul>
+    </blockquote>
+    <pre class="hljs"><code><div>    示例：
+    * + html .box{
+    background:red;
+    } //  IE7下显示红色
+
+</div></code></pre>
+  </body>
+</html>
